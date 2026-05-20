@@ -1,0 +1,153 @@
+{
+    "name": "Mohit Arora",
+    "email": "mohitarora00777@gmail.com",
+    "phone": "+91 9667067062",
+    "profileImage": "https://media.licdn.com/dms/image/v2/D5603AQEFECkYYAzfwQ/profile-displayphoto-shrink_800_800/B56ZUPg9CMHQAg-/0/1739722054371?e=1750896000&v=beta&t=mOWXPwMuk6TKSwufqKotXg7wDQgeOKWoFkJVA1ChEk0",
+    "links": {
+        "github": "https://github.com/mohitarora8181",
+        "linkedin": "https://linkedin.com/in/mohit8181",
+        "leetcode": "https://leetcode.com/mohit8181"
+    },
+    "skills": {
+        "webDevelopment": [
+            "React",
+            "Next.js",
+            "Node.js",
+            "Express.js",
+            "WebSockets",
+            "Tailwind CSS"
+        ],
+        "androidDevelopment": [
+            "Kotlin (Jetpack Compose)",
+            "React Native",
+            "Flutter"
+        ],
+        "databases": [
+            "Firebase",
+            "MongoDB",
+            "Supabase",
+            "MySQL",
+            "PostgreSQL",
+            "PHPMyAdmin",
+            "Redis"
+        ],
+        "cloudServices": [
+            "AWS (S3, EC2, Beanstalk, CloudFront)",
+            "Docker"
+        ],
+        "roboticsAndIoT": [
+            "Arduino",
+            "Esp32",
+            "Esp8266",
+            "RaspberryPi",
+            "PCB Designing",
+            "Proteus simulation"
+        ],
+        "languages": [
+            "C++",
+            "TypeScript",
+            "JavaScript",
+            "Python",
+            "HTML",
+            "CSS",
+            "Java"
+        ]
+    },
+    "experience": [
+        {
+            "title": "SDE Intern",
+            "company": "SeedsAI",
+            "duration": "March 2025 - Present",
+            "responsibilities": [
+                "Developed full-stack AI-driven modules integrating LLMs responses using MERN stack.",
+                "Integrated Firebase CloudStore for real-time interaction logs and dynamic rendering.",
+                "Improved response times and AI feature usage by 30% through caching and async threads."
+            ]
+        },
+        {
+            "title": "Full Stack Developer Intern",
+            "company": "Neecop",
+            "duration": "Feb 2025 - Present",
+            "responsibilities": [
+                "Developed scalable features for a social-media platform for MSMEs and startups.",
+                "Integrated AWS EC2/S3 for secure hosting and configured Hostinger for custom deployments.",
+                "Automated CI/CD workflows, reducing downtime by 40% and improving development speed."
+            ]
+        },
+        {
+            "title": "Tech Intern",
+            "company": "Zebpay",
+            "duration": "July 2024 - Nov 2024",
+            "responsibilities": [
+                "Completed training in Android development with Jetpack Compose, Kotlin, and modular architecture.",
+                "Gained proficiency in RoomDB, dependency injection (Hilt), and state management for mobile apps.",
+                "Explored benchmarking, JS ingestion, and implemented services for real-time data sync."
+            ]
+        },
+        {
+            "title": "Frontend Developer",
+            "company": "CareerBanao",
+            "duration": "Nov 2023 - Mar 2024",
+            "responsibilities": [
+                "Developed UI components using React.js and implemented responsive layouts with Tailwind CSS.",
+                "Collaborated on reusable design elements and strengthened component architecture skills.",
+                "Enhanced understanding of state management and React development workflows."
+            ]
+        }
+    ],
+    "projects": [
+        {
+            "name": "CLI Tool - Doxs",
+            "description": [
+                "Developed Doxs, an npm package that automatically generates README.md files based on project codebase.",
+                "Integrated git-diff functionality to auto-generate commit messages based on detected changes.",
+                "Simplified development workflows by automating documentation and commit message generation."
+            ]
+        },
+        {
+            "name": "Asset Sharing App - IfShare",
+            "description": [
+                "Developed ifShare, a web app for sharing files, code snippets, and notes using short URLs.",
+                "Created intuitive UI for seamless file uploads and sharing, enhancing accessibility and collaboration.",
+                "Implemented secure file sharing with encryption and user dashboard for content management."
+            ]
+        },
+        {
+            "name": "Open Source Contributions",
+            "description": [
+                "SyllabusX",
+                "Placement Cell MSIT"
+            ]
+        },
+        {
+            "name": "Android Projects",
+            "subProjects": [
+                {
+                    "name": "WhatsApp Clone",
+                    "description": [
+                        "Developed a fully functional WhatsApp clone using Meta Business API & React Native.",
+                        "Implemented real-time messaging with support for all media types (image, video, document, audio)."
+                    ]
+                },
+                {
+                    "name": "Shipping Service App",
+                    "description": [
+                        "Developed a shipping service app that scrapes real-time data from a website for tracking & order details.",
+                        "Implemented multiple screens: order tracking, rate calculator, and comprehensive orders screen."
+                    ]
+                }
+            ]
+        }
+    ],
+    "education": {
+        "institution": "Maharaja Surajmal Institute of Technology, GGSIPU",
+        "degree": "B.Tech in Information Technology",
+        "cgpa": "8.922",
+        "duration": "2022 - 2026"
+    },
+    "leadershipAndAchievements": [
+        "Finalist - Smart India Hackathon (2024)",
+        "Chairperson - eYantra (2024–25)",
+        "Hardware Lead - IEEE (2024)"
+    ]
+}
