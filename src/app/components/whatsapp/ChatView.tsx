@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { AttachFile, MoreVert, Search, Mic, Send, EmojiEmotionsOutlined, Group, Person, ArrowBack } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import type { Chat, Message } from './Chats';
 
-const ChatView: React.FC<{ selectedChat: any, setSelectedChat: any }> = ({ selectedChat, setSelectedChat }) => {
+type ChatViewProps = {
+    selectedChat: Chat | null;
+    setSelectedChat: React.Dispatch<React.SetStateAction<Chat | null>>;
+};
+
+const ChatView: React.FC<ChatViewProps> = ({ selectedChat, setSelectedChat }) => {
     const [isTyping, setisTyping] = useState(false);
 
     return (
@@ -51,7 +57,7 @@ const ChatView: React.FC<{ selectedChat: any, setSelectedChat: any }> = ({ selec
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.2, duration: 0.5 }}
                     >
-                        {selectedChat.messages.map((message: any, index: number) => {
+                        {selectedChat.messages.map((message: Message, index: number) => {
                             const showIcon = index === 0 || selectedChat.messages[index - 1].isSender !== message.isSender;
                             return (
                                 <motion.div
@@ -67,7 +73,7 @@ const ChatView: React.FC<{ selectedChat: any, setSelectedChat: any }> = ({ selec
                                             whileHover={{ scale: 1.1 }}
                                         >
                                             {showIcon && (
-                                                <img src={"https://static.whatsapp.net/rsrc.php/v4/ye/r/W2MDyeo0zkf.png"} />
+                                                <img src={"https://static.whatsapp.net/rsrc.php/v4/ye/r/W2MDyeo0zkf.png"} alt="" />
                                             )}
                                         </motion.div>
                                     )}

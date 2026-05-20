@@ -36,7 +36,7 @@ const Footer = () => {
                         className='text-sm text-white hover:underline cursor-pointer'
                         whileHover={{ color: '#1db954' }}
                     >
-                        Kamle (From "Raid 2")
+                        Kamle (From &quot;Raid 2&quot;)
                     </motion.span>
                     <motion.span 
                         className='text-xs text-gray-400 hover:underline cursor-pointer'

@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { AccountCircle } from '@mui/icons-material';
-import PeopleSidebar from './Sidebar';
 
 interface VideoTilesProps {
-    isSpeaking: Boolean;
-    setIsSpeaking: Function;
+    isSpeaking: boolean;
+    setIsSpeaking: (isSpeaking: boolean) => void;
     sidebarOpen: boolean;
     toggleSidebar: () => void;
 }

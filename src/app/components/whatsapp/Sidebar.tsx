@@ -28,7 +28,7 @@ const Sidebar = () => {
                 </path></svg>
             </span>
             <span className='p-2 w-10 h-10 flex justify-center rounded-full cursor-pointer'>
-                <img src={"https://static.whatsapp.net/rsrc.php/v4/ye/r/W2MDyeo0zkf.png"} />
+                <img src={"https://static.whatsapp.net/rsrc.php/v4/ye/r/W2MDyeo0zkf.png"} alt="Profile" />
             </span>
         </motion.div>
     )

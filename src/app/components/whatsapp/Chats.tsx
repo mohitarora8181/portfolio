@@ -2,8 +2,27 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Search, Group, MoreVert } from "@mui/icons-material";
 
-export const Chats: React.FC<{ setSelectedChat: any, selectedChat: any }> = ({ setSelectedChat, selectedChat }) => {
-    const chats = [
+export type Message = {
+    text: string;
+    time: string;
+    isSender: boolean;
+};
+
+export type Chat = {
+    name: string;
+    message: string;
+    time: string;
+    archived: boolean;
+    messages: Message[];
+};
+
+type ChatsProps = {
+    selectedChat: Chat | null;
+    setSelectedChat: React.Dispatch<React.SetStateAction<Chat | null>>;
+};
+
+export const Chats: React.FC<ChatsProps> = ({ setSelectedChat, selectedChat }) => {
+    const chats: Chat[] = [
         {
             name: "Family Group",
             message: "Mom: Don't forget to bring groceries.",

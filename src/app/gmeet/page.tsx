@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Footer from '../components/gmeet/Footer'
 import VideoTiles from '../components/gmeet/VideoTiles'
 
-const page = () => {
+const Page = () => {
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -25,4 +25,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

@@ -41,7 +41,7 @@ const Content = () => {
                             className='bg-[#242424] p-4 rounded-lg max-sm:hidden'
                         >
                             <h3 className='text-white font-bold'>Create your first playlist</h3>
-                            <p className='text-sm text-white mt-1'>It's easy, we'll help you</p>
+                            <p className='text-sm text-white mt-1'>It&apos;s easy, we&apos;ll help you</p>
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
@@ -172,7 +172,7 @@ const Content = () => {
                         transition={{ delay: 0.5 }}
                         className='text-center text-gray-400 mt-8'
                     >
-                        <p className='text-sm'>Let friends and followers on Spotify see what you're listening to.</p>
+                        <p className='text-sm'>Let friends and followers on Spotify see what you&apos;re listening to.</p>
                     </motion.div>
                 </div>
             </motion.div>

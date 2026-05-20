@@ -1,11 +1,12 @@
 'use client'
-import React, { use, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from '../components/whatsapp/Sidebar'
 import Chats from '../components/whatsapp/Chats'
 import ChatView from '../components/whatsapp/ChatView'
+import type { Chat } from '../components/whatsapp/Chats'
 
-const page = () => {
-    const [selectedChat, setSelectedChat] = useState(null);
+const Page = () => {
+    const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
     const [isMobileView, setMobileView] = useState(false);
 
 
@@ -38,4 +39,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page
