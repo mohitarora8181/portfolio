@@ -1,6 +1,10 @@
 import React from 'react'
 import { Add, PlayArrow } from '@mui/icons-material'
 import { motion } from 'framer-motion'
+import { getPortfolioData, getProjectDate, getSkillGroups } from '@/src/services/portfolioData'
+
+const data = getPortfolioData()
+const skillGroups = getSkillGroups()
 
 const Content = () => {
     return (
@@ -76,9 +80,9 @@ const Content = () => {
                         </div>
 
                         <div className='space-y-2 max-h-[300px] max-sm:max-h-[400px] scrollbar-none overflow-y-auto'>
-                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,23,25,24,26].map((item) => (
+                            {skillGroups.map((group) => (
                                 <motion.div
-                                    key={item}
+                                    key={group.label}
                                     whileHover={{ backgroundColor: '#1a1a1a' }}
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -87,8 +91,8 @@ const Content = () => {
                                 >
                                     <span className='relative w-12 h-12 rounded-full overflow-hidden'>
                                         <img
-                                            src={`https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228`}
-                                            alt="Playlist"
+                                            src={`https://picsum.photos/seed/${group.label}/160/160`}
+                                            alt={group.label}
                                             className='w-full h-full object-cover'
                                         />
                                         <span
@@ -102,10 +106,10 @@ const Content = () => {
                                     </span>
                                     <div className='flex-1 min-w-0'>
                                         <h4 className='text-white text-sm font-medium truncate'>
-                                            My Playlist #{item}
+                                            {group.label}
                                         </h4>
                                         <p className='text-gray-400 text-xs truncate'>
-                                            Playlist • Your Name
+                                            Playlist • {group.items.length} skills
                                         </p>
                                     </div>
                                 </motion.div>
@@ -124,19 +128,19 @@ const Content = () => {
                 <div className='p-4'>
                     <h2 className='text-2xl font-bold text-white mb-4'>Made For You</h2>
                     <div className='grid grid-cols-4 gap-3 pb-24'>
-                        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
+                        {data.projects.map((project, index) => (
                             <motion.div
-                                key={item}
+                                key={project.id}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.3, delay: item * 0.05 }}
+                                transition={{ duration: 0.3, delay: index * 0.05 }}
                                 whileHover={{ backgroundColor: '#282828', y: -5 }}
                                 className='bg-[#181818] group/item p-4 rounded-lg transition-colors cursor-pointer'
                             >
                                 <div className='relative'>
                                     <img
-                                        src="https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228"
-                                        alt="Playlist"
+                                        src={`https://picsum.photos/seed/${project.id}/300/300`}
+                                        alt={project.name}
                                         className='w-full aspect-square object-cover rounded-md shadow-lg'
                                     />
                                     <button
@@ -145,8 +149,8 @@ const Content = () => {
                                         <PlayArrow className='text-black' sx={{ fontSize: 30 }} />
                                     </button>
                                 </div>
-                                <h3 className='text-white font-bold mt-4 text-sm'>Daily Mix 1</h3>
-                                <p className='text-gray-400 mt-1 text-sm'>Pritam, B Praak, Arijit Singh and more</p>
+                                <h3 className='text-white font-bold mt-4 text-sm'>{project.name}</h3>
+                                <p className='text-gray-400 mt-1 text-sm'>{project.tagline} • {getProjectDate(project)}</p>
                             </motion.div>
                         ))}
                     </div>
@@ -172,7 +176,7 @@ const Content = () => {
                         transition={{ delay: 0.5 }}
                         className='text-center text-gray-400 mt-8'
                     >
-                        <p className='text-sm'>Let friends and followers on Spotify see what you&apos;re listening to.</p>
+                        <p className='text-sm'>{data.meta.name} is listening to {data.meta.tagline}, featured projects, and production UI systems.</p>
                     </motion.div>
                 </div>
             </motion.div>

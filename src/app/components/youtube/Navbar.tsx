@@ -1,7 +1,9 @@
 import React from 'react';
 import { Add, Menu, Mic, NotificationsOutlined, Search } from '@mui/icons-material';
 import { motion } from 'framer-motion';
-import data from '@/myData.json';
+import { getPortfolioData } from '@/src/services/portfolioData';
+
+const data = getPortfolioData();
 
 type NavbarProps = {
   setIsSidebarOpen: () => void;
@@ -96,7 +98,7 @@ const Navbar: React.FC<NavbarProps> = ({ setIsSidebarOpen }) => {
           className="rounded-full cursor-pointer overflow-hidden"
           whileHover={{ scale: 1.1 }}
         >
-          <img className="w-8 h-8" src={data.profileImage} alt="Profile" />
+          <img className="w-8 h-8" src={data.meta.avatar} alt={data.meta.name} />
         </motion.span>
       </motion.div>
     </motion.div>

@@ -14,6 +14,9 @@ import {
     PeopleOutline,
     ChatOutlined
 } from '@mui/icons-material';
+import { getPortfolioData } from '@/src/services/portfolioData';
+
+const data = getPortfolioData();
 
 interface FooterProps {
     sidebarOpen: boolean;
@@ -56,7 +59,7 @@ const Footer: React.FC<FooterProps> = ({ sidebarOpen, toggleSidebar }) => {
                 <div className="flex items-center space-x-4">
                     <span className="text-white text-md">{currentTime}</span>
                     <span className="text-white text-md">|</span>
-                    <span className="text-white text-md">mohit-arora-8181</span>
+                    <span className="text-white text-md">{data.meta.name.toLowerCase().replaceAll(' ', '-')}-portfolio</span>
                 </div>
 
                 <div className="flex items-center space-x-2">

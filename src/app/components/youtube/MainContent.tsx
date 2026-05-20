@@ -1,170 +1,65 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { getExperiencePeriod, getPortfolioData, getProjectDate } from '@/src/services/portfolioData';
+
+const data = getPortfolioData();
 
 const MainContent = () => {
     const filters = [
         'All',
-        'Data Structures',
-        'APIs',
-        'Shark Tank',
-        'Trailers',
-        'Software development',
-        'Neural network',
-        'Dramedy',
-        'Live',
-        'Cricket',
-        'Calculus',
-        'Soundtracks',
+        'Projects',
+        'Experience',
+        'Skills',
+        'Achievements',
+        ...Object.values(data.skills).slice(0, 4).map((group) => group.label),
     ];
 
     const [activeFilter, setActiveFilter] = useState('All');
 
     const videos = [
-        {
-            thumbnail: 'https://i.ytimg.com/vi/rBeyHDKLVqM/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLA0I7b7NzJWYkrcq6fdkdzilbNWZw',
-            title: 'Kubernetes for Beginners in One Video 🔥',
-            channel: 'M Prashant',
-            views: '222K views',
-            time: '1 year ago',
-            duration: '3:03:29',
-        },
-        {
-            thumbnail: 'https://i.ytimg.com/vi/JeiCxJP7IK4/hqdefault.jpg?sqp=-oaymwEnCOADEI4CSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBr8X6vwYsojfbmqJKo1wa6KUb4OQ',
-            title: 'Kubernetes for Beginners in One Video 🔥',
-            channel: 'M Prashant',
-            views: '222K views',
-            time: '1 year ago',
-            duration: '3:03:29',
-        },
-        {
-            thumbnail: 'https://i.ytimg.com/vi/eChzTni31Ms/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCCP35P7Luzg3ZO7YUDROeITZp-KA',
-            title: "'Dorabi' की Design Sensibilities | Shark Tank India S4",
-            channel: 'Sony LIV',
-            views: '455K views',
-            time: '4 weeks ago',
-            duration: '22:49',
-        },
-        {
-            thumbnail: 'https://i.ytimg.com/vi/rBeyHDKLVqM/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLA0I7b7NzJWYkrcq6fdkdzilbNWZw',
-            title: 'Kubernetes for Beginners in One Video 🔥',
-            channel: 'M Prashant',
-            views: '222K views',
-            time: '1 year ago',
-            duration: '3:03:29',
-        },
-        {
-            thumbnail: 'https://i.ytimg.com/vi/JeiCxJP7IK4/hqdefault.jpg?sqp=-oaymwEnCOADEI4CSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBr8X6vwYsojfbmqJKo1wa6KUb4OQ',
-            title: 'Kubernetes for Beginners in One Video 🔥',
-            channel: 'M Prashant',
-            views: '222K views',
-            time: '1 year ago',
-            duration: '3:03:29',
-        },
-        {
-            thumbnail: 'https://i.ytimg.com/vi/eChzTni31Ms/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCCP35P7Luzg3ZO7YUDROeITZp-KA',
-            title: "'Dorabi' की Design Sensibilities | Shark Tank India S4",
-            channel: 'Sony LIV',
-            views: '455K views',
-            time: '4 weeks ago',
-            duration: '22:49',
-        },
-        {
-            thumbnail: 'https://i.ytimg.com/vi/rBeyHDKLVqM/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLA0I7b7NzJWYkrcq6fdkdzilbNWZw',
-            title: 'Kubernetes for Beginners in One Video 🔥',
-            channel: 'M Prashant',
-            views: '222K views',
-            time: '1 year ago',
-            duration: '3:03:29',
-        },
-        {
-            thumbnail: 'https://i.ytimg.com/vi/JeiCxJP7IK4/hqdefault.jpg?sqp=-oaymwEnCOADEI4CSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBr8X6vwYsojfbmqJKo1wa6KUb4OQ',
-            title: 'Kubernetes for Beginners in One Video 🔥',
-            channel: 'M Prashant',
-            views: '222K views',
-            time: '1 year ago',
-            duration: '3:03:29',
-        },
-        {
-            thumbnail: 'https://i.ytimg.com/vi/eChzTni31Ms/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCCP35P7Luzg3ZO7YUDROeITZp-KA',
-            title: "'Dorabi' की Design Sensibilities | Shark Tank India S4",
-            channel: 'Sony LIV',
-            views: '455K views',
-            time: '4 weeks ago',
-            duration: '22:49',
-        },
-        {
-            thumbnail: 'https://i.ytimg.com/vi/rBeyHDKLVqM/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLA0I7b7NzJWYkrcq6fdkdzilbNWZw',
-            title: 'Kubernetes for Beginners in One Video 🔥',
-            channel: 'M Prashant',
-            views: '222K views',
-            time: '1 year ago',
-            duration: '3:03:29',
-        },
-        {
-            thumbnail: 'https://i.ytimg.com/vi/JeiCxJP7IK4/hqdefault.jpg?sqp=-oaymwEnCOADEI4CSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBr8X6vwYsojfbmqJKo1wa6KUb4OQ',
-            title: 'Kubernetes for Beginners in One Video 🔥',
-            channel: 'M Prashant',
-            views: '222K views',
-            time: '1 year ago',
-            duration: '3:03:29',
-        },
-        {
-            thumbnail: 'https://i.ytimg.com/vi/eChzTni31Ms/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCCP35P7Luzg3ZO7YUDROeITZp-KA',
-            title: "'Dorabi' की Design Sensibilities | Shark Tank India S4",
-            channel: 'Sony LIV',
-            views: '455K views',
-            time: '4 weeks ago',
-            duration: '22:49',
-        },
-        {
-            thumbnail: 'https://i.ytimg.com/vi/rBeyHDKLVqM/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLA0I7b7NzJWYkrcq6fdkdzilbNWZw',
-            title: 'Kubernetes for Beginners in One Video 🔥',
-            channel: 'M Prashant',
-            views: '222K views',
-            time: '1 year ago',
-            duration: '3:03:29',
-        },
-        {
-            thumbnail: 'https://i.ytimg.com/vi/JeiCxJP7IK4/hqdefault.jpg?sqp=-oaymwEnCOADEI4CSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBr8X6vwYsojfbmqJKo1wa6KUb4OQ',
-            title: 'Kubernetes for Beginners in One Video 🔥',
-            channel: 'M Prashant',
-            views: '222K views',
-            time: '1 year ago',
-            duration: '3:03:29',
-        },
-        {
-            thumbnail: 'https://i.ytimg.com/vi/eChzTni31Ms/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCCP35P7Luzg3ZO7YUDROeITZp-KA',
-            title: "'Dorabi' की Design Sensibilities | Shark Tank India S4",
-            channel: 'Sony LIV',
-            views: '455K views',
-            time: '4 weeks ago',
-            duration: '22:49',
-        },
-        {
-            thumbnail: 'https://i.ytimg.com/vi/rBeyHDKLVqM/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLA0I7b7NzJWYkrcq6fdkdzilbNWZw',
-            title: 'Kubernetes for Beginners in One Video 🔥',
-            channel: 'M Prashant',
-            views: '222K views',
-            time: '1 year ago',
-            duration: '3:03:29',
-        },
-        {
-            thumbnail: 'https://i.ytimg.com/vi/JeiCxJP7IK4/hqdefault.jpg?sqp=-oaymwEnCOADEI4CSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBr8X6vwYsojfbmqJKo1wa6KUb4OQ',
-            title: 'Kubernetes for Beginners in One Video 🔥',
-            channel: 'M Prashant',
-            views: '222K views',
-            time: '1 year ago',
-            duration: '3:03:29',
-        },
-        {
-            thumbnail: 'https://i.ytimg.com/vi/eChzTni31Ms/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCCP35P7Luzg3ZO7YUDROeITZp-KA',
-            title: "'Dorabi' की Design Sensibilities | Shark Tank India S4",
-            channel: 'Sony LIV',
-            views: '455K views',
-            time: '4 weeks ago',
-            duration: '22:49',
-        },
+        ...data.projects.map((project, index) => ({
+            thumbnail: `https://picsum.photos/seed/${project.id}/720/405`,
+            title: `${project.name}: ${project.tagline}`,
+            channel: data.meta.name,
+            views: `${project.tech_stack.length} technologies`,
+            time: getProjectDate(project),
+            duration: index % 2 ? '8:18' : '12:40',
+            category: 'Projects',
+        })),
+        ...data.experience.map((experience, index) => ({
+            thumbnail: `https://picsum.photos/seed/${experience.id}/720/405`,
+            title: `${experience.role} at ${experience.company}`,
+            channel: data.meta.name,
+            views: `${experience.highlights.length} highlights`,
+            time: getExperiencePeriod(experience),
+            duration: index % 2 ? '6:25' : '10:15',
+            category: 'Experience',
+        })),
+        ...Object.values(data.skills).map((group, index) => ({
+            thumbnail: `https://picsum.photos/seed/${group.label}/720/405`,
+            title: `${group.label}: ${group.items.join(', ')}`,
+            channel: `${data.meta.name} Skills`,
+            views: `${group.items.length} skills`,
+            time: 'Portfolio stack',
+            duration: index % 2 ? '4:30' : '7:05',
+            category: group.label,
+        })),
+        ...data.achievements.map((achievement) => ({
+            thumbnail: `https://picsum.photos/seed/${achievement.id}/720/405`,
+            title: `${achievement.title} by ${achievement.issuer}`,
+            channel: data.meta.name,
+            views: achievement.type,
+            time: String(achievement.year),
+            duration: '3:20',
+            category: 'Achievements',
+        })),
     ];
+
+    const visibleVideos = videos.filter((video) => {
+        if (activeFilter === 'All') return true;
+        if (activeFilter === 'Skills') return Object.values(data.skills).some((group) => group.label === video.category);
+        return video.category === activeFilter;
+    });
 
     return (
         <motion.div
@@ -202,7 +97,7 @@ const MainContent = () => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
             >
-                {videos.map((video, index) => (
+                {visibleVideos.map((video, index) => (
                     <VideoCard
                         key={index}
                         thumbnail={video.thumbnail}

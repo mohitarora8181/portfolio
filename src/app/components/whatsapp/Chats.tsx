@@ -1,6 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Search, Group, MoreVert } from "@mui/icons-material";
+import { getExperiencePeriod, getPortfolioData, getProjectDate, getSkillGroups } from "@/src/services/portfolioData";
+
+const data = getPortfolioData();
+const skillGroups = getSkillGroups();
 
 export type Message = {
     text: string;
@@ -24,37 +28,47 @@ type ChatsProps = {
 export const Chats: React.FC<ChatsProps> = ({ setSelectedChat, selectedChat }) => {
     const chats: Chat[] = [
         {
-            name: "Family Group",
-            message: "Mom: Don't forget to bring groceries.",
-            time: "10:15 AM",
+            name: "Profile",
+            message: data.meta.tagline,
+            time: "Now",
             archived: false,
             messages: [
-                { text: "Hey, are you coming home?", time: "10:00 AM", isSender: false },
-                { text: "Yes, I'll be there by 6 PM.", time: "10:05 AM", isSender: true },
-                { text: "Don't forget to bring groceries.", time: "10:15 AM", isSender: false },
+                { text: `Hi, I am ${data.meta.name}.`, time: "10:00 AM", isSender: false },
+                { text: data.meta.tagline, time: "10:01 AM", isSender: false },
+                { text: `Email: ${data.meta.email}`, time: "10:02 AM", isSender: true },
+                { text: `Phone: ${data.meta.phone}`, time: "10:03 AM", isSender: true },
             ],
         },
         {
-            name: "Work Team",
-            message: "Boss: Please review the document.",
+            name: "Experience",
+            message: `${data.experience[0].role} at ${data.experience[0].company}`,
             time: "9:45 AM",
             archived: false,
-            messages: [
-                { text: "Can you send me the latest report?", time: "9:30 AM", isSender: false },
-                { text: "Sure, give me a moment.", time: "9:35 AM", isSender: true },
-                { text: "Please review the document.", time: "9:45 AM", isSender: false },
-            ],
+            messages: data.experience.flatMap((experience) => [
+                { text: `${experience.role} at ${experience.company}`, time: getExperiencePeriod(experience), isSender: false },
+                { text: experience.highlights[0], time: experience.current ? "Current" : "Done", isSender: true },
+            ]),
         },
         {
-            name: "Friends Group",
-            message: "John: Let's meet at 7 PM.",
+            name: "Projects",
+            message: `${data.projects.length} portfolio projects`,
             time: "Yesterday",
             archived: false,
-            messages: [
-                { text: "Are we meeting tomorrow?", time: "8:00 PM", isSender: false },
-                { text: "Yes, let's meet at 7 PM.", time: "8:15 PM", isSender: true },
-                { text: "Sounds good!", time: "8:20 PM", isSender: false },
-            ],
+            messages: data.projects.flatMap((project) => [
+                { text: `${project.name}: ${project.tagline}`, time: getProjectDate(project), isSender: false },
+                { text: project.tech_stack.join(", "), time: project.status, isSender: true },
+            ]),
+        },
+        {
+            name: "Skills",
+            message: `${skillGroups.length} skill groups`,
+            time: "Mon",
+            archived: false,
+            messages: skillGroups.map((group) => ({
+                text: `${group.label}: ${group.items.join(", ")}`,
+                time: `${group.items.length} skills`,
+                isSender: false,
+            })),
         },
     ];
 

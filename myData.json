@@ -1,153 +1,327 @@
 {
-    "name": "Mohit Arora",
-    "email": "mohitarora00777@gmail.com",
-    "phone": "+91 9667067062",
-    "profileImage": "https://media.licdn.com/dms/image/v2/D5603AQEFECkYYAzfwQ/profile-displayphoto-shrink_800_800/B56ZUPg9CMHQAg-/0/1739722054371?e=1750896000&v=beta&t=mOWXPwMuk6TKSwufqKotXg7wDQgeOKWoFkJVA1ChEk0",
-    "links": {
-        "github": "https://github.com/mohitarora8181",
-        "linkedin": "https://linkedin.com/in/mohit8181",
-        "leetcode": "https://leetcode.com/mohit8181"
+    "meta": {
+        "name": "Mohit Arora",
+        "tagline": "Full Stack Developer & Robotics Enthusiast",
+        "email": "mohitarora00777@gmail.com",
+        "phone": "+91 9667067062",
+        "avatar": "https://media.licdn.com/dms/image/v2/D5603AQHb4X_ZC2GRyA/profile-displayphoto-scale_400_400/B56Z4kSFxRGsAk-/0/1778725184768?e=1781136000&v=beta&t=pdf88h-q7mOnI4ffMnsCfttNsLCU_Hutkcyo0udAxNE",
+        "resume_url": "https://drive.google.com/file/d/1AAIj30o5dQMxE66pJ_KnW-akPxSXsC-4/view?usp=drive_link",
+        "links": {
+            "linkedin": "https://www.linkedin.com/in/mohit8181",
+            "github": "https://www.github.com/mohitarora8181",
+            "leetcode": "https://www.leetcode.com/mohit8181",
+            "geeksforgeeks": "https://geeksforgeeks/mohit8181",
+            "portfolio": ""
+        }
     },
     "skills": {
-        "webDevelopment": [
-            "React",
-            "Next.js",
-            "Node.js",
-            "Express.js",
-            "WebSockets",
-            "Tailwind CSS"
-        ],
-        "androidDevelopment": [
-            "Kotlin (Jetpack Compose)",
-            "React Native",
-            "Flutter"
-        ],
-        "databases": [
-            "Firebase",
-            "MongoDB",
-            "Supabase",
-            "MySQL",
-            "PostgreSQL",
-            "PHPMyAdmin",
-            "Redis"
-        ],
-        "cloudServices": [
-            "AWS (S3, EC2, Beanstalk, CloudFront)",
-            "Docker"
-        ],
-        "roboticsAndIoT": [
-            "Arduino",
-            "Esp32",
-            "Esp8266",
-            "RaspberryPi",
-            "PCB Designing",
-            "Proteus simulation"
-        ],
-        "languages": [
-            "C++",
-            "TypeScript",
-            "JavaScript",
-            "Python",
-            "HTML",
-            "CSS",
-            "Java"
-        ]
+        "core_languages": {
+            "label": "Core Languages",
+            "icon": "",
+            "items": [
+                "C++",
+                "TypeScript",
+                "JavaScript",
+                "Python",
+                "Java"
+            ]
+        },
+        "web_development": {
+            "label": "Web Development",
+            "icon": "",
+            "items": [
+                "HTML",
+                "Tailwind CSS",
+                "React",
+                "Next.js",
+                "Electron.js",
+                "Angular",
+                "Node.js",
+                "Express.js",
+                "Nest.js",
+                "WebSocket"
+            ]
+        },
+        "mobile_cross_platform": {
+            "label": "Mobile & Cross-Platform",
+            "icon": "",
+            "items": [
+                "Kotlin (Jetpack Compose)",
+                "React Native",
+                "Flutter"
+            ]
+        },
+        "databases_caching": {
+            "label": "Databases & Caching",
+            "icon": "",
+            "items": [
+                "MongoDB",
+                "MySQL",
+                "Firebase",
+                "Supabase",
+                "Redis"
+            ]
+        },
+        "messaging_streaming": {
+            "label": "Messaging & Streaming",
+            "icon": "",
+            "items": [
+                "Apache Kafka",
+                "Kafka UI",
+                "RabbitMQ"
+            ]
+        },
+        "cloud_devops": {
+            "label": "Cloud & DevOps",
+            "icon": "",
+            "items": [
+                "AWS EC2",
+                "AWS S3",
+                "AWS Beanstalk",
+                "AWS CloudFront",
+                "Docker",
+                "Jenkins"
+            ]
+        },
+        "robotics_iot": {
+            "label": "Robotics & IoT",
+            "icon": "",
+            "items": [
+                "Arduino",
+                "ESP32",
+                "ESP8266",
+                "Raspberry Pi",
+                "PCB Designing",
+                "Proteus Simulation"
+            ]
+        }
     },
     "experience": [
         {
-            "title": "SDE Intern",
+            "id": "exp_001",
+            "role": "SDE Intern",
+            "company": "InsuranceDekho",
+            "type": "internship",
+            "start_date": "2025-07-02",
+            "end_date": null,
+            "current": true,
+            "location": "India",
+            "company_url": "",
+            "company_logo": "",
+            "tech_stack": [
+                "Electron.js",
+                "Kafka",
+                "Freshdesk",
+                "Rampwin",
+                "Ellision"
+            ],
+            "highlights": [
+                "Revamped POS support system with category-based backend handling and Freshdesk integrations",
+                "Built proof-of-concept desktop POS app using Electron.js with webhook-based notifications and Kafka",
+                "Contributed to allocation backend service assigning cases to internal executives via configurable rules",
+                "Developed Lead Management System (frontend + backend) integrated with third-party tools"
+            ]
+        },
+        {
+            "id": "exp_002",
+            "role": "SDE Intern",
             "company": "SeedsAI",
-            "duration": "March 2025 - Present",
-            "responsibilities": [
-                "Developed full-stack AI-driven modules integrating LLMs responses using MERN stack.",
-                "Integrated Firebase CloudStore for real-time interaction logs and dynamic rendering.",
-                "Improved response times and AI feature usage by 30% through caching and async threads."
+            "type": "internship",
+            "start_date": "2025-03-02",
+            "end_date": "2025-06-30",
+            "current": false,
+            "location": "India",
+            "company_url": "",
+            "company_logo": "",
+            "tech_stack": [
+                "MERN",
+                "LLMs",
+                "Firebase CloudStore"
+            ],
+            "highlights": [
+                "Developed full-stack AI-driven modules integrating LLM responses using MERN stack",
+                "Integrated Firebase CloudStore for real-time interaction logs and dynamic rendering",
+                "Improved response times and AI feature usage by 30% through caching and async threads"
             ]
         },
         {
-            "title": "Full Stack Developer Intern",
-            "company": "Neecop",
-            "duration": "Feb 2025 - Present",
-            "responsibilities": [
-                "Developed scalable features for a social-media platform for MSMEs and startups.",
-                "Integrated AWS EC2/S3 for secure hosting and configured Hostinger for custom deployments.",
-                "Automated CI/CD workflows, reducing downtime by 40% and improving development speed."
-            ]
-        },
-        {
-            "title": "Tech Intern",
+            "id": "exp_003",
+            "role": "Tech Intern — Android Development",
             "company": "Zebpay",
-            "duration": "July 2024 - Nov 2024",
-            "responsibilities": [
-                "Completed training in Android development with Jetpack Compose, Kotlin, and modular architecture.",
-                "Gained proficiency in RoomDB, dependency injection (Hilt), and state management for mobile apps.",
-                "Explored benchmarking, JS ingestion, and implemented services for real-time data sync."
-            ]
-        },
-        {
-            "title": "Frontend Developer",
-            "company": "CareerBanao",
-            "duration": "Nov 2023 - Mar 2024",
-            "responsibilities": [
-                "Developed UI components using React.js and implemented responsive layouts with Tailwind CSS.",
-                "Collaborated on reusable design elements and strengthened component architecture skills.",
-                "Enhanced understanding of state management and React development workflows."
+            "type": "internship",
+            "start_date": "2024-07-01",
+            "end_date": "2024-11-30",
+            "current": false,
+            "location": "India",
+            "company_url": "",
+            "company_logo": "",
+            "tech_stack": [
+                "Kotlin",
+                "Jetpack Compose",
+                "RoomDB",
+                "Hilt"
+            ],
+            "highlights": [
+                "Completed Android training using Kotlin and Jetpack Compose with modular architecture",
+                "Worked with RoomDB, Hilt-based dependency injection, benchmarking, JS ingestion, and background services"
             ]
         }
     ],
     "projects": [
         {
-            "name": "CLI Tool - Doxs",
-            "description": [
-                "Developed Doxs, an npm package that automatically generates README.md files based on project codebase.",
-                "Integrated git-diff functionality to auto-generate commit messages based on detected changes.",
-                "Simplified development workflows by automating documentation and commit message generation."
+            "id": "proj_001",
+            "name": "Doxs",
+            "type": "cli_tool",
+            "tagline": "Auto-generates README.md and commit messages from your codebase",
+            "description": "An npm package that automatically generates README.md files based on project codebase with git-diff powered commit message generation.",
+            "date": "2025-01",
+            "status": "published",
+            "featured": true,
+            "tech_stack": [
+                "Node.js",
+                "npm",
+                "git"
+            ],
+            "links": {
+                "github": "",
+                "live": "",
+                "npm": "",
+                "demo_video": ""
+            },
+            "images": [],
+            "highlights": [
+                "Integrates git-diff to auto-generate commit messages based on detected changes",
+                "Published as an npm package"
             ]
         },
         {
-            "name": "Asset Sharing App - IfShare",
-            "description": [
-                "Developed ifShare, a web app for sharing files, code snippets, and notes using short URLs.",
-                "Created intuitive UI for seamless file uploads and sharing, enhancing accessibility and collaboration.",
-                "Implemented secure file sharing with encryption and user dashboard for content management."
+            "id": "proj_002",
+            "name": "IfShare",
+            "type": "web_app",
+            "tagline": "Secure encrypted file, code, and note sharing via short URLs",
+            "description": "A web app for sharing secure encrypted files, code snippets, and notes using short URLs with an intuitive UI.",
+            "date": "2024-11",
+            "status": "live",
+            "featured": true,
+            "tech_stack": [
+                "React",
+                "Node.js",
+                "MongoDB"
+            ],
+            "links": {
+                "github": "",
+                "live": "",
+                "demo_video": ""
+            },
+            "images": [],
+            "highlights": [
+                "Encrypted file sharing with short URL generation",
+                "Supports code snippets and notes alongside files"
             ]
         },
         {
-            "name": "Open Source Contributions",
-            "description": [
-                "SyllabusX",
-                "Placement Cell MSIT"
+            "id": "proj_003",
+            "name": "WhatsApp Clone",
+            "type": "android",
+            "tagline": "Fully functional WhatsApp clone using Meta Business API & React Native",
+            "description": "Real-time messaging app built with React Native and Meta Business API supporting all media types.",
+            "date": "2024-05",
+            "status": "completed",
+            "featured": false,
+            "tech_stack": [
+                "React Native",
+                "Meta Business API"
+            ],
+            "links": {
+                "github": "",
+                "demo_video": ""
+            },
+            "images": [],
+            "highlights": [
+                "Real-time messaging with image, video, document, and audio support"
             ]
         },
         {
-            "name": "Android Projects",
-            "subProjects": [
-                {
-                    "name": "WhatsApp Clone",
-                    "description": [
-                        "Developed a fully functional WhatsApp clone using Meta Business API & React Native.",
-                        "Implemented real-time messaging with support for all media types (image, video, document, audio)."
-                    ]
-                },
-                {
-                    "name": "Shipping Service App",
-                    "description": [
-                        "Developed a shipping service app that scrapes real-time data from a website for tracking & order details.",
-                        "Implemented multiple screens: order tracking, rate calculator, and comprehensive orders screen."
-                    ]
-                }
+            "id": "proj_004",
+            "name": "Shipping Service App",
+            "type": "android",
+            "tagline": "Real-time shipment tracking and rate calculator app",
+            "description": "Android app that scrapes real-time data for tracking and order details with multiple functional screens.",
+            "date": "2024-06",
+            "status": "completed",
+            "featured": false,
+            "tech_stack": [
+                "Kotlin",
+                "Jetpack Compose"
+            ],
+            "links": {
+                "github": "",
+                "demo_video": ""
+            },
+            "images": [],
+            "highlights": [
+                "Order tracking, rate calculator, and comprehensive orders screen"
             ]
         }
     ],
-    "education": {
-        "institution": "Maharaja Surajmal Institute of Technology, GGSIPU",
-        "degree": "B.Tech in Information Technology",
-        "cgpa": "8.922",
-        "duration": "2022 - 2026"
-    },
-    "leadershipAndAchievements": [
-        "Finalist - Smart India Hackathon (2024)",
-        "Chairperson - eYantra (2024–25)",
-        "Hardware Lead - IEEE (2024)"
+    "open_source": [
+        {
+            "id": "oss_001",
+            "name": "SyllabusX",
+            "role": "contributor",
+            "repo_url": "",
+            "description": ""
+        },
+        {
+            "id": "oss_002",
+            "name": "Placement Cell MSIT",
+            "role": "contributor",
+            "repo_url": "",
+            "description": ""
+        }
+    ],
+    "education": [
+        {
+            "id": "edu_001",
+            "institution": "Maharaja Surajmal Institute of Technology, GGSIPU",
+            "degree": "B.Tech in Information Technology",
+            "cgpa": 9.03,
+            "start_year": 2022,
+            "end_year": 2026,
+            "logo": "",
+            "highlights": []
+        }
+    ],
+    "achievements": [
+        {
+            "id": "ach_001",
+            "title": "Smart India Hackathon Finalist",
+            "year": 2024,
+            "type": "hackathon",
+            "issuer": "Smart India Hackathon",
+            "description": "",
+            "link": "",
+            "image": ""
+        },
+        {
+            "id": "ach_002",
+            "title": "Chairperson — eYantra Robotics Society",
+            "year": 2024,
+            "type": "leadership",
+            "issuer": "IIT Bombay (Affiliated)",
+            "description": "Led the robotics society affiliated by IIT Bombay",
+            "link": "",
+            "image": ""
+        },
+        {
+            "id": "ach_003",
+            "title": "Hardware Lead — IEEE",
+            "year": 2024,
+            "type": "leadership",
+            "issuer": "IEEE",
+            "description": "",
+            "link": "",
+            "image": ""
+        }
     ]
 }

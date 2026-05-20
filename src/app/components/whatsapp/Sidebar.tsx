@@ -1,5 +1,8 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import { getPortfolioData } from '@/src/services/portfolioData'
+
+const data = getPortfolioData()
 
 const Sidebar = () => {
     return (
@@ -28,7 +31,7 @@ const Sidebar = () => {
                 </path></svg>
             </span>
             <span className='p-2 w-10 h-10 flex justify-center rounded-full cursor-pointer'>
-                <img src={"https://static.whatsapp.net/rsrc.php/v4/ye/r/W2MDyeo0zkf.png"} alt="Profile" />
+                <img src={data.meta.avatar} alt={data.meta.name} className="rounded-full object-cover" />
             </span>
         </motion.div>
     )

@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
-import { AccountCircle } from '@mui/icons-material';
+import { getPortfolioData, getSkillGroups } from '@/src/services/portfolioData';
+
+const data = getPortfolioData();
+const skillGroups = getSkillGroups();
 
 interface VideoTilesProps {
     isSpeaking: boolean;
@@ -67,14 +70,14 @@ const VideoTiles: React.FC<VideoTilesProps> = ({
                             <div className="absolute inset-0 border-4 border-yellow-400/20 rounded-full animate-[ripple_1.5s_linear_1s_infinite]" />
                         </div>
                     )}
-                    <div className="relative bg-yellow-400 rounded-full p-4 z-10">
-                        <AccountCircle className="w-12 h-12 text-white" />
+                    <div className="relative rounded-full z-10 overflow-hidden border-4 border-yellow-400">
+                        <img src={data.meta.avatar} alt={data.meta.name} className="h-24 w-24 object-cover" />
                     </div>
                 </div>
 
                 <div className="absolute bottom-4 left-4">
                     <div className="px-3 py-1 rounded-lg font-bold">
-                        <span className="text-white text-sm">Mohit Arora</span>
+                        <span className="text-white text-sm">{data.meta.name} | {data.meta.tagline}</span>
                     </div>
                 </div>
             </div>
@@ -106,13 +109,22 @@ const VideoTiles: React.FC<VideoTilesProps> = ({
                             <div className="flex items-center justify-between py-2">
                                 <div className="flex items-center gap-3">
                                     <div className="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center">
-                                        <span className="text-white font-medium">MA</span>
+                                    <img src={data.meta.avatar} alt="" className="h-full w-full rounded-full object-cover" />
                                     </div>
                                     <div>
-                                        <p className="text-sm font-medium">Mohit Arora (You)</p>
-                                        <p className="text-xs text-gray-500">Meeting host</p>
+                                        <p className="text-sm font-medium">{data.meta.name} (You)</p>
+                                        <p className="text-xs text-gray-500">{data.meta.tagline}</p>
                                     </div>
                                 </div>
+                            </div>
+                            <div className="mt-4 space-y-2">
+                                <h3 className="text-sm font-medium text-gray-500">AGENDA</h3>
+                                {skillGroups.slice(0, 4).map((group) => (
+                                    <div key={group.label} className="rounded-lg bg-gray-50 p-2 text-sm text-gray-700">
+                                        <p className="font-medium">{group.label}</p>
+                                        <p className="text-xs text-gray-500">{group.items.slice(0, 3).join(', ')}</p>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>

@@ -1,8 +1,10 @@
 import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
-import data from "@/myData.json";
+import { getPortfolioData } from "@/src/services/portfolioData";
 import { ArrowDropDown } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+
+const data = getPortfolioData();
 
 const Navbar = () => {
     return (
@@ -108,7 +110,7 @@ const Navbar = () => {
                         className={`w-6 h-6 bg-gray-300 flex justify-center items-center self-center rounded-full overflow-hidden`}
                         whileHover={{ scale: 1.1 }}
                     >
-                        <img className="w-8 h-8" src={data.profileImage} alt="Profile" />
+                        <img className="w-8 h-8" src={data.meta.avatar} alt={data.meta.name} />
                     </motion.div>
                     <span className="text-xs text-nowrap flex items-center">Me <ArrowDropDown sx={{fontSize:"1rem"}}/></span>
                 </motion.div>

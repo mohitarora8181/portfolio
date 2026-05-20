@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { AttachFile, MoreVert, Search, Mic, Send, EmojiEmotionsOutlined, Group, Person, ArrowBack } from '@mui/icons-material';
+import { AttachFile, MoreVert, Search, Mic, Send, EmojiEmotionsOutlined, Person, ArrowBack } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import type { Chat, Message } from './Chats';
+import { getPortfolioData } from '@/src/services/portfolioData';
+
+const data = getPortfolioData();
 
 type ChatViewProps = {
     selectedChat: Chat | null;
@@ -35,7 +38,7 @@ const ChatView: React.FC<ChatViewProps> = ({ selectedChat, setSelectedChat }) =>
                                 className="w-10 h-10 flex justify-center items-center rounded-full bg-[#dddddd]"
                                 whileHover={{ scale: 1.1 }}
                             >
-                                <Group htmlColor="white" />
+                                <img src={data.meta.avatar} alt="" className="h-full w-full rounded-full object-cover" />
                             </motion.div>
                             <div>
                                 <h1 className="text-sm font-medium">{selectedChat.name}</h1>
@@ -73,7 +76,7 @@ const ChatView: React.FC<ChatViewProps> = ({ selectedChat, setSelectedChat }) =>
                                             whileHover={{ scale: 1.1 }}
                                         >
                                             {showIcon && (
-                                                <img src={"https://static.whatsapp.net/rsrc.php/v4/ye/r/W2MDyeo0zkf.png"} alt="" />
+                                                <img src={data.meta.avatar} alt="" className="h-full w-full rounded-full object-cover" />
                                             )}
                                         </motion.div>
                                     )}

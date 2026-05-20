@@ -1,5 +1,8 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import { getPortfolioData } from '@/src/services/portfolioData'
+
+const data = getPortfolioData()
 
 const Navbar = () => {
     return (
@@ -89,7 +92,7 @@ const Navbar = () => {
                             whileTap={{ scale: 0.95 }}
                             transition={{ type: 'spring', stiffness: 400, damping: 10 }}
                         >
-                            <span className='text-black font-semibold'>M</span>
+                            <img src={data.meta.avatar} alt={data.meta.name} className="h-full w-full rounded-full object-cover" />
                         </motion.div>
                     </div>
                 </div>

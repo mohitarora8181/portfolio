@@ -42,16 +42,16 @@ const Sidebar = () => {
     const [activeIndex, setActiveIndex] = useState(0);
 
     const items = [
-        { icon: HomeIcon, label: 'Home' },
-        { icon: ExploreIcon, label: 'Shorts' },
-        { icon: SubscriptionsIcon, label: 'Subscriptions' },
+        { icon: HomeIcon, label: 'Portfolio Home' },
+        { icon: ExploreIcon, label: 'Projects' },
+        { icon: SubscriptionsIcon, label: 'Experience' },
         { icon: HistoryIcon, label: 'History' },
-        { icon: PlaylistIcon, label: 'Playlists' },
-        { icon: VideosIcon, label: 'Your videos' },
-        { icon: CoursesIcon, label: 'Your courses' },
-        { icon: WatchLaterIcon, label: 'Watch later' },
-        { icon: ThumbUpIcon, label: 'Liked videos' },
-        { icon: ClipsIcon, label: 'Your clips' },
+        { icon: PlaylistIcon, label: 'Skills' },
+        { icon: VideosIcon, label: 'Open source' },
+        { icon: CoursesIcon, label: 'Education' },
+        { icon: WatchLaterIcon, label: 'Achievements' },
+        { icon: ThumbUpIcon, label: 'Featured' },
+        { icon: ClipsIcon, label: 'Contact' },
     ];
 
     return (
