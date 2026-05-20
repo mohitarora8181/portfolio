@@ -16,7 +16,7 @@ const ChatView: React.FC<{ selectedChat: any, setSelectedChat: any }> = ({ selec
             {selectedChat && (
                 <>
                     <motion.div
-                        className="flex items-center justify-between px-4 py-3 bg-[#f0f2f5] border-b border-gray-300"
+                        className="flex items-center justify-between px-4 py-3 bg-[#FFFFFF] border-b border-gray-300"
                         initial={{ y: -20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ duration: 0.5 }}

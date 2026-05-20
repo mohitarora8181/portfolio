@@ -52,7 +52,7 @@ export const Chats: React.FC<{ setSelectedChat: any, selectedChat: any }> = ({ s
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
             >
-                <h1 className="text-xl font-semibold">Chats</h1>
+                <h1 className="text-xl font-semibold">WhatsApp</h1>
                 <div className="flex space-x-2 items-center">
                     <motion.span
                         className="w-10 h-10 flex justify-center items-center rounded-full cursor-pointer"
@@ -88,8 +88,8 @@ export const Chats: React.FC<{ setSelectedChat: any, selectedChat: any }> = ({ s
             >
                 <input
                     type="text"
-                    placeholder="Search"
-                    className="w-full text-sm p-2 pl-10 rounded-lg placeholder:text-gray-500 outline-none"
+                    placeholder="Search or start new chat"
+                    className="w-full text-sm p-2 pl-5 rounded-lg placeholder:text-gray-500 outline-none"
                 />
                 <Search sx={{ fontSize: "20px" }} className="absolute left-2 top-2 text-gray-500" />
             </motion.div>

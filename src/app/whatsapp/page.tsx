@@ -20,8 +20,8 @@ const page = () => {
     return (
         <div className='w-full h-full bg-[#eae6df]'>
             <div className='w-full h-[128px] bg-[#00a884]'>
-                <div className='absolute left-0 top-0 w-full h-full bg-transparent p-5 max-sm:p-1'>
-                    <div className='bg-[#f0f2f5] w-full h-full flex overflow-hidden shadow-xl'>
+                <div className='absolute left-0 top-0 w-full h-full bg-transparent max-sm:p-1'>
+                    <div className='bg-[#F7F5F3] w-full h-full flex overflow-hidden shadow-xl'>
                         <Sidebar />
                         {isMobileView ? !selectedChat
                             ? <Chats selectedChat={selectedChat} setSelectedChat={setSelectedChat} />

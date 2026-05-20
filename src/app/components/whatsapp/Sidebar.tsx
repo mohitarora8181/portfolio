@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 const Sidebar = () => {
     return (
         <motion.div
-            className='h-full w-[64px] max-sm:hidden flex flex-col gap-2 justify-start items-center py-5 px-2'
+            className='h-full w-[64px] max-sm:hidden flex flex-col gap-2 justify-start items-center py-5 px-4'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
