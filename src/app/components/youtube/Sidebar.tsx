@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import {
     HomeOutlined as HomeIcon,
-    SubscriptionsOutlined as SubscriptionsIcon,
+    CodeOutlined as CodeIcon,
     ExploreOutlined as ExploreIcon,
-    HistoryOutlined as HistoryIcon,
+    WorkOutlineOutlined as WorkIcon,
     WatchLaterOutlined as WatchLaterIcon,
     ThumbUpOutlined as ThumbUpIcon,
     PlaylistPlayOutlined as PlaylistIcon,
     VideoCameraFrontOutlined as VideosIcon,
     SchoolOutlined as CoursesIcon,
-    ContentCutOutlined as ClipsIcon,
+    ContactMailOutlined as ContactIcon,
+    StarsOutlined as StarsIcon,
 } from '@mui/icons-material';
+import { youtubeSidebarItems } from './youtubePortfolio';
 
 const SidebarItem = ({
     icon: Icon,
@@ -24,46 +26,56 @@ const SidebarItem = ({
     active?: boolean;
     onClick: () => void;
 }) => (
-    <motion.div
-        className={`flex items-center gap-4 p-3 py-2 rounded-lg cursor-pointer ${
+    <motion.button
+        type="button"
+        className={`box-border flex w-full min-w-0 items-center gap-4 rounded-lg p-3 py-2 text-left ${
             active ? 'bg-[#e8e8e8] font-bold' : 'hover:bg-gray-100'
         }`}
         onClick={onClick}
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3 }}
+        whileTap={{ scale: 0.98 }}
     >
-        <Icon className="text-2xl" />
-        <span className="text-sm">{label}</span>
-    </motion.div>
+        <Icon className="flex-none text-2xl" />
+        <span className="min-w-0 truncate text-sm">{label}</span>
+    </motion.button>
 );
 
-const Sidebar = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
+type SidebarProps = {
+    activeFilter: string;
+    onFilterChange: (filter: string) => void;
+};
 
-    const items = [
-        { icon: HomeIcon, label: 'Portfolio Home' },
-        { icon: ExploreIcon, label: 'Projects' },
-        { icon: SubscriptionsIcon, label: 'Experience' },
-        { icon: HistoryIcon, label: 'History' },
-        { icon: PlaylistIcon, label: 'Skills' },
-        { icon: VideosIcon, label: 'Open source' },
-        { icon: CoursesIcon, label: 'Education' },
-        { icon: WatchLaterIcon, label: 'Achievements' },
-        { icon: ThumbUpIcon, label: 'Featured' },
-        { icon: ClipsIcon, label: 'Contact' },
-    ];
+const Sidebar: React.FC<SidebarProps> = ({ activeFilter, onFilterChange }) => {
+    const iconByFilter: Record<string, React.ElementType> = {
+        All: HomeIcon,
+        Projects: ExploreIcon,
+        Experience: WorkIcon,
+        Skills: PlaylistIcon,
+        Achievements: WatchLaterIcon,
+        Education: CoursesIcon,
+        'Open Source': VideosIcon,
+        Featured: ThumbUpIcon,
+        Contact: ContactIcon,
+    };
+
+    const items = youtubeSidebarItems.map((item, index) => ({
+        icon: iconByFilter[item.filter] ?? (index % 2 === 0 ? CodeIcon : StarsIcon),
+        label: item.label,
+        filter: item.filter,
+    }));
 
     return (
         <motion.div
-            className="h-full fixed w-[200px] overflow-y-auto text-gray-900 flex flex-col"
+            className="youtube-sidebar-scroll sticky top-[72px] flex h-[calc(100vh-72px)] w-[200px] flex-col overflow-y-auto text-gray-900"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.5 }}
         >
             <motion.div
-                className="flex flex-col gap-2 pr-3"
+                className="box-border flex w-full flex-col gap-2 pr-3"
                 initial="hidden"
                 animate="visible"
                 variants={{
@@ -71,18 +83,18 @@ const Sidebar = () => {
                     visible: {
                         opacity: 1,
                         transition: {
-                            staggerChildren: 0.1, // Stagger animation for child items
+                            staggerChildren: 0.04,
                         },
                     },
                 }}
             >
-                {items.map((item, index) => (
+                {items.map((item) => (
                     <SidebarItem
-                        key={index}
+                        key={item.filter}
                         icon={item.icon}
                         label={item.label}
-                        active={index === activeIndex}
-                        onClick={() => setActiveIndex(index)}
+                        active={item.filter === activeFilter}
+                        onClick={() => onFilterChange(item.filter)}
                     />
                 ))}
             </motion.div>

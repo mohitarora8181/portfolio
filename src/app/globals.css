@@ -54,6 +54,33 @@ body {
   display: none;
 }
 
+.youtube-sidebar-scroll {
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.youtube-sidebar-scroll:hover {
+  scrollbar-color: #a0aec0 transparent;
+}
+
+.youtube-sidebar-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.youtube-sidebar-scroll::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 999px;
+}
+
+.youtube-sidebar-scroll:hover::-webkit-scrollbar-thumb {
+  background-color: #a0aec0;
+}
+
+.youtube-sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 
 @keyframes ripple {
   0% {

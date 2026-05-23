@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { Add, Menu, Mic, NotificationsOutlined, Search } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { getPortfolioData } from '@/src/services/portfolioData';
+import { youtubeVideos } from './youtubePortfolio';
 
 const data = getPortfolioData();
 
@@ -10,9 +11,31 @@ type NavbarProps = {
 };
 
 const Navbar: React.FC<NavbarProps> = ({ setIsSidebarOpen }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const searchResults = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) return [];
+
+    return youtubeVideos
+      .filter((video) => {
+        const searchableText = [
+          video.title,
+          video.description,
+          video.channel,
+          video.meta,
+          video.section,
+          ...video.chips,
+        ].join(' ').toLowerCase();
+
+        return searchableText.includes(query);
+      })
+      .slice(0, 6);
+  }, [searchQuery]);
+
   return (
     <motion.div
-      className="w-full fixed z-1000 flex items-center justify-between bg-white text-black p-2 px-3"
+      className="fixed left-0 top-0 z-[1000] flex w-full items-center justify-between bg-white p-2 px-3 text-black"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
@@ -45,15 +68,17 @@ const Navbar: React.FC<NavbarProps> = ({ setIsSidebarOpen }) => {
       </motion.div>
 
       <motion.div
-        className="flex gap-4 flex-grow max-w-2xl max-sm:hidden"
+        className="relative flex flex-grow max-w-2xl gap-4 max-sm:hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <div className="flex items-center max-h-10 w-full rounded-full border border-[#c6c6c6] overflow-hidden">
+        <div className="flex max-h-10 w-full items-center overflow-hidden rounded-full border border-[#c6c6c6] bg-white">
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search portfolio videos"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
             className="flex-grow px-4 py-2 rounded-l-md bg-white text-black focus:outline-none"
           />
           <motion.button
@@ -64,6 +89,40 @@ const Navbar: React.FC<NavbarProps> = ({ setIsSidebarOpen }) => {
             <Search className="w-5 h-5" />
           </motion.button>
         </div>
+        {searchQuery.trim() && (
+          <motion.div
+            className="absolute left-0 top-12 z-[1100] w-[calc(100%-56px)] overflow-hidden rounded-xl border border-gray-200 bg-white py-2 shadow-2xl"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.18 }}
+          >
+            {searchResults.length > 0 ? (
+              searchResults.map((video) => (
+                <button
+                  key={video.id}
+                  type="button"
+                  className="flex w-full items-start gap-3 px-3 py-2 text-left hover:bg-[#f2f2f2]"
+                  onClick={() => setSearchQuery(video.title)}
+                >
+                  <img
+                    src={video.thumbnail}
+                    alt=""
+                    className="h-14 w-24 flex-none rounded-md object-cover"
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-sm font-bold text-black">{video.title}</span>
+                    <span className="mt-1 block truncate text-xs text-gray-600">{video.section} | {video.meta}</span>
+                    <span className="mt-1 block truncate text-xs text-gray-500">{video.description}</span>
+                  </span>
+                </button>
+              ))
+            ) : (
+              <div className="px-4 py-6 text-center text-sm text-gray-500">
+                No matching portfolio videos found.
+              </div>
+            )}
+          </motion.div>
+        )}
         <motion.span
           className="p-2 rounded-full cursor-pointer bg-[#f0f0f0] hover:bg-[#f8f8f8] items-center flex justify-center"
           whileHover={{ scale: 1.1 }}

@@ -7,6 +7,7 @@ import MainContent from '../components/youtube/MainContent'
 
 const Page = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [activeFilter, setActiveFilter] = useState('All');
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -17,16 +18,20 @@ const Page = () => {
   }, [])
 
   return (
-    <div className='w-full h-full flex flex-col'>
+    <div className='min-h-screen w-full bg-white text-black'>
       <Navbar setIsSidebarOpen={() => setIsSidebarOpen(!isSidebarOpen)} />
-      <div className='pt-10 flex flex-1'>
+      <div className='flex pt-14'>
         {isSidebarOpen && (
-          <aside className='flex-shrink-0 w-[220px] h-full py-8 p-2'>
-            <Sidebar />
+          <aside className='w-[220px] flex-shrink-0 p-2 pt-4 max-sm:hidden'>
+            <Sidebar activeFilter={activeFilter} onFilterChange={setActiveFilter} />
           </aside>
         )}
-        <main className={`h-full py-4 ${isSidebarOpen ? 'w-[calc(100%-220px)]' : 'w-full'}`}>
-          <MainContent />
+        <main className={`${isSidebarOpen ? 'w-[calc(100%-220px)] max-sm:w-full' : 'w-full'}`}>
+          <MainContent
+            sidebarOpen={isSidebarOpen}
+            activeFilter={activeFilter}
+            onFilterChange={setActiveFilter}
+          />
         </main>
       </div>
     </div>
