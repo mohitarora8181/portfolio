@@ -269,14 +269,14 @@
             "id": "oss_001",
             "name": "SyllabusX",
             "role": "contributor",
-            "repo_url": "",
+            "repo_url": "https://github.com/mohitarora8181/syllabusx-client",
             "description": ""
         },
         {
             "id": "oss_002",
             "name": "Placement Cell MSIT",
             "role": "contributor",
-            "repo_url": "",
+            "repo_url": "https://github.com/mohitarora8181/placement-cell",
             "description": ""
         }
     ],
