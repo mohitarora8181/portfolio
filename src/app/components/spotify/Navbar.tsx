@@ -4,7 +4,12 @@ import { getPortfolioData } from '@/src/services/portfolioData'
 
 const data = getPortfolioData()
 
-const Navbar = () => {
+type NavbarProps = {
+    query: string;
+    onQueryChange: (query: string) => void;
+};
+
+const Navbar = ({ query, onQueryChange }: NavbarProps) => {
     return (
         <motion.div
             className='w-full fixed px-3 p-2 flex items-center bg-black'
@@ -41,6 +46,8 @@ const Navbar = () => {
                         <motion.input
                             type="text"
                             placeholder="What do you want to play?"
+                            value={query}
+                            onChange={(event) => onQueryChange(event.target.value)}
                             className='bg-transparent min-w-[400px] w-full p-3 text-sm text-white outline-none placeholder-gray-300'
                             initial={{ opacity: 0.8 }}
                             whileFocus={{ opacity: 1 }}

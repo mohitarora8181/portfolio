@@ -6,12 +6,13 @@ import {
 } from '@mui/icons-material'
 import { Slider } from '@mui/material'
 import { motion } from 'framer-motion'
-import { getFeaturedProjects, getPortfolioData } from '@/src/services/portfolioData'
+import type { SpotifyAlbum, SpotifyPlaylist } from './spotifyPortfolio'
 
-const data = getPortfolioData()
-const nowPlaying = getFeaturedProjects()[0] ?? data.projects[0]
+type FooterProps = {
+    nowPlaying: SpotifyAlbum | SpotifyPlaylist;
+};
 
-const Footer = () => {
+const Footer = ({ nowPlaying }: FooterProps) => {
     const [isPlaying, setIsPlaying] = useState(false)
     const [progress, setProgress] = useState(0)
     const [volume, setVolume] = useState(70)
@@ -29,8 +30,8 @@ const Footer = () => {
         >
             <div className='flex items-center gap-4 w-[30%] min-w-[180px] max-sm:hidden'>
                 <motion.img
-                    src={`https://picsum.photos/seed/${nowPlaying.id}/160/160`}
-                    alt={nowPlaying.name}
+                    src={nowPlaying.cover}
+                    alt={nowPlaying.title}
                     className='h-14 w-14 rounded object-cover'
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.2 }}
@@ -40,13 +41,13 @@ const Footer = () => {
                         className='text-sm text-white hover:underline cursor-pointer'
                         whileHover={{ color: '#1db954' }}
                     >
-                        {nowPlaying.name}
+                        {nowPlaying.title}
                     </motion.span>
                     <motion.span 
-                        className='text-xs text-gray-400 hover:underline cursor-pointer'
+                        className='line-clamp-1 text-xs text-gray-400 hover:underline cursor-pointer'
                         whileHover={{ color: '#ffffff' }}
                     >
-                        {nowPlaying.tagline}
+                        {'description' in nowPlaying ? nowPlaying.description : nowPlaying.subtitle}
                     </motion.span>
                 </div>
             </div>
