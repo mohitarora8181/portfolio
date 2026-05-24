@@ -1,18 +1,27 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../components/linkedin/Navbar'
 import Content from '../components/linkedin/Content'
+import type { LinkedInSection } from '../components/linkedin/linkedinPortfolio'
 
-const page = () => {
+const Page = () => {
+    const [query, setQuery] = useState('')
+    const [activeSection, setActiveSection] = useState<LinkedInSection>('All')
+
     return (
-        <div className='w-full h-full bg-[#f4f2ee] overflow-y-scroll max-sm:overflow-x-hidden max-sm:relative'>
-            <Navbar />
-            <div className='w-full h-full px-40 max-sm:px-0'>
-                <Content />
+        <div className='w-full min-h-screen bg-[#f4f2ee] max-sm:overflow-x-hidden max-sm:relative'>
+            <Navbar query={query} onQueryChange={setQuery} />
+            <div className='w-full'>
+                <Content
+                    query={query}
+                    onQueryChange={setQuery}
+                    activeSection={activeSection}
+                    onSectionChange={setActiveSection}
+                />
             </div>
         </div>
     )
 }
 
-export default page
+export default Page

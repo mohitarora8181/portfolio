@@ -6,28 +6,34 @@ import { motion } from 'framer-motion';
 
 const data = getPortfolioData();
 
-const Navbar = () => {
+type NavbarProps = {
+    query: string;
+    onQueryChange: (query: string) => void;
+};
+
+const Navbar = ({ query, onQueryChange }: NavbarProps) => {
     return (
         <motion.div 
-            className="w-full z-20 sticky top-0 bg-white flex items-center justify-between max-sm:justify-center px-52 max-sm:px-0"
+            className="w-full z-20 sticky top-0 border-b border-gray-200 bg-white"
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
         >
+            <div className="mx-auto flex h-[52px] max-w-[1188px] px-10 items-center justify-between max-sm:h-auto max-sm:justify-center max-sm:px-0">
             <div className="flex items-center space-x-2 max-sm:justify-between max-sm:w-full max-sm:px-2 max-sm:py-1.5">
                 <motion.svg 
-                    className='w-10 h-10' 
+                    className='h-[40px] w-[40px]' 
                     viewBox="0 0 24 24" 
                     data-supported-dps="24x24" 
                     fill="#0a66c2" 
                     focusable="false"
-                    whileHover={{ scale: 1.1 }}
+                    whileHover={{ scale: 1.5 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
                     <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"></path>
                 </motion.svg>
                 <motion.div 
-                    className="flex items-center w-[280px] bg-[#f2f2f2] rounded-md p-2"
+                    className="flex h-[34px] items-center rounded-[1.6rem] bg-[#fff] border-1 border-[rgb(0,0,0,0.3)] px-3"
                     initial={{ width: "200px" }}
                     animate={{ width: "280px" }}
                     transition={{ duration: 0.3 }}
@@ -37,13 +43,15 @@ const Navbar = () => {
                     <input
                         type="text"
                         placeholder="Search"
-                        className="bg-transparent outline-none text-sm ml-2"
+                        value={query}
+                        onChange={(event) => onQueryChange(event.target.value)}
+                    className="ml-2 w-[230px] bg-transparent text-sm outline-none"
                     />
                 </motion.div>
             </div>
             <div className="flex h-full max-sm:grid max-sm:grid-cols-5 items-end gap-0 max-sm:h-fit bg-white max-sm:fixed max-sm:bottom-0 max-sm:left-0">
                 <motion.div 
-                    className="flex flex-col pt-1 px-6 max-sm:border-none py-1 items-center text-[rgb(0,0,0,0.6)] hover:text-black border-b-2 border-black cursor-pointer transition-all"
+                    className="flex min-w-[78px] flex-col items-center border-b-2 border-black px-2 pb-1 pt-1 text-[rgb(0,0,0,0.6)] transition-all hover:text-black max-sm:border-none"
                     whileHover={{ y: -2 }}
                 >
                     <motion.svg 
@@ -59,7 +67,7 @@ const Navbar = () => {
                     <span className="text-xs text-nowrap">Home</span>
                 </motion.div>
                 <motion.div 
-                    className="flex flex-col pt-1 pr-5 pl-2 py-1 items-center text-[rgb(0,0,0,0.6)] hover:text-black cursor-pointer transition-all"
+                    className="flex min-w-[78px] flex-col items-center px-2 pb-1 pt-1 text-[rgb(0,0,0,0.6)] transition-all hover:text-black"
                     whileHover={{ y: -2 }}
                 >
                     <svg viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentcolor" width="24" height="24" focusable="false">
@@ -68,7 +76,7 @@ const Navbar = () => {
                     <span className="text-xs text-nowrap">My Network</span>
                 </motion.div>
                 <motion.div 
-                    className="flex flex-col pt-1 pr-5 pl-2 py-1 items-center text-[rgb(0,0,0,0.6)] hover:text-black cursor-pointer transition-all"
+                    className="flex min-w-[78px] flex-col items-center px-2 pb-1 pt-1 text-[rgb(0,0,0,0.6)] transition-all hover:text-black"
                     whileHover={{ y: -2 }}
                 >
                     <svg viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" width="24" height="24" focusable="false">
@@ -77,7 +85,7 @@ const Navbar = () => {
                     <span className="text-xs text-nowrap">Jobs</span>
                 </motion.div>
                 <motion.div 
-                    className="flex flex-col pt-1 pr-5 pl-2 py-1 items-center text-[rgb(0,0,0,0.6)] hover:text-black cursor-pointer transition-all"
+                    className="flex min-w-[78px] flex-col items-center px-2 pb-1 pt-1 text-[rgb(0,0,0,0.6)] transition-all hover:text-black"
                     whileHover={{ y: -2 }}
                 >
                     <svg viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" width="24" height="24" focusable="false">
@@ -86,7 +94,7 @@ const Navbar = () => {
                     <span className="text-xs text-nowrap">Messaging</span>
                 </motion.div>
                 <motion.div 
-                    className="flex flex-col pt-1 pr-5 pl-2 py-1 items-center text-[rgb(0,0,0,0.6)] hover:text-black cursor-pointer transition-all"
+                    className="flex min-w-[78px] flex-col items-center px-2 pb-1 pt-1 text-[rgb(0,0,0,0.6)] transition-all hover:text-black"
                     whileHover={{ y: -2 }}
                 >
                     <motion.svg 
@@ -103,7 +111,7 @@ const Navbar = () => {
                     <span className="text-xs text-nowrap">Notifications</span>
                 </motion.div>
                 <motion.div 
-                    className="flex max-sm:hidden flex-col pt-1 pr-5 pl-2 py-1 items-center text-[rgb(0,0,0,0.6)] hover:text-black cursor-pointer transition-all"
+                    className="flex min-w-[58px] max-sm:hidden flex-col items-center px-2 pb-1 pt-1 text-[rgb(0,0,0,0.6)] transition-all hover:text-black"
                     whileHover={{ y: -2 }}
                 >
                     <motion.div
@@ -115,7 +123,7 @@ const Navbar = () => {
                     <span className="text-xs text-nowrap flex items-center">Me <ArrowDropDown sx={{fontSize:"1rem"}}/></span>
                 </motion.div>
                 <motion.div 
-                    className="flex max-sm:hidden flex-col pt-1 border-l border-gray-200 pr-5 pl-2 py-1 items-center text-[rgb(0,0,0,0.6)] hover:text-black cursor-pointer transition-all"
+                    className="flex min-w-[92px] max-sm:hidden flex-col items-center border-l border-gray-200 px-2 pb-1 pt-1 text-[rgb(0,0,0,0.6)] transition-all hover:text-black"
                     whileHover={{ y: -2 }}
                 >
                     <svg viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" width="24" height="24" focusable="false">
@@ -124,7 +132,7 @@ const Navbar = () => {
                     <span className="text-xs text-nowrap flex items-center">For Business <ArrowDropDown sx={{fontSize:"1rem"}}/></span>
                 </motion.div>
                 <motion.div 
-                    className="flex max-sm:hidden flex-col pt-1 pl-2 py-1 items-center text-[rgb(0,0,0,0.6)] hover:text-black cursor-pointer transition-all"
+                    className="flex min-w-[105px] max-sm:hidden flex-col items-center px-2 pb-1 pt-1 text-[rgb(0,0,0,0.6)] transition-all hover:text-black"
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.95 }}
                 >
@@ -150,6 +158,7 @@ const Navbar = () => {
                     </motion.svg>
                     <span className="text-xs text-nowrap">Try Premium for ₹0</span>
                 </motion.div>
+            </div>
             </div>
         </motion.div>
     );
