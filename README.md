@@ -1,36 +1,163 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mohit Arora Portfolio
+
+A data-driven portfolio built with Next.js, React, Tailwind CSS, Framer Motion, and Material UI icons.
+
+Instead of a traditional portfolio layout, this project presents the same portfolio data through familiar daily-use app interfaces. The home page acts like an animated Chrome new tab page, and each clone turns `myData.json` into a different product-style experience.
+
+## Concept
+
+The goal of this portfolio is to showcase frontend skill through recognizable UI systems:
+
+- Chrome-style home page as the main launchpad
+- YouTube-style project and experience browsing
+- WhatsApp-style portfolio conversations
+- Spotify-style skill playlists and project albums
+- LinkedIn-style professional feed
+- Google Meet-style portfolio presentation room
+
+All of these views are powered by the same structured data source: `myData.json`.
+
+## Routes
+
+| Route | Experience |
+| --- | --- |
+| `/` | Animated Chrome-inspired home page with app shortcuts |
+| `/youtube` | Portfolio videos, synced filters, channel header, search |
+| `/whatsapp` | Chat-based portfolio sections with clickable links |
+| `/spotify` | Projects, experience, and skills as playlists/albums |
+| `/linkedin` | Professional feed with filters and expandable details |
+| `/gmeet` | Portfolio presentation room with people, chat, and details panels |
+
+## Data Source
+
+The portfolio content lives in:
+
+```txt
+myData.json
+```
+
+It contains:
+
+- Profile metadata
+- Social links
+- Skills grouped by category
+- Experience
+- Projects
+- Open source contributions
+- Education
+- Achievements
+
+The data is accessed through:
+
+```txt
+src/services/portfolioData.ts
+```
+
+For now, the service imports `myData.json` locally. The service layer is intentionally separated so it can later be changed to load from Firebase Realtime Database or another remote source without rewriting every UI clone.
+
+## Project Structure
+
+```txt
+src/
+  app/
+    page.tsx
+    youtube/
+    whatsapp/
+    spotify/
+    linkedin/
+    gmeet/
+    components/
+      youtube/
+      whatsapp/
+      spotify/
+      linkedin/
+      gmeet/
+  services/
+    portfolioData.ts
+myData.json
+```
+
+Each clone has its own mapper/component layer so the same JSON can be reshaped into the UI language of that app.
+
+## Tech Stack
+
+- Next.js 15
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Framer Motion
+- Material UI Icons
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```txt
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Build
 
-## Learn More
+Create a production build:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Start the production server:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run start
+```
 
-## Deploy on Vercel
+## Customizing Portfolio Data
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Update `myData.json` to change the portfolio content.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Examples:
+
+- Add a new project in `projects`
+- Add a new role in `experience`
+- Add skills under `skills`
+- Update social links in `meta.links`
+- Add achievements in `achievements`
+
+The app clones will automatically render updated data through their own UI patterns.
+
+## Future Data Plan
+
+The data service is ready to evolve from local JSON to a remote source.
+
+Planned direction:
+
+```txt
+myData.json -> portfolioDataService.get() -> Firebase Realtime Database
+```
+
+The UI components should continue consuming service helpers instead of importing data directly.
+
+## Purpose
+
+This project is meant to demonstrate:
+
+- Component composition
+- State-driven UI
+- Responsive layouts
+- Data mapping
+- Complex cloned interfaces
+- Interactive search/filter systems
+- Motion and polished frontend details
+
+It is both a portfolio and a proof of frontend implementation ability.
