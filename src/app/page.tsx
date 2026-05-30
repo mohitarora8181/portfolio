@@ -1,213 +1,332 @@
+"use client";
+
 import Link from "next/link";
+import { useMemo, useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import {
-  getAppShowcases,
-  getExperiencePeriod,
-  getFeaturedProjects,
-  getPortfolioData,
-  getProjectDate,
-  getSkillGroups,
-} from "@/src/services/portfolioData";
+  Apps,
+  AutoAwesome,
+  Code,
+  DarkMode,
+  GitHub,
+  LightMode,
+  LinkedIn,
+  Palette,
+  RocketLaunch,
+  Search,
+  Tune,
+  WorkOutline,
+} from "@mui/icons-material";
+import { getAppShowcases, getPortfolioData } from "@/src/services/portfolioData";
 
 const data = getPortfolioData();
-const skillGroups = getSkillGroups();
 const appShowcases = getAppShowcases();
-const featuredProjects = getFeaturedProjects();
-const education = data.education[0];
+
+const nameLetters = data.meta.name.split("");
+
+const letterColors = [
+  "text-[#4285f4]",
+  "text-[#ea4335]",
+  "text-[#fbbc04]",
+  "text-[#34a853]",
+  "text-[#4285f4]",
+  "text-[#ea4335]",
+];
+
+const appLogos: Record<string, string> = {
+  YouTube: "https://www.google.com/s2/favicons?domain=youtube.com&sz=128",
+  WhatsApp: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg",
+  Spotify: "https://www.google.com/s2/favicons?domain=spotify.com&sz=128",
+  LinkedIn: "https://www.google.com/s2/favicons?domain=linkedin.com&sz=128",
+  "Google Meet": "https://www.google.com/s2/favicons?domain=meet.google.com&sz=128",
+};
+
+const stats = [
+  { label: "Projects", value: data.projects.length, icon: <Code sx={{ fontSize: 18 }} /> },
+  { label: "Roles", value: data.experience.length, icon: <WorkOutline sx={{ fontSize: 18 }} /> },
+  { label: "Clones", value: appShowcases.length, icon: <Apps sx={{ fontSize: 18 }} /> },
+];
+
+const themes = {
+  light: {
+    label: "Light",
+    icon: <LightMode sx={{ fontSize: 17 }} />,
+    main: "bg-[#f8fafd] text-[#202124]",
+    panel: "border-[#dfe1e5] bg-white/80 text-[#3c4043]",
+    hover: "hover:bg-white",
+    muted: "text-[#5f6368]",
+    search: "border-[#dfe1e5] bg-white text-[#202124]",
+    placeholder: "placeholder:text-[#5f6368]",
+    shortcut: "hover:bg-white/85",
+    shortcutIcon: "bg-white ring-[#dfe1e5]",
+    shortcutText: "text-[#202124]",
+    stat: "border-[#dfe1e5] bg-white/80 text-[#3c4043]",
+    glow: "bg-[#8ab4f8]/22",
+  },
+  sepia: {
+    label: "Sepia",
+    icon: <AutoAwesome sx={{ fontSize: 17 }} />,
+    main: "bg-[#f4ecd8] text-[#2b2118]",
+    panel: "border-[#dbc9a4] bg-[#fff8e7]/80 text-[#3a2a1d]",
+    hover: "hover:bg-[#fff8e7]",
+    muted: "text-[#765f44]",
+    search: "border-[#dbc9a4] bg-[#fff8e7] text-[#2b2118]",
+    placeholder: "placeholder:text-[#765f44]",
+    shortcut: "hover:bg-[#fff8e7]/90",
+    shortcutIcon: "bg-[#fff8e7] ring-[#dbc9a4]",
+    shortcutText: "text-[#2b2118]",
+    stat: "border-[#dbc9a4] bg-[#fff8e7]/80 text-[#3a2a1d]",
+    glow: "bg-[#c58b3b]/20",
+  },
+  dark: {
+    label: "Dark",
+    icon: <DarkMode sx={{ fontSize: 17 }} />,
+    main: "bg-[#0f1115] text-[#f8fafd]",
+    panel: "border-white/12 bg-[#1b1f27]/88 text-[#e8eaed]",
+    hover: "hover:bg-[#242a35]",
+    muted: "text-[#a8b3c7]",
+    search: "border-white/12 bg-[#171b22] text-[#f8fafd]",
+    placeholder: "placeholder:text-[#a8b3c7]",
+    shortcut: "hover:bg-[#1b1f27]/90",
+    shortcutIcon: "bg-[#1b1f27] ring-white/12",
+    shortcutText: "text-[#f8fafd]",
+    stat: "border-white/12 bg-[#1b1f27]/80 text-[#e8eaed]",
+    glow: "bg-[#8ab4f8]/18",
+  },
+};
+
+type ThemeKey = keyof typeof themes;
 
 export default function Home() {
+  const [query, setQuery] = useState("");
+  const [themeKey, setThemeKey] = useState<ThemeKey>("light");
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const cursorX = useMotionValue(0);
+  const cursorY = useMotionValue(0);
+  const smoothX = useSpring(pointerX, { stiffness: 80, damping: 22 });
+  const smoothY = useSpring(pointerY, { stiffness: 80, damping: 22 });
+  const glowX = useSpring(cursorX, { stiffness: 120, damping: 24 });
+  const glowY = useSpring(cursorY, { stiffness: 120, damping: 24 });
+
+  const backgroundX = useTransform(smoothX, [-0.5, 0.5], [-28, 28]);
+  const backgroundY = useTransform(smoothY, [-0.5, 0.5], [-20, 20]);
+  const panelX = useTransform(smoothX, [-0.5, 0.5], [18, -18]);
+  const panelY = useTransform(smoothY, [-0.5, 0.5], [14, -14]);
+  const theme = themes[themeKey];
+
+  const filteredApps = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase();
+    if (!normalizedQuery) return appShowcases;
+
+    return appShowcases.filter((app) =>
+      [app.name, app.description, ...app.skills].join(" ").toLowerCase().includes(normalizedQuery)
+    );
+  }, [query]);
+
   return (
-    <main className="min-h-screen bg-[#f7f7f2] text-[#171717]">
-      <section className="border-b border-black/10 bg-[#fafaf7]">
-        <div className="mx-auto flex min-h-[88vh] w-full max-w-7xl flex-col justify-between px-5 py-6 sm:px-8 lg:px-10">
-          <nav className="flex items-center justify-between gap-4">
-            <Link href="/" className="flex items-center gap-3">
-              <img
-                src={data.meta.avatar}
-                alt={data.meta.name}
-                className="h-10 w-10 rounded-full object-cover ring-2 ring-black/10"
-              />
-              <span className="text-sm font-semibold tracking-wide">{data.meta.name}</span>
-            </Link>
-            <div className="hidden items-center gap-2 text-sm font-medium text-black/60 sm:flex">
-              <a href={data.meta.links.github} target="_blank" className="rounded-full px-3 py-2 hover:bg-black hover:text-white">
-                GitHub
-              </a>
-              <a href={data.meta.links.linkedin} target="_blank" className="rounded-full px-3 py-2 hover:bg-black hover:text-white">
-                LinkedIn
-              </a>
-              <a href={data.meta.resume_url} target="_blank" className="rounded-full px-3 py-2 hover:bg-black hover:text-white">
-                Resume
-              </a>
-            </div>
-          </nav>
+    <main
+      className={`h-screen overflow-hidden ${theme.main}`}
+      onMouseMove={(event) => {
+        pointerX.set(event.clientX / window.innerWidth - 0.5);
+        pointerY.set(event.clientY / window.innerHeight - 0.5);
+        cursorX.set(event.clientX);
+        cursorY.set(event.clientY);
+      }}
+    >
+      <motion.div
+        style={{ left: glowX, top: glowY }}
+        className={`pointer-events-none fixed z-0 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[90px] ${theme.glow}`}
+      />
+      <section className="relative flex h-full flex-col items-center px-4 pt-[12vh] max-md:pt-[9vh]">
+        <motion.div
+          style={{ x: backgroundX, y: backgroundY }}
+          className="pointer-events-none absolute inset-0 opacity-70"
+        >
+          <div className={`absolute left-[8%] top-[18%] h-24 w-72 rounded-2xl border shadow-sm ${theme.panel}`} />
+          <div className={`absolute right-[9%] top-[22%] h-28 w-64 rounded-2xl border shadow-sm ${theme.panel}`} />
+          <div className={`absolute bottom-[18%] left-[14%] h-20 w-56 rounded-2xl border shadow-sm ${theme.panel}`} />
+          <div className="absolute inset-0 bg-[linear-gradient(#e8eaed_1px,transparent_1px),linear-gradient(90deg,#e8eaed_1px,transparent_1px)] bg-[size:72px_72px] opacity-30" />
+        </motion.div>
 
-          <div className="grid items-end gap-10 py-12 lg:grid-cols-[1fr_460px]">
-            <div>
-              <p className="mb-5 w-fit rounded-full border border-black/15 bg-white px-4 py-2 text-sm font-medium text-black/70">
-                Portfolio data rendered through daily-use app interfaces
-              </p>
-              <h1 className="max-w-4xl text-5xl font-black leading-[0.95] sm:text-7xl lg:text-8xl">
-                {data.meta.name}
-              </h1>
-              <p className="mt-4 text-2xl font-semibold text-black/80">{data.meta.tagline}</p>
-              <p className="mt-6 max-w-2xl text-base leading-7 text-black/65 sm:text-lg">
-                This portfolio uses one structured JSON profile as the source of truth. The same data becomes a
-                LinkedIn feed, WhatsApp conversations, Spotify playlists, YouTube cards, and a Google Meet room.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <a href="#apps" className="rounded-full bg-black px-5 py-3 text-sm font-semibold text-white hover:bg-black/80">
-                  Explore app clones
-                </a>
-                <a href={`mailto:${data.meta.email}`} className="rounded-full border border-black/15 bg-white px-5 py-3 text-sm font-semibold hover:border-black">
-                  {data.meta.email}
-                </a>
-              </div>
-            </div>
-
-            <div className="grid gap-3">
-              <div className="rounded-[8px] border border-black/10 bg-white p-4 shadow-sm">
-                <div className="flex items-center gap-3 border-b border-black/10 pb-4">
-                  <img src={data.meta.avatar} alt="" className="h-12 w-12 rounded-full object-cover" />
-                  <div>
-                    <p className="font-bold">{data.meta.name}</p>
-                    <p className="text-sm text-black/55">{education.degree}</p>
-                  </div>
-                </div>
-                <div className="mt-4 grid grid-cols-3 gap-3 text-center text-sm">
-                  <span className="rounded-[8px] bg-[#f4f2ee] p-3">
-                    <b className="block text-xl">{data.experience.length}</b>
-                    roles
-                  </span>
-                  <span className="rounded-[8px] bg-black p-3 text-white">
-                    <b className="block text-xl">{data.projects.length}</b>
-                    projects
-                  </span>
-                  <span className="rounded-[8px] bg-[#e8f0fe] p-3">
-                    <b className="block text-xl">{education.cgpa}</b>
-                    CGPA
-                  </span>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="rounded-[8px] bg-[#00a884] p-4 text-white">
-                  <p className="text-sm font-semibold">{data.meta.phone}</p>
-                  <p className="mt-10 text-sm font-semibold">Contact-ready profile</p>
-                </div>
-                <div className="rounded-[8px] bg-[#121212] p-4 text-white">
-                  <p className="text-sm font-semibold">{skillGroups.length} skill groups</p>
-                  <p className="mt-10 text-sm font-semibold">Mapped into app UIs</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="apps" className="mx-auto w-full max-w-7xl px-5 py-14 sm:px-8 lg:px-10">
-        <div className="mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-black/45">UI clone lab</p>
-            <h2 className="mt-2 text-3xl font-black sm:text-5xl">One JSON, five app metaphors</h2>
-          </div>
-          <p className="max-w-md text-sm leading-6 text-black/60">
-            Every clone reads the same profile structure through the portfolio data service.
-          </p>
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-          {appShowcases.map((app) => (
-            <Link
-              key={app.name}
-              href={app.href}
-              className="group flex min-h-[320px] flex-col justify-between rounded-[8px] border border-black/10 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+        <div className={`absolute left-6 top-5 z-10 flex items-center gap-2 rounded-full border px-2 py-2 shadow-sm backdrop-blur ${theme.panel}`}>
+          <span className="grid h-8 w-8 place-items-center rounded-full">
+            <Palette sx={{ fontSize: 18 }} />
+          </span>
+          {(Object.keys(themes) as ThemeKey[]).map((key) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setThemeKey(key)}
+              className={`flex cursor-pointer items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                themeKey === key ? "bg-[#1a73e8] text-white" : `${theme.hover}`
+              }`}
             >
-              <div>
-                <div className={`mb-5 h-24 rounded-[8px] ${app.theme} p-3`}>
-                  <div className="flex gap-2">
-                    <span className="h-3 w-3 rounded-full bg-white/90" />
-                    <span className="h-3 w-3 rounded-full bg-white/60" />
-                    <span className="h-3 w-3 rounded-full bg-white/40" />
-                  </div>
-                  <div className="mt-8 h-2 w-2/3 rounded-full bg-white/80" />
-                  <div className="mt-2 h-2 w-1/2 rounded-full bg-white/50" />
-                </div>
-                <h3 className="text-xl font-black">{app.name}</h3>
-                <p className="mt-3 text-sm leading-6 text-black/62">{app.description}</p>
-              </div>
-              <div className="mt-6">
-                <div className="flex flex-wrap gap-2">
-                  {app.skills.map((skill) => (
-                    <span key={skill} className="rounded-full bg-black/[0.06] px-3 py-1 text-xs font-semibold text-black/65">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-                <p className="mt-5 text-sm font-bold text-black group-hover:underline">Open {app.name}</p>
-              </div>
-            </Link>
+              {themes[key].icon}
+              <span className="max-sm:hidden">{themes[key].label}</span>
+            </button>
           ))}
         </div>
-      </section>
 
-      <section className="border-y border-black/10 bg-white">
-        <div className="mx-auto grid w-full max-w-7xl gap-10 px-5 py-14 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:px-10">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-black/45">Stack</p>
-            <h2 className="mt-2 text-3xl font-black sm:text-5xl">Skills from the JSON structure</h2>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {skillGroups.map((group) => (
-              <div key={group.label} className="rounded-[8px] border border-black/10 bg-[#fafaf7] p-5">
-                <h3 className="font-black">{group.label}</h3>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {group.items.map((skill) => (
-                    <span key={skill} className="rounded-full bg-white px-3 py-1 text-sm text-black/70 ring-1 ring-black/10">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="absolute right-6 top-5 z-10 flex items-center gap-4 text-sm font-medium max-sm:hidden">
+          <a href={data.meta.links.github} target="_blank" className={`flex cursor-pointer items-center gap-1.5 rounded-full px-3 py-2 ${theme.hover}`}>
+            <GitHub sx={{ fontSize: 18 }} /> GitHub
+          </a>
+          <a href={data.meta.links.linkedin} target="_blank" className={`flex cursor-pointer items-center gap-1.5 rounded-full px-3 py-2 ${theme.hover}`}>
+            <LinkedIn sx={{ fontSize: 18 }} /> LinkedIn
+          </a>
+          <button className={`grid h-10 w-10 cursor-pointer place-items-center rounded-full ${theme.hover}`}>
+            <Tune sx={{ fontSize: 21 }} />
+          </button>
+          <img src={data.meta.avatar} alt="" className="h-10 w-10 rounded-full object-cover ring-2 ring-[#4285f4]" />
         </div>
-      </section>
 
-      <section className="mx-auto grid w-full max-w-7xl gap-10 px-5 py-14 sm:px-8 lg:grid-cols-2 lg:px-10">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-black/45">Experience</p>
-          <div className="mt-5 grid gap-3">
-            {data.experience.map((item) => (
-              <article key={item.id} className="rounded-[8px] border border-black/10 bg-white p-5">
-                <p className="text-sm font-semibold text-black/50">{getExperiencePeriod(item)}</p>
-                <h3 className="mt-1 text-xl font-black">{item.role}</h3>
-                <p className="text-sm font-semibold text-black/65">{item.company}</p>
-                <p className="mt-3 text-sm leading-6 text-black/60">{item.highlights[0]}</p>
-              </article>
+        <motion.div
+          initial={{ opacity: 0, y: 22 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, ease: "easeOut" }}
+          className="relative z-10 flex w-full flex-col items-center"
+        >
+          <h1 className="select-none text-center text-[82px] font-semibold leading-none tracking-[-0.035em] max-md:text-[64px] max-sm:text-[44px]">
+            {nameLetters.map((letter, index) => (
+              <motion.span
+                key={`${letter}-${index}`}
+                className={letter === " " ? "inline-block w-12 max-sm:w-7" : `${letterColors[index % letterColors.length]} mx-[0.018em] inline-block cursor-pointer`}
+                initial={{ opacity: 0, y: 18, rotateX: -80 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                whileHover={{ rotateY: 180, scale: 1.08 }}
+                transition={{
+                  opacity: { delay: index * 0.035, duration: 0.45, ease: "easeOut" },
+                  y: { delay: index * 0.035, duration: 0.45, ease: "easeOut" },
+                  rotateX: { delay: index * 0.035, duration: 0.45, ease: "easeOut" },
+                  rotateY: { duration: 0.16, ease: "easeOut" },
+                  scale: { duration: 0.12, ease: "easeOut" },
+                }}
+              >
+                {letter}
+              </motion.span>
+            ))}
+          </h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+            className={`mt-4 text-center text-sm font-medium ${theme.muted}`}
+          >
+            {data.meta.tagline}
+          </motion.p>
+
+          <motion.div
+            style={{ x: panelX, y: panelY }}
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.18, duration: 0.5 }}
+            className="relative mt-8 w-full max-w-[760px]"
+          >
+            <label className={`flex h-[58px] items-center rounded-full border px-5 shadow-[0_10px_35px_rgba(60,64,67,0.18)] transition hover:shadow-[0_14px_40px_rgba(60,64,67,0.24)] ${theme.search}`}>
+              <Search className={`mr-4 ${theme.muted}`} sx={{ fontSize: 24 }} />
+              <input
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Search portfolio apps, projects, skills"
+                className={`min-w-0 flex-1 bg-transparent text-base outline-none ${theme.placeholder}`}
+              />
+              <button type="button" aria-label="Voice search" className="mx-2 grid h-9 w-9 cursor-pointer place-items-center rounded-full hover:bg-[#f1f3f4]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path fill="none" d="M0 0h24v24H0z" /><path fill="#4285F4" d="M12 15c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v7c0 1.66 1.34 3 3 3z" /><path fill="#34A853" d="M11 18.92h2V22h-2z" /><path fill="#F4B400" d="M7 12H5c0 1.93.78 3.68 2.05 4.95l1.41-1.41C7.56 14.63 7 13.38 7 12z" /><path fill="#EA4335" d="M12 17c-1.38 0-2.63-.56-3.54-1.47l-1.41 1.41A6.99 6.99 0 0 0 12.01 19c3.87 0 6.98-3.14 6.98-7h-2c0 2.76-2.23 5-4.99 5z" /></svg>
+              </button>
+              <button type="button" aria-label="Search by image" className="grid h-9 w-9 shrink-0 cursor-pointer place-items-center overflow-hidden rounded-full p-0 hover:bg-[#f1f3f4]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="20 20 152 152"
+                  preserveAspectRatio="xMidYMid meet"
+                  className="block h-[22px] w-[22px]"
+                >
+                  <circle cx="144.07" cy="144" r="16" fill="#34A853" />
+                  <circle cx="96.07" cy="104" r="24" fill="#4285F4" />
+
+                  <path
+                    fill="#EA4335"
+                    d="M24 135.2c0 18.11 14.69 32.8 32.8 32.8H96v-16l-40.1-.1c-8.8 0-15.9-8.19-15.9-17.9v-18H24v19.2z"
+                  />
+
+                  <path
+                    fill="#FBBC04"
+                    d="M168 72.8c0-18.11-14.69-32.8-32.8-32.8H116l20 16c8.8 0 16 8.29 16 18v30h16V72.8z"
+                  />
+
+                  <path
+                    fill="#4285F4"
+                    d="M112 24H80L68 40H56.8C38.69 40 24 54.69 24 72.8V92h16V74c0-9.71 7.2-18 16-18h80l-24-32z"
+                  />
+                </svg>
+              </button>
+            </label>
+          </motion.div>
+
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
+            {stats.map((item, index) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.38 + index * 0.08 }}
+                className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold shadow-sm backdrop-blur ${theme.stat}`}
+              >
+                {item.icon}
+                <span>{item.value}</span>
+                <span className={theme.muted}>{item.label}</span>
+              </motion.div>
             ))}
           </div>
-        </div>
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-black/45">Featured Projects</p>
-          <div className="mt-5 grid gap-3">
-            {featuredProjects.map((project) => (
-              <article key={project.id} className="rounded-[8px] border border-black/10 bg-[#171717] p-5 text-white">
-                <p className="text-sm font-semibold text-white/45">{getProjectDate(project)} | {project.status}</p>
-                <h3 className="mt-1 text-xl font-black">{project.name}</h3>
-                <p className="mt-3 text-sm leading-6 text-white/65">{project.tagline}</p>
-              </article>
-            ))}
-            <div className="rounded-[8px] border border-black/10 bg-[#e8f0fe] p-5">
-              <h3 className="text-xl font-black">Achievements</h3>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {data.achievements.map((item) => (
-                  <span key={item.id} className="rounded-full bg-white px-3 py-1 text-sm font-semibold text-black/70">
-                    {item.title}
+
+          <div className="mt-8 grid max-w-[760px] grid-cols-3 gap-x-5 gap-y-4 sm:grid-cols-5">
+            {filteredApps.map((app, index) => (
+              <motion.div
+                key={app.name}
+                initial={{ opacity: 0, y: 26, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ delay: 0.46 + index * 0.08, duration: 0.42, ease: "easeOut" }}
+                whileHover={{ y: -8, scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+              >
+                <Link
+                  href={app.href}
+                  className={`group flex h-[112px] w-[112px] cursor-pointer flex-col items-center justify-center rounded-2xl hover:shadow-lg ${theme.shortcut}`}
+                >
+                  <span className={`grid h-[58px] w-[58px] place-items-center rounded-2xl shadow-[0_8px_22px_rgba(60,64,67,0.16)] ring-1 transition group-hover:shadow-[0_12px_28px_rgba(60,64,67,0.22)] ${theme.shortcutIcon}`}>
+                    <img src={appLogos[app.name]} alt={app.name} className="h-9 w-9 object-contain" />
                   </span>
-                ))}
-              </div>
-            </div>
+                  <span className={`mt-3 max-w-[100px] truncate text-center text-sm font-medium ${theme.shortcutText}`}>{app.name}</span>
+                </Link>
+              </motion.div>
+            ))}
+
+            <motion.button
+              initial={{ opacity: 0, y: 26, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ delay: 0.46 + filteredApps.length * 0.08, duration: 0.42 }}
+              whileHover={{ y: -8, scale: 1.04 }}
+              className={`flex h-[112px] w-[112px] cursor-pointer flex-col items-center justify-center rounded-2xl hover:shadow-lg ${theme.shortcut}`}
+            >
+              <span className="grid h-[58px] w-[58px] place-items-center rounded-full bg-[#e8f0fe] text-[#174ea6] shadow-sm">
+                <RocketLaunch sx={{ fontSize: 27 }} />
+              </span>
+              <span className={`mt-3 text-center text-sm font-medium ${theme.shortcutText}`}>Launch lab</span>
+            </motion.button>
           </div>
-        </div>
+        </motion.div>
+
+        <motion.a
+          href={data.meta.resume_url}
+          target="_blank"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9 }}
+          className="absolute bottom-6 right-6 cursor-pointer rounded-full bg-[#d3e3fd] px-5 py-3 text-sm font-semibold text-[#0b316f] shadow-md hover:bg-[#c2d7fb] max-sm:hidden"
+        >
+          View Resume
+        </motion.a>
       </section>
     </main>
   );
