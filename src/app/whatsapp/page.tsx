@@ -13,7 +13,12 @@ const Page = () => {
 
     useEffect(() => {
         const updateViewport = () => {
-            setMobileView(window.innerWidth < 746);
+            const isMobile = window.innerWidth < 746;
+            setMobileView(isMobile);
+            setSelectedChat((currentChat) => {
+                if (isMobile) return null;
+                return currentChat ?? portfolioChats[0] ?? null;
+            });
         };
 
         updateViewport();
@@ -23,9 +28,9 @@ const Page = () => {
     }, [])
 
     return (
-        <div className='h-screen w-full overflow-hidden bg-[#eae6df]'>
+        <div className='h-dvh w-full overflow-hidden bg-[#eae6df]'>
             <div className='w-full h-[128px] bg-[#00a884]'>
-                <div className='absolute left-0 top-0 w-full h-full bg-transparent max-sm:p-1'>
+                <div className='absolute left-0 top-0 w-full h-full bg-transparent max-sm:p-0'>
                     <div className='mx-auto flex h-full w-full max-w-[1600px] overflow-hidden bg-[#F7F5F3] shadow-xl'>
                         <Sidebar />
                         {isMobileView ? !selectedChat

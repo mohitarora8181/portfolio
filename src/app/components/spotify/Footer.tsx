@@ -23,7 +23,7 @@ const Footer = ({ nowPlaying }: FooterProps) => {
 
     return (
         <motion.div 
-            className='fixed bottom-0 w-full bg-black h-[90px] border-t border-[#282828] px-4 flex items-center justify-between'
+            className='fixed bottom-0 z-40 flex h-[90px] w-full items-center justify-between border-t border-[#282828] bg-black px-4 max-sm:px-3'
             initial={{ y: 90 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.3 }}
@@ -52,8 +52,8 @@ const Footer = ({ nowPlaying }: FooterProps) => {
                 </div>
             </div>
 
-            <div className='flex flex-col items-center max-w-[722px] max-sm:w-full w-[40%]'>
-                <div className='flex items-center gap-6 mb-1'>
+            <div className='flex w-[40%] max-w-[722px] flex-col items-center max-sm:w-full'>
+                <div className='mb-1 flex items-center gap-6 max-sm:gap-4'>
                     <motion.span 
                         className="text-gray-400 hover:text-white cursor-pointer"
                         whileHover={{ scale: 1.1 }}

@@ -79,7 +79,7 @@ const Content = ({ query, onQueryChange, onNowPlayingChange }: ContentProps) => 
     }, [activeFilter, query]);
 
     return (
-        <div className='flex h-full pt-16 pb-[90px]'>
+        <div className='flex h-full overflow-hidden pb-[90px] pt-16 max-sm:block max-sm:overflow-y-auto max-sm:pb-[96px]'>
             <motion.aside
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -136,7 +136,7 @@ const Content = ({ query, onQueryChange, onNowPlayingChange }: ContentProps) => 
                         />
                     </label>
 
-                    <div className='mt-4 max-h-[calc(100vh-390px)] space-y-1 overflow-y-auto scrollbar-none max-sm:max-h-[calc(100vh-320px)]'>
+                    <div className='mt-4 max-h-[calc(100dvh-390px)] space-y-1 overflow-y-auto scrollbar-none max-sm:max-h-none'>
                         {activeFilter !== 'Skills' && visibleAlbums.slice(0, 4).map((album) => (
                             <motion.button
                                 key={album.id}
@@ -192,20 +192,20 @@ const Content = ({ query, onQueryChange, onNowPlayingChange }: ContentProps) => 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.4 }}
-                className='flex-1 overflow-y-auto rounded-tl-lg bg-[#121212] scrollbar-none max-sm:hidden'
+                className='flex-1 overflow-y-auto rounded-tl-lg bg-[#121212] scrollbar-none max-sm:block max-sm:overflow-visible max-sm:rounded-none'
             >
                 <section className='bg-gradient-to-b from-[#2a2a2a] to-[#121212] p-6'>
-                    <div className='flex items-end gap-5'>
+                    <div className='flex items-end gap-5 max-sm:items-start max-sm:gap-3'>
                         <img
                             src={selectedPlaylist?.cover ?? selectedAlbum?.cover ?? spotifyProfile.avatar}
                             alt=''
-                            className='h-36 w-36 rounded-md object-cover shadow-2xl'
+                            className='h-36 w-36 rounded-md object-cover shadow-2xl max-sm:h-24 max-sm:w-24'
                         />
                         <div>
                             <p className='text-xs font-bold uppercase text-white'>
                                 {selectedPlaylist ? 'Playlist' : selectedAlbum ? 'Portfolio album' : 'Portfolio playlist'}
                             </p>
-                            <h1 className='mt-2 text-6xl font-black text-white'>
+                            <h1 className='mt-2 text-6xl font-black text-white max-sm:text-3xl'>
                                 {selectedPlaylist?.title ?? selectedAlbum?.title ?? spotifyProfile.name}
                             </h1>
                             <p className='mt-3 text-sm text-gray-300'>

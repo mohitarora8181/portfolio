@@ -18,7 +18,7 @@ const Page = () => {
   }, [])
 
   return (
-    <div className='min-h-screen w-full bg-white text-black'>
+    <div className='min-h-dvh w-full bg-white text-black'>
       <Navbar setIsSidebarOpen={() => setIsSidebarOpen(!isSidebarOpen)} />
       <div className='flex pt-14'>
         {isSidebarOpen && (

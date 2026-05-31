@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import {
   Apps,
@@ -96,10 +96,16 @@ const themes = {
 };
 
 type ThemeKey = keyof typeof themes;
+const THEME_STORAGE_KEY = "portfolio:selected-theme";
+
+const isThemeKey = (value: string | null): value is ThemeKey => (
+  Boolean(value && value in themes)
+);
 
 export default function Home() {
   const [query, setQuery] = useState("");
   const [themeKey, setThemeKey] = useState<ThemeKey>("light");
+  const [themeReady, setThemeReady] = useState(false);
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
   const cursorX = useMotionValue(0);
@@ -114,6 +120,24 @@ export default function Home() {
   const panelX = useTransform(smoothX, [-0.5, 0.5], [18, -18]);
   const panelY = useTransform(smoothY, [-0.5, 0.5], [14, -14]);
   const theme = themes[themeKey];
+
+  useEffect(() => {
+    const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+    if (isThemeKey(savedTheme)) {
+      setThemeKey(savedTheme);
+    }
+    setThemeReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (!themeReady) return;
+    window.localStorage.setItem(THEME_STORAGE_KEY, themeKey);
+  }, [themeKey, themeReady]);
+
+  const selectTheme = (key: ThemeKey) => {
+    setThemeKey(key);
+    window.localStorage.setItem(THEME_STORAGE_KEY, key);
+  };
 
   const filteredApps = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -157,7 +181,7 @@ export default function Home() {
             <button
               key={key}
               type="button"
-              onClick={() => setThemeKey(key)}
+              onClick={() => selectTheme(key)}
               className={`flex cursor-pointer items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
                 themeKey === key ? "bg-[#1a73e8] text-white" : `${theme.hover}`
               }`}

@@ -14,7 +14,7 @@ const Page = () => {
   }, [])
 
   return (
-    <div className='w-full h-full bg-black overflow-hidden'>
+    <div className='h-dvh w-full bg-black overflow-hidden'>
       <Navbar query={query} onQueryChange={setQuery} />
       <Content query={query} onQueryChange={setQuery} onNowPlayingChange={updateNowPlaying} />
       <Footer nowPlaying={nowPlaying} />

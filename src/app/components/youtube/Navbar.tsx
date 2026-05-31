@@ -35,32 +35,32 @@ const Navbar: React.FC<NavbarProps> = ({ setIsSidebarOpen }) => {
 
   return (
     <motion.div
-      className="fixed left-0 top-0 z-[1000] flex w-full items-center justify-between bg-white p-2 px-3 text-black"
+      className="fixed left-0 top-0 z-[1000] flex w-full items-center justify-between gap-2 bg-white p-2 px-3 text-black"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.5 }}
     >
       <motion.div
-        className="flex items-center gap-2"
+        className="flex min-w-0 items-center gap-2"
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
       >
         <motion.span
           onClick={setIsSidebarOpen}
-          className="p-2 rounded-full cursor-pointer hover:bg-gray-200 items-center flex justify-center"
+          className="flex cursor-pointer items-center justify-center rounded-full p-2 hover:bg-gray-200 max-sm:p-1.5"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
         >
           <Menu className="w-12 h-12" />
         </motion.span>
         <motion.div
-          className="text-xl font-bold cursor-pointer"
+          className="min-w-0 cursor-pointer text-xl font-bold"
           whileHover={{ scale: 1.05 }}
         >
           <img
-            className="h-5"
+            className="h-5 max-sm:h-4"
             src="https://upload.wikimedia.org/wikipedia/commons/2/20/YouTube_2024.svg"
             alt="YouTube Logo"
           />
@@ -133,18 +133,18 @@ const Navbar: React.FC<NavbarProps> = ({ setIsSidebarOpen }) => {
       </motion.div>
 
       <motion.div
-        className="flex items-center gap-2 pr-5 justify-end"
+        className="flex shrink-0 items-center justify-end gap-2 pr-5 max-sm:gap-1 max-sm:pr-0"
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
       >
         <motion.span
-          className="h-full p-1.5 px-3 rounded-full text-sm cursor-pointer bg-[#f0f0f0] hover:bg-[#f8f8f8] items-center flex justify-center"
+          className="flex h-full cursor-pointer items-center justify-center rounded-full bg-[#f0f0f0] p-1.5 px-3 text-sm hover:bg-[#f8f8f8] max-sm:h-9 max-sm:w-9 max-sm:px-0"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <Add />
-          Create
+          <span className="max-sm:hidden">Create</span>
         </motion.span>
         <motion.span
           className="p-2 max-sm:hidden rounded-full cursor-pointer hover:bg-gray-200 items-center flex justify-center"

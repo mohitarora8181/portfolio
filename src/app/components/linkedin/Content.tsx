@@ -89,7 +89,7 @@ const Content = ({ query, onQueryChange, activeSection, onSectionChange }: Conte
     };
 
     return (
-        <div className="mx-auto grid w-full max-w-[1188px] px-10 grid-cols-[225px_minmax(0,555px)_300px] items-start gap-6 pt-6 max-lg:grid-cols-[225px_minmax(0,555px)] max-sm:block max-sm:px-2 max-sm:pt-2">
+        <div className="mx-auto grid w-full max-w-[1188px] grid-cols-[225px_minmax(0,555px)_300px] items-start gap-6 px-10 pt-6 max-lg:grid-cols-[225px_minmax(0,555px)] max-sm:block max-sm:px-2 max-sm:pb-16 max-sm:pt-2">
             <aside className="sticky top-[68px] self-start max-sm:hidden flex flex-col gap-2">
                 <motion.div
                     initial={{ opacity: 0 }}
@@ -170,7 +170,7 @@ const Content = ({ query, onQueryChange, activeSection, onSectionChange }: Conte
                             className="h-[48px] w-full rounded-full border border-gray-400 px-5 text-sm font-semibold outline-none placeholder:text-gray-700 hover:bg-gray-50"
                         />
                     </span>
-                    <div className="mt-3 grid grid-cols-3 text-sm font-semibold text-gray-600">
+                    <div className="mt-3 grid grid-cols-3 text-sm font-semibold text-gray-600 max-sm:text-xs">
                         <button type="button" onClick={() => pickSection('Projects')} className="flex items-center justify-center gap-2 rounded-lg p-3 hover:bg-gray-100">
                             <OndemandVideo className="text-[#5f9b41]" /> Projects
                         </button>

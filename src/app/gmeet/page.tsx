@@ -19,7 +19,7 @@ const Page = () => {
     };
 
     return (
-        <div className='h-screen w-full overflow-hidden bg-[#202124]'>
+        <div className='h-dvh w-full overflow-hidden bg-[#202124]'>
             <VideoTiles
                 activePanel={activePanel}
                 selectedTopic={selectedTopic}

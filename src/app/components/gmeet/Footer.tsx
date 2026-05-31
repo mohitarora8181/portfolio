@@ -112,22 +112,22 @@ const Footer: React.FC<FooterProps> = ({
     ];
 
     return (
-        <footer className="fixed bottom-0 left-0 right-0 z-40 bg-[#202124] px-6 py-4 max-sm:px-3">
-            <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 max-lg:grid-cols-[1fr_auto] max-sm:flex max-sm:flex-col">
+        <footer className="fixed bottom-0 left-0 right-0 z-40 bg-[#202124] px-6 py-4 max-sm:px-2 max-sm:py-3">
+            <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 max-lg:grid-cols-[1fr_auto] max-sm:flex max-sm:flex-col max-sm:gap-2">
                 <div className="flex min-w-0 items-center gap-3 text-sm text-white max-sm:hidden">
                     <span>{currentTime}</span>
                     <span className="text-gray-500">|</span>
                     <span className="truncate">{gmeetProfile.meetingCode}</span>
                 </div>
 
-                <div className="flex items-center gap-3">
-                    {centerControls.map((control) => (
+                <div className="flex items-center gap-3 max-sm:w-full max-sm:justify-center max-sm:gap-2">
+                    {centerControls.slice(0, 5).map((control) => (
                         <button
                             key={control.label}
                             type="button"
                             aria-label={control.label}
                             onClick={control.onClick}
-                            className={`grid h-12 w-12 place-items-center rounded-full text-white transition ${
+                            className={`grid h-12 w-12 place-items-center rounded-full text-white transition max-sm:h-10 max-sm:w-10 ${
                                 control.danger
                                     ? 'bg-[#ea4335] hover:bg-[#d93025]'
                                     : control.active
@@ -141,13 +141,13 @@ const Footer: React.FC<FooterProps> = ({
                     <button
                         type="button"
                         aria-label="Leave call"
-                        className="grid h-12 min-w-[72px] place-items-center rounded-full bg-[#ea4335] px-6 text-white hover:bg-[#d93025]"
+                        className="grid h-12 min-w-[72px] place-items-center rounded-full bg-[#ea4335] px-6 text-white hover:bg-[#d93025] max-sm:h-10 max-sm:min-w-[56px] max-sm:px-4"
                     >
                         <CallEnd />
                     </button>
                 </div>
 
-                <div className="flex items-center justify-end gap-1 max-lg:hidden">
+                <div className="flex items-center justify-end gap-1 max-lg:justify-center max-sm:w-full">
                     {rightControls.map((control) => (
                         <button
                             key={control.label}
@@ -161,10 +161,10 @@ const Footer: React.FC<FooterProps> = ({
                             {control.icon}
                         </button>
                     ))}
-                    <button className="grid h-10 w-10 place-items-center rounded-full text-white hover:bg-[#3c4043]">
+                    <button className="grid h-10 w-10 place-items-center rounded-full text-white hover:bg-[#3c4043] max-sm:hidden">
                         <Apps />
                     </button>
-                    <button className="grid h-10 w-10 place-items-center rounded-full text-white hover:bg-[#3c4043]">
+                    <button className="grid h-10 w-10 place-items-center rounded-full text-white hover:bg-[#3c4043] max-sm:hidden">
                         <LockPersonOutlined />
                     </button>
                 </div>

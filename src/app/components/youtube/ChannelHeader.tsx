@@ -12,14 +12,14 @@ const ChannelHeader = () => {
             transition={{ duration: 0.35 }}
         >
 
-            <div className="mt-5 flex items-start gap-4">
+            <div className="mt-5 flex items-start gap-4 max-sm:gap-3">
                 <img
                     src={youtubeChannel.avatar}
                     alt={youtubeChannel.name}
                     className="h-24 w-24 rounded-full object-cover max-sm:h-16 max-sm:w-16"
                 />
                 <div className="min-w-0 flex-1">
-                    <h2 className="text-3xl font-black max-sm:text-2xl">{youtubeChannel.name}</h2>
+                    <h2 className="break-words text-3xl font-black leading-tight max-sm:text-2xl">{youtubeChannel.name}</h2>
                     <p className="mt-1 text-sm text-gray-600">
                         {youtubeChannel.handle} | {youtubeChannel.subscribers}
                     </p>
@@ -49,13 +49,13 @@ const ChannelHeader = () => {
                 </div>
             </div>
 
-            <div className="mt-5 flex flex-wrap gap-2 border-t border-gray-100 pt-4">
+            <div className="mt-5 flex max-w-full flex-wrap gap-2 border-t border-gray-100 pt-4">
                 {youtubeChannel.socials.map((social) => (
                     <a
                         key={social.label}
                         href={social.href}
                         target="_blank"
-                        className="inline-flex items-center gap-1 rounded-full bg-[#f2f2f2] px-4 py-2 text-sm font-semibold text-gray-800 hover:bg-[#e5e5e5]"
+                        className="inline-flex min-w-0 items-center gap-1 rounded-full bg-[#f2f2f2] px-4 py-2 text-sm font-semibold text-gray-800 hover:bg-[#e5e5e5] max-sm:px-3"
                     >
                         {social.label}
                         <OpenInNew sx={{ fontSize: 14 }} />

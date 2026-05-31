@@ -39,7 +39,7 @@ export const Chats: React.FC<ChatsProps> = ({ setSelectedChat, selectedChat }) =
 
     return (
         <motion.aside
-            className="flex h-full w-[450px] min-w-[450px] flex-col overflow-hidden bg-white max-sm:w-full max-sm:min-w-full"
+            className="flex h-full w-[450px] min-w-[450px] flex-col overflow-hidden bg-white max-sm:w-full max-sm:min-w-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}

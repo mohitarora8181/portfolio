@@ -53,17 +53,17 @@ const VideoTiles: React.FC<VideoTilesProps> = ({
     ].slice(0, 4);
 
     return (
-        <main className={`flex h-full flex-col gap-3 bg-[#202124] p-4 pb-[92px] transition-all duration-300 ${panelOpen ? 'pr-[392px]' : 'pr-4'} max-lg:pr-4 max-sm:p-2 max-sm:pb-[112px]`}>
+        <main className={`flex h-full flex-col gap-3 bg-[#202124] p-4 pb-[92px] transition-all duration-300 ${panelOpen ? 'pr-[392px]' : 'pr-4'} max-lg:pr-4 max-sm:p-2 max-sm:pb-[148px]`}>
             <div className={`grid min-h-0 flex-1 gap-3 ${panelOpen ? 'grid-cols-1' : 'grid-cols-[minmax(0,1fr)_264px]'} max-xl:grid-cols-1`}>
-                <section className="relative min-h-0 overflow-hidden rounded-[18px] bg-[#303134] shadow-2xl">
-                    <div className="absolute left-4 top-4 z-10 flex items-center gap-2 rounded-full bg-black/45 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur">
+                <section className="relative min-h-0 overflow-hidden rounded-[18px] bg-[#303134] shadow-2xl max-sm:rounded-xl">
+                    <div className="absolute left-4 top-4 z-10 flex max-w-[calc(100%-2rem)] items-center gap-2 rounded-full bg-black/45 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur max-sm:left-3 max-sm:top-3">
                         <PresentToAll sx={{ fontSize: 16 }} />
-                        {gmeetProfile.firstName} is presenting
+                        <span className="truncate">{gmeetProfile.firstName} is presenting</span>
                     </div>
 
                     <div className="flex h-full items-center justify-center p-6 max-xl:p-5 max-sm:p-3">
                         <div className="flex h-full w-full max-w-[1080px] flex-col overflow-hidden rounded-xl bg-[#f8fafd] shadow-2xl ring-1 ring-black/15">
-                            <div className="flex h-12 shrink-0 items-center justify-between border-b border-gray-200 bg-white px-5">
+                            <div className="flex h-12 shrink-0 items-center justify-between border-b border-gray-200 bg-white px-5 max-sm:px-3">
                                 <div className="flex items-center gap-2">
                                     <span className="h-3 w-3 rounded-full bg-[#ea4335]" />
                                     <span className="h-3 w-3 rounded-full bg-[#fbbc04]" />
@@ -72,7 +72,7 @@ const VideoTiles: React.FC<VideoTilesProps> = ({
                                 <p className="truncate text-sm font-semibold text-gray-600">{gmeetProfile.meetingCode}</p>
                             </div>
 
-                            <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_250px] gap-6 overflow-hidden px-8 py-7 max-2xl:grid-cols-1 max-xl:px-7 max-xl:py-6 max-sm:px-4 max-sm:py-5">
+                            <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_250px] gap-6 overflow-hidden px-8 py-7 max-2xl:grid-cols-1 max-xl:px-7 max-xl:py-6 max-sm:px-3 max-sm:py-4">
                                 <div className="flex min-h-0 min-w-0 flex-col overflow-hidden">
                                     <p className="text-xs font-bold uppercase tracking-wide text-[#1a73e8]">{selectedTopic.type}</p>
                                     <h1 className="mt-3 line-clamp-2 text-3xl font-semibold leading-[1.1] text-[#202124] max-xl:text-2xl max-sm:text-xl">
@@ -134,11 +134,11 @@ const VideoTiles: React.FC<VideoTilesProps> = ({
                         </div>
                     </div>
 
-                    <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-lg bg-black/55 px-3 py-2 text-sm font-semibold text-white backdrop-blur">
+                    <div className="absolute bottom-4 left-4 flex max-w-[calc(100%-2rem)] items-center gap-2 rounded-lg bg-black/55 px-3 py-2 text-sm font-semibold text-white backdrop-blur max-sm:left-3 max-sm:text-xs">
                         {!micOn && <MicOff sx={{ fontSize: 18 }} />}
                         {!cameraOn && <VideocamOff sx={{ fontSize: 18 }} />}
                         {handRaised && <BackHandOutlined sx={{ fontSize: 18 }} className="text-[#fdd663]" />}
-                        <span>{gmeetProfile.name}</span>
+                        <span className="truncate">{gmeetProfile.name}</span>
                     </div>
                 </section>
 
@@ -204,7 +204,7 @@ const VideoTiles: React.FC<VideoTilesProps> = ({
                             key={topic.id}
                             type="button"
                             onClick={() => onSelectTopic(topic)}
-                            className={`min-w-[220px] rounded-xl border px-4 py-3 text-left transition ${
+                            className={`min-w-[220px] rounded-xl border px-4 py-3 text-left transition max-sm:min-w-[190px] ${
                                 selectedTopic.id === topic.id
                                     ? 'border-[#8ab4f8] bg-[#2b3a55] text-white'
                                     : 'border-white/10 bg-[#303134] text-gray-200 hover:bg-[#3c4043]'
