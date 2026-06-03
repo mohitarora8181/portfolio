@@ -211,11 +211,11 @@ export default function Home() {
           transition={{ duration: 0.55, ease: "easeOut" }}
           className="relative z-10 flex w-full flex-col items-center"
         >
-          <h1 className="select-none text-center text-[82px] font-semibold leading-none tracking-[-0.035em] max-md:text-[64px] max-sm:text-[44px]">
+          <h1 className="select-none text-center text-[82px] font-semibold leading-none tracking-[-0.035em] max-md:text-[64px] max-sm:text-[42px] max-sm:tracking-normal">
             {nameLetters.map((letter, index) => (
               <motion.span
                 key={`${letter}-${index}`}
-                className={letter === " " ? "inline-block w-12 max-sm:w-7" : `${letterColors[index % letterColors.length]} mx-[0.018em] inline-block cursor-pointer`}
+                className={letter === " " ? "inline-block w-12 max-sm:w-10" : `${letterColors[index % letterColors.length]} mx-[0.018em] inline-block cursor-pointer`}
                 initial={{ opacity: 0, y: 18, rotateX: -80 }}
                 animate={{ opacity: 1, y: 0, rotateX: 0 }}
                 whileHover={{ rotateY: 180, scale: 1.08 }}
@@ -240,6 +240,27 @@ export default function Home() {
           >
             {data.meta.tagline}
           </motion.p>
+
+          <div className="mt-4 hidden items-center justify-center gap-2 max-sm:flex">
+            <a
+              href={data.meta.links.github}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub"
+              className={`grid h-10 w-10 place-items-center rounded-full border shadow-sm ${theme.panel}`}
+            >
+              <GitHub sx={{ fontSize: 19 }} />
+            </a>
+            <a
+              href={data.meta.links.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn"
+              className={`grid h-10 w-10 place-items-center rounded-full border shadow-sm ${theme.panel}`}
+            >
+              <LinkedIn sx={{ fontSize: 19 }} />
+            </a>
+          </div>
 
           <motion.div
             style={{ x: panelX, y: panelY }}

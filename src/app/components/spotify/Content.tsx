@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Add, PlayArrow, Search } from '@mui/icons-material';
+import { Add, Article, GitHub, LinkedIn, PlayArrow, Search } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import {
     spotifyActivity,
@@ -10,6 +10,12 @@ import {
 import type { SpotifyAlbum, SpotifyPlaylist } from './spotifyPortfolio';
 
 const filterOptions = ['All', 'Projects', 'Experience', 'Skills'];
+
+const socialLinks = [
+    { label: 'GitHub', href: spotifyProfile.links.github, icon: GitHub },
+    { label: 'LinkedIn', href: spotifyProfile.links.linkedin, icon: LinkedIn },
+    { label: 'Resume', href: spotifyProfile.resumeUrl, icon: Article },
+].filter((link) => Boolean(link.href));
 
 type ContentProps = {
     query: string;
@@ -135,6 +141,21 @@ const Content = ({ query, onQueryChange, onNowPlayingChange }: ContentProps) => 
                             className='w-full bg-transparent p-2 text-sm text-white outline-none placeholder:text-gray-500'
                         />
                     </label>
+
+                    <div className='mt-3 flex gap-2 overflow-x-auto scrollbar-none'>
+                        {socialLinks.map(({ label, href, icon: Icon }) => (
+                            <a
+                                key={label}
+                                href={href}
+                                target='_blank'
+                                rel='noreferrer'
+                                className='inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#242424] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#2a2a2a]'
+                            >
+                                <Icon sx={{ fontSize: 15 }} />
+                                {label}
+                            </a>
+                        ))}
+                    </div>
 
                     <div className='mt-4 max-h-[calc(100dvh-390px)] space-y-1 overflow-y-auto scrollbar-none max-sm:max-h-none'>
                         {activeFilter !== 'Skills' && visibleAlbums.slice(0, 4).map((album) => (

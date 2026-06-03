@@ -17,6 +17,8 @@ import {
     Send,
     Article,
     ThumbUpOffAlt,
+    GitHub,
+    LinkedIn,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import {
@@ -64,6 +66,12 @@ const postActions = [
     { label: 'Repost', icon: <Repeat sx={{ fontSize: 22 }} /> },
     { label: 'Send', icon: <Send sx={{ fontSize: 22 }} /> },
 ];
+
+const socialLinks = [
+    { label: 'GitHub', href: linkedinProfile.links.github, icon: GitHub },
+    { label: 'LinkedIn', href: linkedinProfile.links.linkedin, icon: LinkedIn },
+    { label: 'Resume', href: linkedinProfile.resumeUrl, icon: Article },
+].filter((link) => Boolean(link.href));
 
 const Content = ({ query, onQueryChange, activeSection, onSectionChange }: ContentProps) => {
     const [activePostId, setActivePostId] = useState<string | null>(null);
@@ -180,6 +188,20 @@ const Content = ({ query, onQueryChange, activeSection, onSectionChange }: Conte
                         <button type="button" onClick={openResume} className="flex items-center justify-center gap-2 rounded-lg p-3 hover:bg-gray-100">
                             <Article className="text-[#e16745]" /> Resume
                         </button>
+                    </div>
+                    <div className="mt-2 flex gap-2 overflow-x-auto border-t border-gray-100 pt-3 scrollbar-none">
+                        {socialLinks.map(({ label, href, icon: Icon }) => (
+                            <a
+                                key={label}
+                                href={href}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-gray-300 px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                            >
+                                <Icon sx={{ fontSize: 15 }} />
+                                {label}
+                            </a>
+                        ))}
                     </div>
                 </motion.div>
 

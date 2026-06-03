@@ -34,6 +34,7 @@ export const whatsappProfile = {
     email: data.meta.email,
     phone: data.meta.phone,
     resumeUrl: data.meta.resume_url,
+    links: data.meta.links,
 };
 
 export const portfolioChats: Chat[] = [

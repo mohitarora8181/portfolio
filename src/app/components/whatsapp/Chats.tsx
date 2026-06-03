@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Search, Group, MoreVert, AddCommentOutlined } from "@mui/icons-material";
+import { Article, GitHub, Group, LinkedIn, MoreVert, Search, AddCommentOutlined } from "@mui/icons-material";
 import { portfolioChats, whatsappProfile } from "./whatsappPortfolio";
 import type { Chat, ChatCategory } from "./whatsappPortfolio";
 
@@ -17,6 +17,12 @@ const filters: { label: string; value: ChatCategory }[] = [
     { label: "Favorites", value: "favorites" },
     { label: "Groups", value: "groups" },
 ];
+
+const socialLinks = [
+    { label: "GitHub", href: whatsappProfile.links.github, icon: GitHub },
+    { label: "LinkedIn", href: whatsappProfile.links.linkedin, icon: LinkedIn },
+    { label: "Resume", href: whatsappProfile.resumeUrl, icon: Article },
+].filter((link) => Boolean(link.href));
 
 export const Chats: React.FC<ChatsProps> = ({ setSelectedChat, selectedChat }) => {
     const [query, setQuery] = useState("");
@@ -83,6 +89,21 @@ export const Chats: React.FC<ChatsProps> = ({ setSelectedChat, selectedChat }) =
                         >
                             {filter.label}
                         </button>
+                    ))}
+                </div>
+
+                <div className="mb-3 flex gap-2 overflow-x-auto scrollbar-none">
+                    {socialLinks.map(({ label, href, icon: Icon }) => (
+                        <a
+                            key={label}
+                            href={href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#f0f2f5] px-3 py-1.5 text-xs font-semibold text-[#54656f] hover:bg-[#e9edef]"
+                        >
+                            <Icon sx={{ fontSize: 15 }} />
+                            {label}
+                        </a>
                     ))}
                 </div>
             </div>

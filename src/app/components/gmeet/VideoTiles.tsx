@@ -1,7 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import {
     BackHandOutlined,
+    Article,
+    GitHub,
     Groups,
+    LinkedIn,
     MicOff,
     PresentToAll,
     VideocamOff,
@@ -29,6 +32,12 @@ const topicTypes: Array<{ label: string; value: GmeetTopic['type'] | 'all' }> = 
     { label: 'Skills', value: 'skill' },
     { label: 'Achievements', value: 'achievement' },
 ];
+
+const socialLinks = [
+    { label: 'GitHub', href: gmeetProfile.links.github, icon: GitHub },
+    { label: 'LinkedIn', href: gmeetProfile.links.linkedin, icon: LinkedIn },
+    { label: 'Resume', href: gmeetProfile.resumeUrl, icon: Article },
+].filter((link) => Boolean(link.href));
 
 const VideoTiles: React.FC<VideoTilesProps> = ({
     activePanel,
@@ -79,6 +88,21 @@ const VideoTiles: React.FC<VideoTilesProps> = ({
                                         {selectedTopic.title}
                                     </h1>
                                     <p className="mt-3 line-clamp-2 text-sm font-medium leading-5 text-gray-600 max-sm:text-xs">{selectedTopic.subtitle}</p>
+
+                                    <div className="mt-4 flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+                                        {socialLinks.map(({ label, href, icon: Icon }) => (
+                                            <a
+                                                key={label}
+                                                href={href}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#d7e3fc] bg-white px-3 py-1.5 text-xs font-semibold text-[#1a73e8] shadow-sm hover:bg-[#eef3fd]"
+                                            >
+                                                <Icon sx={{ fontSize: 15 }} />
+                                                {label}
+                                            </a>
+                                        ))}
+                                    </div>
 
                                     <div className="mt-5 grid shrink-0 grid-cols-3 gap-3 max-lg:grid-cols-2 max-sm:grid-cols-1">
                                         {selectedTopic.meta.map((item) => (

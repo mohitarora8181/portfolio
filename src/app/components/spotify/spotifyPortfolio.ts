@@ -41,6 +41,7 @@ export const spotifyProfile = {
     avatar: data.meta.avatar,
     email: data.meta.email,
     resumeUrl: data.meta.resume_url,
+    links: data.meta.links,
 };
 
 export const spotifyPlaylists: SpotifyPlaylist[] = [
