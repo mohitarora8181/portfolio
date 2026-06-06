@@ -162,7 +162,7 @@ export default function Home() {
         style={{ left: glowX, top: glowY }}
         className={`pointer-events-none fixed z-0 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[90px] ${theme.glow}`}
       />
-      <section className="relative flex h-full flex-col items-center px-4 pt-[12vh] max-md:pt-[9vh]">
+      <section className="relative flex h-full flex-col items-center px-4 pt-[12vh] max-md:pt-[9vh] max-sm:pt-[15vh]">
         <motion.div
           style={{ x: backgroundX, y: backgroundY }}
           className="pointer-events-none absolute inset-0 opacity-70"
@@ -211,11 +211,11 @@ export default function Home() {
           transition={{ duration: 0.55, ease: "easeOut" }}
           className="relative z-10 flex w-full flex-col items-center"
         >
-          <h1 className="select-none text-center text-[82px] font-semibold leading-none tracking-[-0.035em] max-md:text-[64px] max-sm:text-[42px] max-sm:tracking-normal">
+          <h1 className="select-none text-center text-[82px] font-semibold leading-none tracking-[-0.035em] max-md:text-[64px] max-sm:text-[42px]">
             {nameLetters.map((letter, index) => (
               <motion.span
                 key={`${letter}-${index}`}
-                className={letter === " " ? "inline-block w-12 max-sm:w-10" : `${letterColors[index % letterColors.length]} mx-[0.018em] inline-block cursor-pointer`}
+                className={letter === " " ? "inline-block w-12 max-sm:w-7" : `${letterColors[index % letterColors.length]} mx-[0.018em] inline-block cursor-pointer`}
                 initial={{ opacity: 0, y: 18, rotateX: -80 }}
                 animate={{ opacity: 1, y: 0, rotateX: 0 }}
                 whileHover={{ rotateY: 180, scale: 1.08 }}
