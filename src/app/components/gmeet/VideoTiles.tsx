@@ -6,7 +6,6 @@ import {
     Groups,
     LinkedIn,
     MicOff,
-    PresentToAll,
     VideocamOff,
 } from '@mui/icons-material';
 import {
@@ -60,109 +59,95 @@ const VideoTiles: React.FC<VideoTilesProps> = ({
         selectedParticipant,
         ...gmeetParticipants.filter((participant) => participant.id !== selectedParticipant.id),
     ].slice(0, 4);
+    const primaryDetails = selectedTopic.details.slice(0, isSkillTopic ? 10 : 4);
 
     return (
-        <main className={`flex h-full flex-col gap-3 bg-[#202124] p-4 pb-[92px] transition-all duration-300 ${panelOpen ? 'pr-[392px]' : 'pr-4'} max-lg:pr-4 max-sm:p-2 max-sm:pb-[148px]`}>
-            <div className={`grid min-h-0 flex-1 gap-3 ${panelOpen ? 'grid-cols-1' : 'grid-cols-[minmax(0,1fr)_264px]'} max-xl:grid-cols-1`}>
-                <section className="relative min-h-0 overflow-hidden rounded-[18px] bg-[#303134] shadow-2xl max-sm:rounded-xl">
-                    <div className="absolute left-4 top-4 z-10 flex max-w-[calc(100%-2rem)] items-center gap-2 rounded-full bg-black/45 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur max-sm:left-3 max-sm:top-3">
-                        <PresentToAll sx={{ fontSize: 16 }} />
-                        <span className="truncate">{gmeetProfile.firstName} is presenting</span>
-                    </div>
-
-                    <div className="flex h-full items-center justify-center p-6 max-xl:p-5 max-sm:p-3">
-                        <div className="flex h-full w-full max-w-[1080px] flex-col overflow-hidden rounded-xl bg-[#f8fafd] shadow-2xl ring-1 ring-black/15">
-                            <div className="flex h-12 shrink-0 items-center justify-between border-b border-gray-200 bg-white px-5 max-sm:px-3">
-                                <div className="flex items-center gap-2">
-                                    <span className="h-3 w-3 rounded-full bg-[#ea4335]" />
-                                    <span className="h-3 w-3 rounded-full bg-[#fbbc04]" />
-                                    <span className="h-3 w-3 rounded-full bg-[#34a853]" />
+        <main className={`flex h-full flex-col gap-3 overflow-hidden bg-[#202124] p-4 pb-[92px] transition-all duration-300 ${panelOpen ? 'pr-[392px]' : 'pr-4'} max-lg:pr-4 max-sm:overflow-y-auto max-sm:p-2 max-sm:pb-[132px] max-sm:scrollbar-none`}>
+            <div className={`grid min-h-0 flex-1 gap-3 max-sm:flex-none ${panelOpen ? 'grid-cols-1' : 'grid-cols-[minmax(0,1fr)_280px]'} max-xl:grid-cols-1`}>
+                <section className="grid min-h-0 gap-3 overflow-hidden rounded-[22px] bg-[#202124] max-lg:overflow-y-auto max-lg:scrollbar-none max-sm:overflow-visible">
+                    <div className="grid min-h-0 grid-cols-[minmax(0,1.35fr)_minmax(320px,0.65fr)] gap-3 max-lg:grid-cols-1 max-sm:min-h-0">
+                        <div className="relative flex min-h-[360px] flex-col overflow-hidden rounded-[22px] bg-[#2b2f31] p-5 ring-1 ring-white/10 max-sm:min-h-[240px] max-sm:rounded-2xl max-sm:p-3">
+                            <div className="flex items-center justify-between gap-3">
+                                <div className="min-w-0 truncate rounded-full bg-black/25 px-3 py-1.5 text-xs font-semibold text-white">
+                                    {gmeetProfile.meetingCode}
                                 </div>
-                                <p className="truncate text-sm font-semibold text-gray-600">{gmeetProfile.meetingCode}</p>
+                                <div className="flex shrink-0 gap-1.5">
+                                    {!micOn && <span className="grid h-8 w-8 place-items-center rounded-full bg-[#ea4335] text-white"><MicOff sx={{ fontSize: 17 }} /></span>}
+                                    {!cameraOn && <span className="grid h-8 w-8 place-items-center rounded-full bg-[#ea4335] text-white"><VideocamOff sx={{ fontSize: 17 }} /></span>}
+                                    {handRaised && <span className="grid h-8 w-8 place-items-center rounded-full bg-[#fdd663] text-[#202124]"><BackHandOutlined sx={{ fontSize: 17 }} /></span>}
+                                </div>
                             </div>
 
-                            <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_250px] gap-6 overflow-hidden px-8 py-7 max-2xl:grid-cols-1 max-xl:px-7 max-xl:py-6 max-sm:px-3 max-sm:py-4">
-                                <div className="flex min-h-0 min-w-0 flex-col overflow-hidden">
-                                    <p className="text-xs font-bold uppercase tracking-wide text-[#1a73e8]">{selectedTopic.type}</p>
-                                    <h1 className="mt-3 line-clamp-2 text-3xl font-semibold leading-[1.1] text-[#202124] max-xl:text-2xl max-sm:text-xl">
-                                        {selectedTopic.title}
-                                    </h1>
-                                    <p className="mt-3 line-clamp-2 text-sm font-medium leading-5 text-gray-600 max-sm:text-xs">{selectedTopic.subtitle}</p>
-
-                                    <div className="mt-4 flex gap-2 overflow-x-auto pb-1 scrollbar-none">
-                                        {socialLinks.map(({ label, href, icon: Icon }) => (
-                                            <a
-                                                key={label}
-                                                href={href}
-                                                target="_blank"
-                                                rel="noreferrer"
-                                                className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#d7e3fc] bg-white px-3 py-1.5 text-xs font-semibold text-[#1a73e8] shadow-sm hover:bg-[#eef3fd]"
-                                            >
-                                                <Icon sx={{ fontSize: 15 }} />
-                                                {label}
-                                            </a>
-                                        ))}
-                                    </div>
-
-                                    <div className="mt-5 grid shrink-0 grid-cols-3 gap-3 max-lg:grid-cols-2 max-sm:grid-cols-1">
-                                        {selectedTopic.meta.map((item) => (
-                                            <div key={`${item.label}-${item.value}`} className="min-w-0 rounded-xl border border-gray-200 bg-white px-4 py-3 shadow-sm">
-                                                <p className="text-[11px] font-bold uppercase text-gray-500">{item.label}</p>
-                                                <p className="mt-1 truncate text-xs font-semibold capitalize text-[#202124]">{item.value}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-
-                                    {isSkillTopic ? (
-                                        <div className="mt-5 min-h-0 flex-1 overflow-y-auto rounded-2xl border border-[#d7e3fc] bg-[#eef3fd] p-5 scrollbar-none max-sm:p-4">
-                                            <div className="grid grid-cols-4 gap-2.5 max-2xl:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1">
-                                                {selectedTopic.details.map((skill) => (
-                                                    <div key={`${selectedTopic.id}-${skill}`} className="truncate rounded-full bg-white px-4 py-2 text-xs font-semibold text-[#202124] shadow-sm">
-                                                        {skill}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
+                            <div className="flex flex-1 flex-col items-center justify-center text-center">
+                                <div className="grid h-36 w-36 place-items-center overflow-hidden rounded-full bg-[#3c4043] ring-4 ring-[#8ab4f8] max-sm:h-20 max-sm:w-20">
+                                    {cameraOn ? (
+                                        <img src={gmeetProfile.avatar} alt={gmeetProfile.name} className="h-full w-full object-cover" />
                                     ) : (
-                                        <div className="mt-5 min-h-0 flex-1 space-y-3 overflow-y-auto pr-2 scrollbar-none">
-                                            {selectedTopic.details.map((detail, index) => (
-                                                <div key={`${selectedTopic.id}-${detail}`} className="grid grid-cols-[36px_1fr] rounded-xl bg-[#eef3fd] px-4 py-3 text-xs leading-5 text-[#202124]">
-                                                    <span className="font-semibold text-[#1a73e8]">{index + 1}</span>
-                                                    <span>{detail}</span>
-                                                </div>
-                                            ))}
-                                        </div>
+                                        <span className="text-4xl font-semibold text-white">{gmeetProfile.firstName[0]}</span>
                                     )}
                                 </div>
+                                <h2 className="mt-5 text-3xl font-semibold text-white max-sm:mt-3 max-sm:text-xl">{gmeetProfile.name}</h2>
+                                <p className="mt-2 max-w-md text-sm leading-6 text-gray-300 max-sm:line-clamp-2 max-sm:text-xs max-sm:leading-5">{gmeetProfile.tagline}</p>
+                            </div>
 
-                                <aside className="flex min-h-0 min-w-0 flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white p-5 max-2xl:hidden">
-                                    <div className="flex items-center gap-3">
-                                        <img src={selectedParticipant.avatar} alt={selectedParticipant.name} className="h-14 w-14 rounded-full object-cover" />
-                                        <div className="min-w-0">
-                                            <p className="truncate text-xs font-semibold text-[#202124]">{selectedParticipant.name}</p>
-                                            <p className="truncate text-xs text-gray-500">{selectedParticipant.role}</p>
-                                        </div>
-                                    </div>
-                                    <p className="mt-5 line-clamp-4 text-xs leading-5 text-gray-600">{selectedParticipant.note}</p>
-                                    <div className="mt-5 max-h-[180px] overflow-y-auto pr-1 scrollbar-none">
-                                        <div className="flex flex-wrap gap-2">
-                                        {selectedTopic.chips.slice(0, 8).map((chip) => (
-                                            <span key={chip} className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
-                                                {chip}
-                                            </span>
-                                        ))}
-                                        </div>
-                                    </div>
-                                </aside>
+                            <div className="flex items-center justify-between gap-3 rounded-2xl bg-black/25 px-4 py-3 text-white max-sm:px-3 max-sm:py-2.5">
+                                <div className="min-w-0">
+                                    <p className="truncate text-sm font-semibold">Currently discussing</p>
+                                    <p className="truncate text-xs text-gray-300">{selectedTopic.title}</p>
+                                </div>
+                                <span className="shrink-0 rounded-full bg-[#8ab4f8] px-3 py-1 text-xs font-bold text-[#202124]">
+                                    {selectedTopic.type}
+                                </span>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="absolute bottom-4 left-4 flex max-w-[calc(100%-2rem)] items-center gap-2 rounded-lg bg-black/55 px-3 py-2 text-sm font-semibold text-white backdrop-blur max-sm:left-3 max-sm:text-xs">
-                        {!micOn && <MicOff sx={{ fontSize: 18 }} />}
-                        {!cameraOn && <VideocamOff sx={{ fontSize: 18 }} />}
-                        {handRaised && <BackHandOutlined sx={{ fontSize: 18 }} className="text-[#fdd663]" />}
-                        <span className="truncate">{gmeetProfile.name}</span>
+                        <div className="flex min-h-0 flex-col overflow-hidden rounded-[22px] bg-[#f8fafd] p-5 text-[#202124] max-sm:overflow-visible max-sm:rounded-2xl max-sm:p-4">
+                            <div className="flex flex-wrap gap-2">
+                                {selectedTopic.meta.map((item) => (
+                                    <span key={`${item.label}-${item.value}`} className="rounded-full bg-[#e8f0fe] px-3 py-1 text-xs font-semibold text-[#1a73e8]">
+                                        {item.label}: {item.value}
+                                    </span>
+                                ))}
+                            </div>
+                            <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-normal max-sm:text-xl">{selectedTopic.title}</h1>
+                            <p className="mt-2 text-sm leading-6 text-gray-600 max-sm:text-xs max-sm:leading-5">{selectedTopic.subtitle}</p>
+
+                            <div className="mt-4 flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+                                {socialLinks.map(({ label, href, icon: Icon }) => (
+                                    <a
+                                        key={label}
+                                        href={href}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#d7e3fc] bg-white px-3 py-1.5 text-xs font-semibold text-[#1a73e8] hover:bg-[#eef3fd]"
+                                    >
+                                        <Icon sx={{ fontSize: 15 }} />
+                                        {label}
+                                    </a>
+                                ))}
+                            </div>
+
+                            <div className="mt-4 min-h-0 flex-1 overflow-y-auto scrollbar-none max-sm:flex-none max-sm:overflow-visible">
+                                {isSkillTopic ? (
+                                    <div className="flex flex-wrap gap-2">
+                                        {primaryDetails.map((skill) => (
+                                            <span key={`${selectedTopic.id}-${skill}`} className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 ring-1 ring-gray-200">
+                                                {skill}
+                                            </span>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="space-y-2">
+                                        {primaryDetails.map((detail, index) => (
+                                            <div key={`${selectedTopic.id}-${detail}`} className="grid grid-cols-[30px_1fr] rounded-xl bg-white px-3 py-2 text-sm leading-6 ring-1 ring-gray-200 max-sm:grid-cols-[24px_1fr] max-sm:text-xs max-sm:leading-5">
+                                                <span className="font-semibold text-[#1a73e8]">{index + 1}</span>
+                                                <span>{detail}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -177,7 +162,7 @@ const VideoTiles: React.FC<VideoTilesProps> = ({
                                 key={participant.id}
                                 type="button"
                                 onClick={() => topic && onSelectTopic(topic)}
-                                className={`relative overflow-hidden rounded-[18px] bg-[#303134] text-left transition ${
+                                className={`relative overflow-hidden rounded-[22px] bg-[#303134] text-left shadow-lg transition ${
                                     selected ? 'ring-2 ring-[#8ab4f8]' : 'hover:ring-1 hover:ring-white/30'
                                 }`}
                             >
@@ -207,14 +192,14 @@ const VideoTiles: React.FC<VideoTilesProps> = ({
                 )}
             </div>
 
-            <div className="shrink-0 rounded-2xl bg-[#202124] p-2 shadow-xl ring-1 ring-white/10">
+            <div className="shrink-0 rounded-2xl bg-[#202124] p-2 shadow-xl ring-1 ring-white/10 max-sm:rounded-xl max-sm:p-1.5">
                 <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
                     {topicTypes.map((type) => (
                         <button
                             key={type.value}
                             type="button"
                             onClick={() => setActiveType(type.value)}
-                            className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold ${
+                            className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold max-sm:px-3 max-sm:py-1.5 max-sm:text-xs ${
                                 activeType === type.value ? 'bg-[#8ab4f8] text-[#202124]' : 'bg-[#303134] text-gray-200 hover:bg-[#3c4043]'
                             }`}
                         >
@@ -228,7 +213,7 @@ const VideoTiles: React.FC<VideoTilesProps> = ({
                             key={topic.id}
                             type="button"
                             onClick={() => onSelectTopic(topic)}
-                            className={`min-w-[220px] rounded-xl border px-4 py-3 text-left transition max-sm:min-w-[190px] ${
+                            className={`min-w-[220px] rounded-xl border px-4 py-3 text-left transition max-sm:min-w-[172px] max-sm:px-3 max-sm:py-2.5 ${
                                 selectedTopic.id === topic.id
                                     ? 'border-[#8ab4f8] bg-[#2b3a55] text-white'
                                     : 'border-white/10 bg-[#303134] text-gray-200 hover:bg-[#3c4043]'

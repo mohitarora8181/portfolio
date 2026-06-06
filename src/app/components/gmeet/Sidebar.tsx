@@ -60,7 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     };
 
     return (
-        <aside className="fixed bottom-[88px] right-4 top-4 z-30 w-[360px] overflow-hidden rounded-3xl bg-white text-[#202124] shadow-2xl max-lg:bottom-[116px] max-lg:left-3 max-lg:right-3 max-lg:top-auto max-lg:max-h-[62dvh] max-lg:w-auto max-sm:bottom-[148px] max-sm:rounded-2xl">
+        <aside className="fixed bottom-[88px] right-4 top-4 z-30 w-[360px] overflow-hidden rounded-3xl bg-white text-[#202124] shadow-2xl max-lg:bottom-[108px] max-lg:left-3 max-lg:right-3 max-lg:top-auto max-lg:max-h-[62dvh] max-lg:w-auto max-sm:bottom-[116px] max-sm:rounded-2xl">
             <div className="flex h-full flex-col">
                 <div className="flex items-center justify-between border-b px-5 py-4">
                     <div>

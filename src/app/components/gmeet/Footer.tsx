@@ -112,22 +112,22 @@ const Footer: React.FC<FooterProps> = ({
     ];
 
     return (
-        <footer className="fixed bottom-0 left-0 right-0 z-40 bg-[#202124] px-6 py-4 max-sm:px-2 max-sm:py-3">
-            <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 max-lg:grid-cols-[1fr_auto] max-sm:flex max-sm:flex-col max-sm:gap-2">
+        <footer className="fixed bottom-0 left-0 right-0 z-40 bg-[#202124] px-6 py-4 max-sm:px-2 max-sm:py-2">
+            <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 max-lg:grid-cols-[1fr_auto] max-sm:flex max-sm:flex-col max-sm:gap-1.5">
                 <div className="flex min-w-0 items-center gap-3 text-sm text-white max-sm:hidden">
                     <span>{currentTime}</span>
                     <span className="text-gray-500">|</span>
                     <span className="truncate">{gmeetProfile.meetingCode}</span>
                 </div>
 
-                <div className="flex items-center gap-3 max-sm:w-full max-sm:justify-center max-sm:gap-2">
+                <div className="flex items-center gap-3 max-sm:w-full max-sm:justify-center max-sm:gap-1.5">
                     {centerControls.slice(0, 5).map((control) => (
                         <button
                             key={control.label}
                             type="button"
                             aria-label={control.label}
                             onClick={control.onClick}
-                            className={`grid h-12 w-12 place-items-center rounded-full text-white transition max-sm:h-10 max-sm:w-10 ${
+                            className={`grid h-12 w-12 place-items-center rounded-full text-white transition max-sm:h-9 max-sm:w-9 ${
                                 control.danger
                                     ? 'bg-[#ea4335] hover:bg-[#d93025]'
                                     : control.active
@@ -141,7 +141,7 @@ const Footer: React.FC<FooterProps> = ({
                     <button
                         type="button"
                         aria-label="Leave call"
-                        className="grid h-12 min-w-[72px] place-items-center rounded-full bg-[#ea4335] px-6 text-white hover:bg-[#d93025] max-sm:h-10 max-sm:min-w-[56px] max-sm:px-4"
+                        className="grid h-12 min-w-[72px] place-items-center rounded-full bg-[#ea4335] px-6 text-white hover:bg-[#d93025] max-sm:h-9 max-sm:min-w-[52px] max-sm:px-4"
                     >
                         <CallEnd />
                     </button>
@@ -154,7 +154,7 @@ const Footer: React.FC<FooterProps> = ({
                             type="button"
                             aria-label={control.label}
                             onClick={() => onTogglePanel(control.panel)}
-                            className={`grid h-10 w-10 place-items-center rounded-full text-white ${
+                            className={`grid h-10 w-10 place-items-center rounded-full text-white max-sm:h-9 max-sm:w-9 ${
                                 activePanel === control.panel ? 'bg-[#3c4043]' : 'hover:bg-[#3c4043]'
                             }`}
                         >

@@ -8,7 +8,7 @@ import { defaultGmeetTopic } from '../components/gmeet/gmeetPortfolio'
 import type { GmeetPanel, GmeetTopic } from '../components/gmeet/gmeetPortfolio'
 
 const Page = () => {
-    const [activePanel, setActivePanel] = useState<GmeetPanel>('people');
+    const [activePanel, setActivePanel] = useState<GmeetPanel>(null);
     const [selectedTopic, setSelectedTopic] = useState<GmeetTopic>(defaultGmeetTopic);
     const [micOn, setMicOn] = useState(true);
     const [cameraOn, setCameraOn] = useState(true);
