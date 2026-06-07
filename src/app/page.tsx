@@ -182,9 +182,8 @@ export default function Home() {
               key={key}
               type="button"
               onClick={() => selectTheme(key)}
-              className={`flex cursor-pointer items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
-                themeKey === key ? "bg-[#1a73e8] text-white" : `${theme.hover}`
-              }`}
+              className={`flex cursor-pointer items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition ${themeKey === key ? "bg-[#1a73e8] text-white" : `${theme.hover}`
+                }`}
             >
               {themes[key].icon}
               <span className="max-sm:hidden">{themes[key].label}</span>
@@ -354,10 +353,15 @@ export default function Home() {
               whileHover={{ y: -8, scale: 1.04 }}
               className={`flex h-[112px] w-[112px] cursor-pointer flex-col items-center justify-center rounded-2xl hover:shadow-lg ${theme.shortcut}`}
             >
-              <span className="grid h-[58px] w-[58px] place-items-center rounded-full bg-[#e8f0fe] text-[#174ea6] shadow-sm">
-                <RocketLaunch sx={{ fontSize: 27 }} />
-              </span>
-              <span className={`mt-3 text-center text-sm font-medium ${theme.shortcutText}`}>Launch lab</span>
+              <Link
+                href={"/launch"}
+                className={`group flex h-[112px] w-[112px] cursor-pointer flex-col items-center justify-center rounded-2xl hover:shadow-lg ${theme.shortcut}`}
+              >
+                <span className="grid h-[58px] w-[58px] place-items-center rounded-full bg-[#e8f0fe] text-[#174ea6] shadow-sm">
+                  <RocketLaunch sx={{ fontSize: 27 }} />
+                </span>
+                <span className={`mt-3 text-center text-sm font-medium ${theme.shortcutText}`}>Launch lab</span>
+              </Link>
             </motion.button>
           </div>
         </motion.div>
