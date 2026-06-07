@@ -8,6 +8,9 @@ import {
 const data = getPortfolioData();
 const skillGroups = getSkillGroups();
 
+const firstImage = (item: { images?: { url: string }[] }) => item.images?.find((image) => image.url)?.url;
+const logoFallback = (label: string) => `https://ui-avatars.com/api/?name=${encodeURIComponent(label)}&background=1a73e8&color=ffffff&size=720`;
+
 export type YouTubeSection =
     | 'All'
     | 'Projects'
@@ -75,7 +78,7 @@ export const youtubeVideos: PortfolioVideo[] = [
         id: project.id,
         title: project.name,
         description: project.tagline,
-        thumbnail: `https://picsum.photos/seed/${project.id}/720/405`,
+        thumbnail: firstImage(project) ?? logoFallback(project.name),
         channel: data.meta.name,
         meta: `${project.status} | ${getProjectDate(project)} | ${project.tech_stack.length} technologies`,
         duration: index % 2 ? '8:18' : '12:40',
@@ -86,7 +89,7 @@ export const youtubeVideos: PortfolioVideo[] = [
         id: `featured-${project.id}`,
         title: `Featured: ${project.name}`,
         description: project.description,
-        thumbnail: `https://picsum.photos/seed/featured-${project.id}/720/405`,
+        thumbnail: project.images?.[1]?.url ?? firstImage(project) ?? logoFallback(project.name),
         channel: data.meta.name,
         meta: `${project.status} | ${getProjectDate(project)} | highlighted project`,
         duration: index % 2 ? '9:10' : '11:30',
@@ -97,7 +100,7 @@ export const youtubeVideos: PortfolioVideo[] = [
         id: experience.id,
         title: `${experience.role} at ${experience.company}`,
         description: experience.highlights[0],
-        thumbnail: `https://picsum.photos/seed/${experience.id}/720/405`,
+        thumbnail: firstImage(experience) || experience.company_logo || logoFallback(experience.company),
         channel: data.meta.name,
         meta: `${getExperiencePeriod(experience)} | ${experience.location}`,
         duration: index % 2 ? '6:25' : '10:15',
@@ -108,7 +111,7 @@ export const youtubeVideos: PortfolioVideo[] = [
         id: group.label,
         title: group.label,
         description: group.items.join(', '),
-        thumbnail: `https://picsum.photos/seed/${group.label}/720/405`,
+        thumbnail: logoFallback(group.label),
         channel: `${data.meta.name} Skills`,
         meta: `${group.items.length} skills | Portfolio stack`,
         duration: index % 2 ? '4:30' : '7:05',
@@ -119,7 +122,7 @@ export const youtubeVideos: PortfolioVideo[] = [
         id: achievement.id,
         title: achievement.title,
         description: achievement.description || `${achievement.type} recognition from ${achievement.issuer}.`,
-        thumbnail: `https://picsum.photos/seed/${achievement.id}/720/405`,
+        thumbnail: achievement.image || logoFallback(achievement.title),
         channel: data.meta.name,
         meta: `${achievement.issuer} | ${achievement.year}`,
         duration: '3:20',
@@ -130,7 +133,7 @@ export const youtubeVideos: PortfolioVideo[] = [
         id: education.id,
         title: education.institution,
         description: `${education.degree} | CGPA ${education.cgpa}`,
-        thumbnail: `https://picsum.photos/seed/${education.id}/720/405`,
+        thumbnail: education.logo || logoFallback(education.institution),
         channel: data.meta.name,
         meta: `${education.start_year} - ${education.end_year}`,
         duration: '5:45',
@@ -141,7 +144,7 @@ export const youtubeVideos: PortfolioVideo[] = [
         id: item.id,
         title: item.name,
         description: item.description || `${item.role} contribution`,
-        thumbnail: `https://picsum.photos/seed/${item.id}/720/405`,
+        thumbnail: logoFallback(item.name),
         channel: data.meta.name,
         meta: item.role,
         duration: '2:50',
@@ -152,7 +155,7 @@ export const youtubeVideos: PortfolioVideo[] = [
         id: 'contact',
         title: `Contact ${data.meta.name}`,
         description: `${data.meta.email} | ${data.meta.phone} | ${data.meta.links.linkedin}`,
-        thumbnail: `https://picsum.photos/seed/contact-${data.meta.name}/720/405`,
+        thumbnail: data.meta.avatar,
         channel: data.meta.name,
         meta: 'Available for frontend and full-stack opportunities',
         duration: '1:00',

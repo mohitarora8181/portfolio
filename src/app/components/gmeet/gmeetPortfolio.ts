@@ -8,6 +8,9 @@ import {
 const data = getPortfolioData();
 const skillGroups = getSkillGroups();
 
+const firstImage = (item: { images?: { url: string }[] }) => item.images?.find((image) => image.url)?.url;
+const avatarFallback = (label: string) => `https://ui-avatars.com/api/?name=${encodeURIComponent(label)}&background=3c4043&color=ffffff&size=120`;
+
 export type GmeetPanel = 'people' | 'chat' | 'details' | null;
 
 export type GmeetParticipant = {
@@ -136,7 +139,7 @@ export const gmeetParticipants: GmeetParticipant[] = [
         id: `person-${project.id}`,
         name: project.name,
         role: project.type.replace(/_/g, ' '),
-        avatar: `https://picsum.photos/seed/gmeet-${project.id}/120/120`,
+        avatar: firstImage(project) ?? avatarFallback(project.name),
         muted: index % 2 === 0,
         topicId: project.id,
         category: 'project' as const,
@@ -147,7 +150,7 @@ export const gmeetParticipants: GmeetParticipant[] = [
         id: `person-${experience.id}`,
         name: experience.company,
         role: experience.role,
-        avatar: `https://picsum.photos/seed/gmeet-${experience.id}/120/120`,
+        avatar: experience.company_logo || firstImage(experience) || avatarFallback(experience.company),
         muted: index !== 0,
         topicId: experience.id,
         category: 'experience' as const,
@@ -158,7 +161,7 @@ export const gmeetParticipants: GmeetParticipant[] = [
         id: `person-skill-${group.label}`,
         name: group.label,
         role: `${group.items.length} skills`,
-        avatar: `https://picsum.photos/seed/gmeet-${group.label}/120/120`,
+        avatar: avatarFallback(group.label),
         muted: true,
         topicId: `skill-${group.label}`,
         category: 'skill' as const,
@@ -169,7 +172,7 @@ export const gmeetParticipants: GmeetParticipant[] = [
         id: `person-${achievement.id}`,
         name: achievement.title,
         role: achievement.issuer,
-        avatar: `https://picsum.photos/seed/gmeet-${achievement.id}/120/120`,
+        avatar: achievement.image || avatarFallback(achievement.title),
         muted: true,
         topicId: achievement.id,
         category: 'achievement' as const,

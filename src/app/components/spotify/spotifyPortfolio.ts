@@ -8,6 +8,9 @@ import {
 const data = getPortfolioData();
 const skillGroups = getSkillGroups();
 
+const firstImage = (item: { images?: { url: string }[] }) => item.images?.find((image) => image.url)?.url;
+const logoFallback = (label: string) => `https://ui-avatars.com/api/?name=${encodeURIComponent(label)}&background=1ed760&color=121212&size=320`;
+
 export type SpotifyPlaylist = {
     id: string;
     title: string;
@@ -33,6 +36,7 @@ export type SpotifyActivity = {
     id: string;
     title: string;
     subtitle: string;
+    image: string;
 };
 
 export const spotifyProfile = {
@@ -49,14 +53,14 @@ export const spotifyPlaylists: SpotifyPlaylist[] = [
         id: group.label,
         title: group.label,
         subtitle: `Playlist • ${group.items.length} skills`,
-        cover: `https://picsum.photos/seed/spotify-${group.label}/160/160`,
+        cover: logoFallback(group.label),
         tracks: group.items,
     })),
     {
         id: 'open-source',
         title: 'Open Source Contributions',
         subtitle: `Playlist • ${data.open_source.length} contributions`,
-        cover: 'https://picsum.photos/seed/spotify-open-source/160/160',
+        cover: logoFallback('Open Source Contributions'),
         tracks: data.open_source.map((item) => item.name),
     },
 ];
@@ -67,7 +71,7 @@ export const spotifyAlbums: SpotifyAlbum[] = [
         kind: 'project' as const,
         title: project.name,
         subtitle: `${project.status} • ${getProjectDate(project)}`,
-        cover: `https://picsum.photos/seed/spotify-${project.id}/320/320`,
+        cover: firstImage(project) ?? logoFallback(project.name),
         description: project.description || project.tagline,
         details: [project.tagline, ...project.highlights].filter(Boolean),
         meta: [
@@ -85,7 +89,7 @@ export const spotifyAlbums: SpotifyAlbum[] = [
         kind: 'experience' as const,
         title: `${experience.company}`,
         subtitle: `${experience.role} • ${getExperiencePeriod(experience)}`,
-        cover: `https://picsum.photos/seed/spotify-${experience.id}/320/320`,
+        cover: experience.company_logo || firstImage(experience) || logoFallback(experience.company),
         description: experience.highlights[0],
         details: experience.highlights,
         meta: [
@@ -104,11 +108,13 @@ export const spotifyActivity: SpotifyActivity[] = [
         id: experience.id,
         title: experience.company,
         subtitle: `${experience.role} • ${experience.current ? 'Currently working' : 'Completed'}`,
+        image: experience.company_logo || firstImage(experience) || logoFallback(experience.company),
     })),
     ...data.achievements.map((achievement) => ({
         id: achievement.id,
         title: achievement.title,
         subtitle: `${achievement.issuer} • ${achievement.year}`,
+        image: achievement.image || logoFallback(achievement.title),
     })),
 ];
 

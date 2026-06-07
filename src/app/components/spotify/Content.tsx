@@ -393,7 +393,7 @@ const Content = ({ query, onQueryChange, onNowPlayingChange }: ContentProps) => 
                         {spotifyActivity.map((activity) => (
                             <button key={activity.id} type='button' className='flex w-full gap-3 rounded-lg p-2 text-left hover:bg-white/10'>
                                 <img
-                                    src={`https://picsum.photos/seed/activity-${activity.id}/80/80`}
+                                    src={activity.image}
                                     alt=''
                                     className='h-10 w-10 rounded-full object-cover'
                                 />

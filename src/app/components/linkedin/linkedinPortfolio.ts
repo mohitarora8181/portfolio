@@ -8,6 +8,9 @@ import {
 const data = getPortfolioData();
 const skillGroups = getSkillGroups();
 
+const firstImage = (item: { images?: { url: string }[] }) => item.images?.find((image) => image.url)?.url;
+const logoFallback = (label: string) => `https://ui-avatars.com/api/?name=${encodeURIComponent(label)}&background=0a66c2&color=ffffff&size=900`;
+
 export type LinkedInSection = 'All' | 'Experience' | 'Projects' | 'Skills' | 'Education' | 'Achievements' | 'Open Source';
 
 export type LinkedInPost = {
@@ -52,7 +55,7 @@ export const linkedinPosts: LinkedInPost[] = [
         title: `${item.role} at ${item.company}`,
         subtitle: `${item.location} | ${getExperiencePeriod(item)}`,
         content: item.highlights[0],
-        image: `https://picsum.photos/seed/linkedin-${item.id}/900/520`,
+        image: firstImage(item) || item.company_logo || logoFallback(item.company),
         metrics: `${item.tech_stack.length} technologies | ${item.highlights.length} highlights`,
         details: item.highlights,
         chips: item.tech_stack,
@@ -64,7 +67,7 @@ export const linkedinPosts: LinkedInPost[] = [
         title: project.name,
         subtitle: `${project.status} | ${getProjectDate(project)}`,
         content: project.description || project.tagline,
-        image: `https://picsum.photos/seed/linkedin-${project.id}/900/520`,
+        image: firstImage(project) ?? logoFallback(project.name),
         metrics: project.tech_stack.join(' | '),
         details: [project.tagline, ...project.highlights].filter(Boolean),
         chips: project.tech_stack,
@@ -78,7 +81,7 @@ export const linkedinPosts: LinkedInPost[] = [
         title: group.label,
         subtitle: `Skill group | ${group.items.length} skills`,
         content: `Tools and technologies used across ${data.projects.length} projects and ${data.experience.length} work experiences.`,
-        image: `https://picsum.photos/seed/linkedin-${group.label}/900/520`,
+        image: logoFallback(group.label),
         metrics: group.items.join(' | '),
         details: group.items,
         chips: group.items,
@@ -90,7 +93,7 @@ export const linkedinPosts: LinkedInPost[] = [
         title: education.institution,
         subtitle: `${education.degree} | ${education.start_year} - ${education.end_year}`,
         content: `CGPA ${education.cgpa}. ${education.highlights.join(' ')}`,
-        image: `https://picsum.photos/seed/linkedin-${education.id}/900/520`,
+        image: education.logo || logoFallback(education.institution),
         metrics: `CGPA ${education.cgpa}`,
         details: education.highlights.length > 0 ? education.highlights : [`CGPA ${education.cgpa}`],
         chips: [education.degree, `${education.start_year} - ${education.end_year}`],
@@ -102,7 +105,7 @@ export const linkedinPosts: LinkedInPost[] = [
         title: achievement.title,
         subtitle: `${achievement.issuer} | ${achievement.year}`,
         content: achievement.description || `${achievement.type} recognition from ${achievement.issuer}.`,
-        image: `https://picsum.photos/seed/linkedin-${achievement.id}/900/520`,
+        image: achievement.image || logoFallback(achievement.title),
         metrics: achievement.type,
         details: [achievement.description || achievement.type],
         chips: [achievement.type, String(achievement.year)],
@@ -114,7 +117,7 @@ export const linkedinPosts: LinkedInPost[] = [
         title: item.name,
         subtitle: `${item.role} | Open source`,
         content: item.description || `Contributed to ${item.name}.`,
-        image: `https://picsum.photos/seed/linkedin-${item.id}/900/520`,
+        image: logoFallback(item.name),
         metrics: item.role,
         details: [item.description || `Repository contribution as ${item.role}.`],
         chips: [item.role],
