@@ -1101,36 +1101,6 @@ function IconButton({
   );
 }
 
-function CodeTile() {
-  return (
-    <aside className="pf-codeTile">
-      <header>
-        <span>escape_profile.ts</span>
-        <WindowDots />
-      </header>
-      <pre>
-        <span className="pf-codeKey">const</span> mohit = {"{"}
-        {"\n"}  <span className="pf-codeKey">role</span>:{" "}
-        <span className="pf-codeValue">"full-stack developer"</span>,{"\n"}{" "}
-        <span className="pf-codeKey">mode</span>:{" "}
-        <span className="pf-codeValue">"danger-zone redline"</span>,{"\n"}{" "}
-        <span className="pf-codeKey">stack</span>: [
-        <span className="pf-codeValue">"React"</span>,{" "}
-        <span className="pf-codeValue">"Node"</span>,{" "}
-        <span className="pf-codeValue">"Kotlin"</span>,{" "}
-        <span className="pf-codeValue">"C++"</span>],{"\n"}{" "}
-        <span className="pf-codeKey">focus</span>: [
-        <span className="pf-codeValue">"automation"</span>,{" "}
-        <span className="pf-codeValue">"product UX"</span>],{"\n"}{" "}
-        <span className="pf-codeFn">escape</span>: () =&gt;{" "}
-        <span className="pf-codeValue">"ship useful tools"</span>
-        {"\n"}
-        {"}"}
-      </pre>
-    </aside>
-  );
-}
-
 function WindowDots() {
   return (
     <span className="pf-dots" aria-hidden="true">
