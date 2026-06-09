@@ -12,6 +12,13 @@ import {
   useRef,
   useState,
 } from "react";
+import {
+  getAppShowcases,
+  getExperiencePeriod,
+  getPortfolioData,
+  getProjectDate,
+  getSkillGroups,
+} from "@/src/services/portfolioData";
 
 type RouteItem = {
   name: string;
@@ -24,7 +31,10 @@ type Project = {
   name: string;
   label: string;
   href: string;
+  linkLabel: string;
   description: string;
+  image: string;
+  imageAlt: string;
   tags: string[];
   tone: "green" | "blue" | "gold" | "coral" | "violet" | "mint";
 };
@@ -48,126 +58,74 @@ type JourneyPanel = {
   label: string;
 };
 
-const routes: RouteItem[] = [
-  {
-    name: "YouTube",
-    path: "/youtube",
-    type: "Clone",
-    icon: "https://www.google.com/s2/favicons?domain=youtube.com&sz=128",
-  },
-  {
-    name: "WhatsApp",
-    path: "/whatsapp",
-    type: "Clone",
-    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg",
-  },
-  {
-    name: "Spotify",
-    path: "/spotify",
-    type: "Clone",
-    icon: "https://www.google.com/s2/favicons?domain=spotify.com&sz=128",
-  },
-  {
-    name: "LinkedIn",
-    path: "/linkedin",
-    type: "Clone",
-    icon: "https://www.google.com/s2/favicons?domain=linkedin.com&sz=128",
-  },
-  {
-    name: "Google Meet",
-    path: "/gmeet",
-    type: "Clone",
-    icon: "https://www.google.com/s2/favicons?domain=meet.google.com&sz=128",
-  },
-];
+const data = getPortfolioData();
+const skillGroups = getSkillGroups();
+const appShowcases = getAppShowcases();
+const toneSequence: Project["tone"][] = ["green", "blue", "gold", "coral", "violet", "mint"];
 
-const projects: Project[] = [
-  {
-    name: "IfShare",
-    label: "Product",
-    href: "https://github.com/mohitarora8181/IfShare",
-    description:
-      "File, code snippet, and note sharing with shortened URLs, QR access, and encrypted handoffs.",
-    tags: ["TypeScript", "Sharing", "QR", "Encryption"],
-    tone: "green",
-  },
-  {
-    name: "Heal",
-    label: "Health",
-    href: "https://github.com/mohitarora8181/Heal",
-    description:
-      "Health Enabled Anywhere & Live, shaped as a practical full-stack healthcare workflow.",
-    tags: ["TypeScript", "Health", "Full-stack"],
-    tone: "blue",
-  },
-  {
-    name: "dox-cli",
-    label: "Dev Tool",
-    href: "https://github.com/mohitarora8181/dox-cli",
-    description:
-      "CLI utility for generating README files and improving commit flow across a codebase.",
-    tags: ["JavaScript", "CLI", "Groq API", "Docs"],
-    tone: "gold",
-  },
-  {
-    name: "babaChat",
-    label: "Realtime",
-    href: "https://github.com/mohitarora8181/babaChat",
-    description:
-      "Chat application with live user discovery, private messaging, and persistent conversation storage.",
-    tags: ["JavaScript", "Next.js", "Realtime", "Firebase"],
-    tone: "coral",
-  },
-  {
-    name: "AuntAI",
-    label: "AI",
-    href: "https://github.com/mohitarora8181/AuntAI",
-    description:
-      "AI-facing project work centered around useful assisted interactions and automation.",
-    tags: ["JavaScript", "AI", "Automation"],
-    tone: "violet",
-  },
-  {
-    name: "letzHire-proto",
-    label: "Prototype",
-    href: "https://github.com/mohitarora8181/letzHire-proto",
-    description:
-      "Hiring prototype that explores faster candidate workflows and product-first UI decisions.",
-    tags: ["TypeScript", "Hiring", "Prototype"],
-    tone: "mint",
-  },
-];
+const appIcons: Record<string, string> = {
+  YouTube: "https://www.google.com/s2/favicons?domain=youtube.com&sz=128",
+  WhatsApp: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg",
+  Spotify: "https://www.google.com/s2/favicons?domain=spotify.com&sz=128",
+  LinkedIn: "https://www.google.com/s2/favicons?domain=linkedin.com&sz=128",
+  "Google Meet": "https://www.google.com/s2/favicons?domain=meet.google.com&sz=128",
+};
 
-const stackGroups: [string, string[]][] = [
-  ["Frontend", ["React", "Next.js", "JavaScript", "Tailwind CSS", "HTML", "CSS"]],
-  ["Backend", ["Node.js", "Express", "REST APIs", "Auth", "Firebase"]],
-  ["Languages", ["C++", "C", "Java", "Python", "Kotlin"]],
-  ["Interests", ["Robotics", "Automation", "AI workflows", "DSA", "Product UX"]],
-];
+const firstImage = (item: { images?: { url: string; alt?: string }[] }) => item.images?.find((image) => image.url);
+const firstProjectLink = (links: Partial<Record<string, string>>): [string, string] => {
+  const entry = Object.entries(links).find((entry): entry is [string, string] => Boolean(entry[1]));
+  return entry ?? ["details", "#projects"];
+};
+
+const routes: RouteItem[] = appShowcases.map((app) => ({
+  name: app.name,
+  path: app.href,
+  type: "Clone",
+  icon: appIcons[app.name] ?? data.meta.avatar,
+}));
+
+const projects: Project[] = data.projects.map((project, index) => {
+  const image = firstImage(project);
+  const [linkLabel, href] = firstProjectLink(project.links);
+
+  return {
+    name: project.name,
+    label: project.type.replace(/_/g, " "),
+    href,
+    linkLabel: linkLabel.replace(/_/g, " "),
+    description: project.description || project.tagline,
+    image: image?.url ?? data.meta.avatar,
+    imageAlt: image?.alt ?? project.name,
+    tags: project.tech_stack,
+    tone: toneSequence[index % toneSequence.length],
+  };
+});
+
+const stackGroups: [string, string[]][] = skillGroups.map((group) => [group.label, group.items]);
 
 const timeline: TimelineItem[] = [
-  {
-    date: "2026",
-    title: "B.Tech IT, MSIT",
-    body: "Graduating profile with a practical mix of software engineering, DSA, robotics, and community leadership.",
-  },
-  {
-    date: "Current",
-    title: "InsuranceDekho",
-    body: "Software developer experience in a production environment, with a focus on scalable web systems.",
-  },
-  {
-    date: "2024",
-    title: "Eyantra / IEEE",
-    body: "Robotics society head and IEEE hardware lead, bridging software, automation, and physical systems.",
-  },
+  ...data.experience.map((experience) => ({
+    date: experience.current ? "Current" : getExperiencePeriod(experience),
+    title: `${experience.role} at ${experience.company}`,
+    body: experience.highlights[0] ?? `${experience.type.replace(/_/g, " ")} role in ${experience.location}.`,
+  })),
+  ...data.education.map((education) => ({
+    date: `${education.start_year} - ${education.end_year}`,
+    title: education.institution,
+    body: `${education.degree}. CGPA ${education.cgpa}.`,
+  })),
+  ...data.achievements.map((achievement) => ({
+    date: String(achievement.year),
+    title: achievement.title,
+    body: achievement.description || `${achievement.type} recognition from ${achievement.issuer}.`,
+  })),
 ];
 
 const facts = [
-  ["50", "public repos"],
-  ["699+", "LeetCode"],
-  ["MSIT", "B.Tech IT 2026"],
-  ["IEEE", "hardware lead"],
+  [String(data.projects.length), "projects"],
+  [String(data.experience.length), "roles"],
+  [String(skillGroups.reduce((total, group) => total + group.items.length, 0)), "skills"],
+  [data.education[0]?.institution.split(",")[0] ?? "Education", data.education[0]?.degree ?? "Education"],
 ];
 
 const journeyPanels: JourneyPanel[] = [
@@ -218,20 +176,20 @@ export default function PortfolioHomePage() {
       },
       {
         title: "GitHub",
-        detail: "Open mohitarora8181",
-        href: "https://github.com/mohitarora8181",
+        detail: `Open ${data.meta.name}'s GitHub`,
+        href: data.meta.links.github,
         keywords: "code repos",
       },
       {
         title: "LinkedIn",
         detail: "Open professional profile",
-        href: "https://www.linkedin.com/in/mohit8181",
+        href: data.meta.links.linkedin,
         keywords: "social role",
       },
       {
         title: "Resume",
         detail: "Open resume file",
-        href: "https://drive.google.com/file/d/1AAIj30o5dQMxE66pJ_KnW-akPxSXsC-4/view?usp=drive_link",
+        href: data.meta.resume_url,
         keywords: "cv",
       },
       ...routes.map((route) => ({
@@ -270,11 +228,11 @@ export default function PortfolioHomePage() {
 
       <header className="pf-header">
         <nav className="pf-nav" aria-label="Primary">
-          <a className="pf-brand" href="#top" aria-label="Mohit Arora home">
-            <span className="pf-brandMark">MA</span>
+          <a className="pf-brand" href="#top" aria-label={`${data.meta.name} home`}>
+            <span className="pf-brandMark">{data.meta.name.split(/\s+/).map((part) => part[0]).join("").slice(0, 2)}</span>
             <span>
-              Mohit Arora
-              <small>mohit8181</small>
+              {data.meta.name}
+              <small>{data.meta.links.portfolio || data.meta.email}</small>
             </span>
           </a>
 
@@ -296,7 +254,7 @@ export default function PortfolioHomePage() {
             </IconButton>
             <a
               className="pf-textButton pf-textButtonDark"
-              href="https://github.com/mohitarora8181"
+              href={data.meta.links.github}
               target="_blank"
               rel="noreferrer"
             >
@@ -318,23 +276,24 @@ export default function PortfolioHomePage() {
 
           <div className="pf-heroContent">
             <div className="pf-statusStrip" aria-label="Current focus">
-              <span>Red alert</span>
-              <span>Lock target</span>
-              <span>Deploy UI</span>
-              <span>Ship signal</span>
+              <span>{data.projects.length} projects</span>
+              <span>{data.experience.length} roles</span>
+              <span>{skillGroups.length} skill groups</span>
+              <span>{data.achievements.length} achievements</span>
             </div>
             <div className="pf-superLabel" aria-hidden="true">
-              <span>DEFCON UI</span>
-              <b>danger zone journey</b>
+              <span>{data.meta.tagline}</span>
+              <b>{data.meta.email}</b>
             </div>
-            <p className="pf-eyebrow">Delhi based builder / red alert portfolio route</p>
-            <h1 id="hero-title" data-text="Mohit Arora">
-              <span>Mohit</span>
-              <span>Arora</span>
+            <p className="pf-eyebrow">{data.meta.tagline}</p>
+            <h1 id="hero-title" data-text={data.meta.name}>
+              {data.meta.name.split(" ").map((part) => (
+                <span key={part}>{part}</span>
+              ))}
             </h1>
             <p className="pf-lede">
-              Scroll the alert sequence or use the arrow controls to move through
-              projects, stack, experience, and contact like a mission briefing.
+              Explore {data.meta.name}'s projects, stack, experience, and contact
+              details from the same source data that powers the clone routes.
             </p>
 
             <div className="pf-heroActions" aria-label="Main actions">
@@ -344,7 +303,7 @@ export default function PortfolioHomePage() {
               </a>
               <a
                 className="pf-secondaryButton"
-                href="https://drive.google.com/file/d/1AAIj30o5dQMxE66pJ_KnW-akPxSXsC-4/view?usp=drive_link"
+                href={data.meta.resume_url}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -352,7 +311,7 @@ export default function PortfolioHomePage() {
               </a>
               <a
                 className="pf-secondaryButton"
-                href="https://www.linkedin.com/in/mohit8181"
+                href={data.meta.links.linkedin}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -371,15 +330,15 @@ export default function PortfolioHomePage() {
             </div>
 
             <div className="pf-miniConsole" aria-label="Build status">
-              <span>~/danger-zone</span>
-              <strong>npm run engage</strong>
-              <i>alert</i>
+              <span>~/portfolio</span>
+              <strong>{data.meta.links.portfolio || data.meta.email}</strong>
+              <i>{data.experience[0]?.current ? "current" : "ready"}</i>
             </div>
 
             <div className="pf-vibeStrip" aria-label="Portfolio modes">
-              <span>red alert mode</span>
-              <span>ship fast</span>
-              <span>zero dull screens</span>
+              {skillGroups.slice(0, 3).map((group) => (
+                <span key={group.label}>{group.label}</span>
+              ))}
             </div>
           </div>
         </section>
@@ -390,8 +349,8 @@ export default function PortfolioHomePage() {
           <div className="pf-container">
             <SectionHead
               kicker="Checkpoint 01"
-              title="Builds entering the danger zone."
-              copy="Clones, dev tools, and product experiments shown as active systems under alert: UI craft, backend thinking, and practical problem solving."
+              title={`${data.projects.length} builds from myData.json.`}
+              copy="Projects and clone routes are generated from the structured portfolio source instead of hardcoded launch-page content."
             />
 
             <div className="pf-routeGrid">
@@ -412,8 +371,8 @@ export default function PortfolioHomePage() {
           <div className="pf-container">
             <SectionHead
               kicker="Checkpoint 02"
-              title="The toolkit that keeps the system online."
-              copy="Comfortable moving from interface details to backend contracts, automation flows, and low-level problem solving."
+              title="Stack mapped from the skills section."
+              copy={`${skillGroups.length} skill groups are read directly from myData.json and rendered as the launch toolkit.`}
             />
 
             <div className="pf-stackLayout">
@@ -423,12 +382,8 @@ export default function PortfolioHomePage() {
                   <WindowDots />
                 </header>
                 <pre>{`{
-  "frontend": ["React", "Next.js", "Tailwind CSS"],
-  "backend": ["Node.js", "Express", "APIs"],
-  "mobile": ["Kotlin", "Jetpack Compose"],
-  "core": ["C++", "Java", "Python", "DSA"],
-  "interests": ["Robotics", "Automation", "AI"],
-  "system_state": "armed for shipping"
+${stackGroups.slice(0, 5).map(([title, items]) => `  "${title.toLowerCase().replace(/[^a-z0-9]+/g, "_")}": [${items.slice(0, 4).map((item) => `"${item}"`).join(", ")}]`).join(",\n")},
+  "system_state": "synced_from_myData"
 }`}</pre>
               </div>
 
@@ -452,8 +407,8 @@ export default function PortfolioHomePage() {
           <div className="pf-container">
             <SectionHead
               kicker="Checkpoint 03"
-              title="The path that made the builder."
-              copy="Education, production exposure, and communities that shaped the way Mohit builds."
+              title="Experience, education, and achievements."
+              copy="Timeline entries are built from experience, education, and achievement arrays in myData.json."
             />
 
             <div className="pf-timeline">
@@ -484,12 +439,12 @@ export default function PortfolioHomePage() {
                 </h2>
               </div>
               <div className="pf-contactActions">
-                <a className="pf-primaryButton" href="mailto:mohit8181_it_2026@msit.in">
+                <a className="pf-primaryButton" href={`mailto:${data.meta.email}`}>
                   Email
                 </a>
                 <a
                   className="pf-secondaryButton"
-                  href="https://leetcode.com/mohit8181"
+                  href={data.meta.links.leetcode}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -497,7 +452,7 @@ export default function PortfolioHomePage() {
                 </a>
                 <a
                   className="pf-secondaryButton"
-                  href="https://geeksforgeeks.org/user/mohit8181"
+                  href={data.meta.links.geeksforgeeks}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -511,8 +466,8 @@ export default function PortfolioHomePage() {
 
       <footer className="pf-footer">
         <div className="pf-container">
-          <span>Mohit Arora / mohit8181</span>
-          <span>Built in Delhi. Alert route open.</span>
+          <span>{data.meta.name} / {data.meta.email}</span>
+          <span>{data.meta.tagline}</span>
         </div>
       </footer>
 
@@ -900,25 +855,24 @@ function RouteTile({ route, index }: { route: RouteItem; index: number }) {
 }
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const external = isExternal(project.href);
+
   return (
     <a
       className={`pf-projectCard pf-reveal pf-tone-${project.tone}`}
       href={project.href}
-      target="_blank"
-      rel="noreferrer"
+      target={external && project.href !== "#projects" ? "_blank" : undefined}
+      rel={external && project.href !== "#projects" ? "noreferrer" : undefined}
       data-index={`0${index + 1}`}
       style={{ "--delay": `${index * 80}ms` } as CSSProperties}
     >
-      <div className="pf-projectVisual" aria-hidden="true">
-        <span />
-        <span />
-        <span />
-        <span />
+      <div className="pf-projectVisual">
+        <img src={project.image} alt={project.imageAlt} loading="lazy" />
       </div>
       <div className="pf-projectBody">
         <div className="pf-projectMeta">
           <span>{project.label}</span>
-          <span>GitHub</span>
+          <span>{project.linkLabel}</span>
         </div>
         <h3>{project.name}</h3>
         <p>{project.description}</p>
@@ -3184,66 +3138,36 @@ body {
 
 .pf-projectVisual {
   position: relative;
-  display: grid;
-  align-content: end;
-  gap: 0.42rem;
   min-height: 150px;
   border-bottom: 1px solid rgba(214, 168, 79, 0.18);
   clip-path: polygon(0 24%, 8% 24%, 8% 9%, 50% 0, 92% 9%, 92% 24%, 100% 24%, 100% 100%, 0 100%);
   overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 18%, color-mix(in srgb, var(--tone) 36%, transparent), transparent 18%),
-    linear-gradient(135deg, var(--tone-soft), transparent 64%),
-    repeating-linear-gradient(90deg, rgba(214, 168, 79, 0.1) 0 2px, transparent 2px 30px),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.42));
-  padding: 1rem;
+  background: #141716;
 }
 
 .pf-projectVisual::before {
   content: "";
   position: absolute;
-  left: calc(50% - 32px);
-  top: 30px;
-  width: 64px;
-  height: 58px;
-  border: 1px solid rgba(214, 168, 79, 0.32);
-  border-radius: 50% 50% 0 0;
+  inset: 0;
   background:
-    linear-gradient(90deg, transparent 48%, rgba(214, 168, 79, 0.34) 49% 51%, transparent 52%),
-    linear-gradient(0deg, transparent 48%, rgba(214, 168, 79, 0.34) 49% 51%, transparent 52%),
-    rgba(214, 168, 79, 0.12);
-  box-shadow: 0 0 22px color-mix(in srgb, var(--tone) 32%, transparent);
+    linear-gradient(180deg, transparent 32%, rgba(0, 0, 0, 0.64)),
+    linear-gradient(135deg, color-mix(in srgb, var(--tone) 34%, transparent), transparent 48%);
+  z-index: 1;
 }
 
-.pf-projectVisual span {
+.pf-projectVisual img {
   display: block;
-  height: 7px;
-  border-radius: var(--pf-radius);
-  background: var(--tone);
-  box-shadow: 0 0 18px color-mix(in srgb, var(--tone) 46%, transparent);
-  animation: pfBarPulse 2.8s ease-in-out infinite alternate;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  filter: saturate(0.95) contrast(1.06);
+  transform: scale(1.02);
+  transition: transform 220ms ease, filter 220ms ease;
 }
 
-.pf-projectVisual span:nth-child(1) {
-  width: 78%;
-}
-
-.pf-projectVisual span:nth-child(2) {
-  width: 52%;
-  background: var(--pf-blue);
-  animation-delay: -0.8s;
-}
-
-.pf-projectVisual span:nth-child(3) {
-  width: 88%;
-  background: var(--pf-coral);
-  animation-delay: -1.4s;
-}
-
-.pf-projectVisual span:nth-child(4) {
-  width: 64%;
-  background: var(--pf-gold);
-  animation-delay: -2s;
+.pf-projectCard:hover .pf-projectVisual img {
+  filter: saturate(1.1) contrast(1.12);
+  transform: scale(1.08);
 }
 
 .pf-tone-green {
