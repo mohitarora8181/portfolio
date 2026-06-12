@@ -39,6 +39,7 @@ const appLogos: Record<string, string> = {
   Spotify: "https://www.google.com/s2/favicons?domain=spotify.com&sz=128",
   LinkedIn: "https://www.google.com/s2/favicons?domain=linkedin.com&sz=128",
   "Google Meet": "https://www.google.com/s2/favicons?domain=meet.google.com&sz=128",
+  "Google Maps": "https://www.google.com/s2/favicons?domain=maps.google.com&sz=128",
 };
 
 const stats = [

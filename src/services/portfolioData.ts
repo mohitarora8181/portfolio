@@ -80,5 +80,12 @@ export const getAppShowcases = () => {
       description: `${data.meta.name}'s portfolio as a live interview room with agenda and profile context.`,
       skills: ["Panels", "Controls", "Live presence"],
     },
+    {
+      name: "Google Maps",
+      href: "/gmaps",
+      theme: "bg-[#4285f4]",
+      description: "Portfolio sections plotted as map pins with routes, search, and place-style detail panels.",
+      skills: ["Interactive map", "Route pins", "Portfolio places"],
+    },
   ];
 };

@@ -367,6 +367,11 @@ const Content = ({ query, onQueryChange, onNowPlayingChange }: ContentProps) => 
                                         <h3 className='mt-4 truncate text-sm font-bold text-white'>{album.title}</h3>
                                         <p className='mt-1 line-clamp-2 text-sm text-gray-400'>{album.description}</p>
                                         <p className='mt-3 truncate text-xs font-semibold text-gray-500'>{album.subtitle}</p>
+                                        {album.links.length > 0 && (
+                                            <span className='mt-2 inline-flex rounded-full bg-white px-3 py-1 text-[11px] font-bold capitalize text-black'>
+                                                Open {album.links[0].label}
+                                            </span>
+                                        )}
                                     </motion.button>
                                 ))}
                             </div>

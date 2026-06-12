@@ -27,6 +27,12 @@ export type Chat = {
     messages: Message[];
 };
 
+const linksFromRecord = (links: Partial<Record<string, string>>) => (
+    Object.entries(links)
+        .filter((entry): entry is [string, string] => Boolean(entry[1]))
+        .map(([label, href]) => `${label.replace(/_/g, ' ')}: ${href}`)
+);
+
 export const whatsappProfile = {
     name: data.meta.name,
     tagline: data.meta.tagline,
@@ -51,6 +57,9 @@ export const portfolioChats: Chat[] = [
             { text: `Email: ${data.meta.email}`, time: '10:02 AM', isSender: true },
             { text: `Phone: ${data.meta.phone}`, time: '10:03 AM', isSender: true },
             { text: `Resume: ${data.meta.resume_url}`, time: '10:04 AM', isSender: true },
+            ...Object.entries(data.meta.links)
+                .filter((entry): entry is [string, string] => Boolean(entry[1]))
+                .map(([label, href]) => ({ text: `${label}: ${href}`, time: 'Link', isSender: true })),
         ],
     },
     {
@@ -77,6 +86,11 @@ export const portfolioChats: Chat[] = [
                 time: experience.type,
                 isSender: false,
             },
+            ...(experience.company_url ? [{
+                text: `Company link: ${experience.company_url}`,
+                time: 'Link',
+                isSender: true,
+            }] : []),
         ]),
     },
     {
@@ -103,6 +117,11 @@ export const portfolioChats: Chat[] = [
                 time: project.featured ? 'Featured' : 'Project',
                 isSender: false,
             },
+            ...linksFromRecord(project.links).map((text) => ({
+                text,
+                time: 'Link',
+                isSender: true,
+            })),
         ]),
     },
     {
@@ -131,7 +150,10 @@ export const portfolioChats: Chat[] = [
             time: String(achievement.year),
             isSender: false,
             dateTag: String(achievement.year),
-        })),
+        })).flatMap((message, index) => {
+            const achievement = data.achievements[index];
+            return achievement.link ? [message, { text: `Credential: ${achievement.link}`, time: 'Link', isSender: true }] : [message];
+        }),
     },
     {
         id: 'education',
@@ -159,6 +181,9 @@ export const portfolioChats: Chat[] = [
             time: item.role,
             isSender: false,
             dateTag: 'Open Source',
-        })),
+        })).flatMap((message, index) => {
+            const item = data.open_source[index];
+            return item.repo_url ? [message, { text: `Repository: ${item.repo_url}`, time: 'Link', isSender: true }] : [message];
+        }),
     },
 ];

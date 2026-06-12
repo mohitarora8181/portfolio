@@ -219,9 +219,9 @@
           "git"
         ],
         "links": {
-          "github": "",
+          "github": "https://github.com/mohitarora8181/dox-cli",
           "live": "",
-          "npm": "",
+          "npm": "https://www.npmjs.com/package/doxs",
           "demo_video": ""
         },
         "images": [
@@ -256,8 +256,8 @@
           "MongoDB"
         ],
         "links": {
-          "github": "",
-          "live": "",
+          "github": "https://github.com/mohitarora8181/ifshare",
+          "live": "https://www.ifshare.vercel.app/",
           "demo_video": ""
         },
         "images": [

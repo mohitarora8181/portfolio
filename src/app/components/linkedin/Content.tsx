@@ -260,6 +260,21 @@ const Content = ({ query, onQueryChange, activeSection, onSectionChange }: Conte
                                 <span className='truncate pr-4 font-medium text-[#0a66c2]'>{post.metrics}</span>
                                 <span>{index + 7} comments | {index + 3} reposts</span>
                             </div>
+                            {post.links.length > 0 && (
+                                <div className="flex flex-wrap gap-2 px-5 pb-3 max-sm:px-2">
+                                    {post.links.slice(0, 3).map((link) => (
+                                        <a
+                                            key={`${post.id}-inline-${link.label}`}
+                                            href={link.href}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="rounded-full bg-[#eaf4ff] px-3 py-1.5 text-xs font-bold capitalize text-[#0a66c2] hover:bg-[#d7ebff]"
+                                        >
+                                            Open {link.label}
+                                        </a>
+                                    ))}
+                                </div>
+                            )}
                             <div className='mx-5 border-t border-gray-200' />
                             <div className='grid grid-cols-4 gap-1 px-5 py-1 text-sm font-semibold text-gray-600 max-sm:px-1'>
                                 {postActions.map((action) => (

@@ -32,7 +32,14 @@ export type PortfolioVideo = {
     duration: string;
     section: YouTubeSection | string;
     chips: string[];
+    links: { label: string; href: string }[];
 };
+
+const linksFromRecord = (links: Partial<Record<string, string>>) => (
+    Object.entries(links)
+        .filter((entry): entry is [string, string] => Boolean(entry[1]))
+        .map(([label, href]) => ({ label: label.replace(/_/g, ' '), href }))
+);
 
 export const youtubeChannel = {
     name: data.meta.name,
@@ -84,6 +91,7 @@ export const youtubeVideos: PortfolioVideo[] = [
         duration: index % 2 ? '8:18' : '12:40',
         section: 'Projects',
         chips: project.tech_stack,
+        links: linksFromRecord(project.links),
     })),
     ...data.projects.filter((project) => project.featured).map((project, index) => ({
         id: `featured-${project.id}`,
@@ -95,6 +103,7 @@ export const youtubeVideos: PortfolioVideo[] = [
         duration: index % 2 ? '9:10' : '11:30',
         section: 'Featured',
         chips: project.tech_stack,
+        links: linksFromRecord(project.links),
     })),
     ...data.experience.map((experience, index) => ({
         id: experience.id,
@@ -106,6 +115,7 @@ export const youtubeVideos: PortfolioVideo[] = [
         duration: index % 2 ? '6:25' : '10:15',
         section: 'Experience',
         chips: experience.tech_stack,
+        links: experience.company_url ? [{ label: 'company', href: experience.company_url }] : [],
     })),
     ...skillGroups.map((group, index) => ({
         id: group.label,
@@ -117,6 +127,7 @@ export const youtubeVideos: PortfolioVideo[] = [
         duration: index % 2 ? '4:30' : '7:05',
         section: group.label,
         chips: group.items,
+        links: [],
     })),
     ...data.achievements.map((achievement) => ({
         id: achievement.id,
@@ -128,6 +139,7 @@ export const youtubeVideos: PortfolioVideo[] = [
         duration: '3:20',
         section: 'Achievements',
         chips: [achievement.type],
+        links: achievement.link ? [{ label: 'credential', href: achievement.link }] : [],
     })),
     ...data.education.map((education) => ({
         id: education.id,
@@ -139,6 +151,7 @@ export const youtubeVideos: PortfolioVideo[] = [
         duration: '5:45',
         section: 'Education',
         chips: ['Degree', 'CGPA', 'College'],
+        links: education.logo ? [{ label: 'logo source', href: education.logo }] : [],
     })),
     ...data.open_source.map((item) => ({
         id: item.id,
@@ -150,6 +163,7 @@ export const youtubeVideos: PortfolioVideo[] = [
         duration: '2:50',
         section: 'Open Source',
         chips: ['Open source'],
+        links: item.repo_url ? [{ label: 'repository', href: item.repo_url }] : [],
     })),
     {
         id: 'contact',
@@ -161,5 +175,10 @@ export const youtubeVideos: PortfolioVideo[] = [
         duration: '1:00',
         section: 'Contact',
         chips: ['Email', 'LinkedIn', 'Resume'],
+        links: [
+            { label: 'email', href: `mailto:${data.meta.email}` },
+            { label: 'linkedin', href: data.meta.links.linkedin },
+            { label: 'resume', href: data.meta.resume_url },
+        ].filter((item) => item.href),
     },
 ];

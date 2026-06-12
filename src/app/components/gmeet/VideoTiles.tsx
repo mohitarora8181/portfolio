@@ -147,6 +147,21 @@ const VideoTiles: React.FC<VideoTilesProps> = ({
                                     </div>
                                 )}
                             </div>
+                            {selectedTopic.links.length > 0 && (
+                                <div className="mt-4 flex flex-wrap gap-2">
+                                    {selectedTopic.links.map((link) => (
+                                        <a
+                                            key={`${selectedTopic.id}-${link.label}`}
+                                            href={link.href}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="rounded-full bg-[#1a73e8] px-3 py-1.5 text-xs font-bold capitalize text-white hover:bg-[#1558b0]"
+                                        >
+                                            Open {link.label}
+                                        </a>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </section>
