@@ -7,12 +7,15 @@ import {
 
 const data = getPortfolioData();
 const skillGroups = getSkillGroups();
+const firstImage = (item: { images?: { url: string }[] }) => item.images?.find((image) => image.url)?.url;
 
 export type Message = {
     text: string;
     time: string;
     isSender: boolean;
     dateTag?: string;
+    image?: string;
+    caption?: string;
 };
 
 export type ChatCategory = 'all' | 'unread' | 'favorites' | 'groups';
@@ -136,6 +139,8 @@ export const portfolioChats: Chat[] = [
             time: `${group.items.length} skills`,
             isSender: false,
             dateTag: group.label,
+            image: firstImage(group),
+            caption: group.label,
         })),
     },
     {
@@ -181,6 +186,8 @@ export const portfolioChats: Chat[] = [
             time: item.role,
             isSender: false,
             dateTag: 'Open Source',
+            image: firstImage(item),
+            caption: item.name,
         })).flatMap((message, index) => {
             const item = data.open_source[index];
             return item.repo_url ? [message, { text: `Repository: ${item.repo_url}`, time: 'Link', isSender: true }] : [message];

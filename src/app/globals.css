@@ -490,6 +490,17 @@ body {
   border-bottom: 0;
 }
 
+.gmaps-app .oss-item {
+  align-items: flex-start;
+}
+
+.gmaps-app .oss-main {
+  display: grid;
+  flex: 1;
+  gap: 8px;
+  min-width: 0;
+}
+
 .gmaps-app .exp-list,
 .gmaps-app .project-list,
 .gmaps-app .skill-groups,

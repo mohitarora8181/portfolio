@@ -53,14 +53,14 @@ export const spotifyPlaylists: SpotifyPlaylist[] = [
         id: group.label,
         title: group.label,
         subtitle: `Playlist • ${group.items.length} skills`,
-        cover: logoFallback(group.label),
+        cover: group.images?.[0]?.url ?? logoFallback(group.label),
         tracks: group.items,
     })),
     {
         id: 'open-source',
         title: 'Open Source Contributions',
         subtitle: `Playlist • ${data.open_source.length} contributions`,
-        cover: logoFallback('Open Source Contributions'),
+        cover: data.open_source[0]?.images?.[0]?.url ?? logoFallback('Open Source Contributions'),
         tracks: data.open_source.map((item) => item.name),
     },
 ];

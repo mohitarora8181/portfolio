@@ -133,6 +133,16 @@ const ChatView: React.FC<ChatViewProps> = ({ selectedChat, setSelectedChat }) =>
                                                 } max-w-[70%] rounded-lg px-4 py-2 shadow-sm max-sm:max-w-[86%] max-sm:px-3`}
                                             whileHover={{ scale: 1.02 }}
                                         >
+                                            {message.image && (
+                                                <div className="mb-2 overflow-hidden rounded-lg border border-gray-200 bg-[#f7f7f7]">
+                                                    <img src={message.image} alt={message.caption ?? message.text} className="h-40 w-full object-cover max-sm:h-32" />
+                                                    {message.caption && (
+                                                        <div className="px-3 py-2 text-[11px] font-medium text-gray-500">
+                                                            {message.caption}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
                                             <p className="whitespace-pre-wrap break-words text-sm leading-5">{renderLinkedText(message.text)}</p>
                                             <span className="float-right ml-3 mt-1 text-[11px] text-gray-500">{message.time}</span>
                                         </motion.div>

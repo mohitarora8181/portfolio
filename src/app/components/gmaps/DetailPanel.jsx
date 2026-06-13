@@ -147,18 +147,21 @@ function OpenSourceBody({ content, onFlyTo }) {
   return (
     <ul className="oss-list">
       {content.map((o) => (
-        <li key={o.id}>
-          {o.repo_url ? (
-            <a href={o.repo_url} target="_blank" rel="noreferrer">
-              <span className="oss-name">🐙 {o.name}</span>
-              <span className="oss-role">{o.role}</span>
-            </a>
-          ) : (
-            <span className="oss-static">
-              <span className="oss-name">🐙 {o.name}</span>
-              <span className="oss-role">{o.role}</span>
-            </span>
-          )}
+        <li key={o.id} className="oss-item">
+          <div className="oss-main">
+            {o.repo_url ? (
+              <a href={o.repo_url} target="_blank" rel="noreferrer">
+                <span className="oss-name">🐙 {o.name}</span>
+                <span className="oss-role">{o.role}</span>
+              </a>
+            ) : (
+              <span className="oss-static">
+                <span className="oss-name">🐙 {o.name}</span>
+                <span className="oss-role">{o.role}</span>
+              </span>
+            )}
+            <ImageStrip images={o.images} />
+          </div>
           <FlyBtn onFlyTo={onFlyTo} coords={o.coords} label={o.name} />
         </li>
       ))}
@@ -179,6 +182,7 @@ function SkillsBody({ content, onFlyTo }) {
           <div className="chips-inline">
             {g.items.map((item) => <span className="chip" key={item}>{item}</span>)}
           </div>
+          <ImageStrip images={g.images} />
         </div>
       ))}
     </div>

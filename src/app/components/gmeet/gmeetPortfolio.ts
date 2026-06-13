@@ -161,7 +161,7 @@ export const gmeetParticipants: GmeetParticipant[] = [
         id: `person-skill-${group.label}`,
         name: group.label,
         role: `${group.items.length} skills`,
-        avatar: avatarFallback(group.label),
+        avatar: group.images?.[0]?.url ?? avatarFallback(group.label),
         muted: true,
         topicId: `skill-${group.label}`,
         category: 'skill' as const,
