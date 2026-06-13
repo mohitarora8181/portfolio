@@ -82,7 +82,7 @@ export const getAppShowcases = () => {
     },
     {
       name: "Google Maps",
-      href: "/gmaps",
+      href: "/maps",
       theme: "bg-[#4285f4]",
       description: "Portfolio sections plotted as map pins with routes, search, and place-style detail panels.",
       skills: ["Interactive map", "Route pins", "Portfolio places"],

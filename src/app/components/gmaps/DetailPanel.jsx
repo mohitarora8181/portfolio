@@ -234,7 +234,7 @@ function ContactBody({ content }) {
     { icon: '🧩', label: 'LeetCode', href: content.links.leetcode },
     { icon: '🧠', label: 'GeeksforGeeks', href: content.links.geeksforgeeks },
     { icon: '🌐', label: 'Portfolio', href: content.links.portfolio },
-    { icon: '📄', label: 'Résumé', href: content.resume_url },
+    { icon: '📄', label: 'Resume', href: content.resume_url },
   ]
   return (
     <ul className="contact-list">
