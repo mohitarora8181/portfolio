@@ -16,7 +16,6 @@ import {
   getAppShowcases,
   getExperiencePeriod,
   getPortfolioData,
-  getProjectDate,
   getSkillGroups,
 } from "@/src/services/portfolioData";
 
@@ -293,7 +292,7 @@ export default function PortfolioHomePage() {
               ))}
             </h1>
             <p className="pf-lede">
-              Explore {data.meta.name}'s projects, stack, experience, and contact
+              Explore {data.meta.name}&apos;s projects, stack, experience, and contact
               details from the same source data that powers the clone routes.
             </p>
 
