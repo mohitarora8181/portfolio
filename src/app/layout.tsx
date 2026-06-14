@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Mohit8181",
   description: "Created by +91 9667067062",
+  icons: {
+    icon: 'https://media.licdn.com/dms/image/v2/D5603AQG0cK8tZmPDAQ/profile-displayphoto-scale_400_400/B56Z5_MgzwIUAg-/0/1780250448976?e=1782345600&v=beta&t=Bc7E5SgJB3is3YCY7Wz8oLz0SPYlcmxKwRacLm_46aU',
+  },
 };
 
 export default function RootLayout({
