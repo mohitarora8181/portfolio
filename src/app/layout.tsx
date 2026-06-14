@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "leaflet/dist/leaflet.css";
 import "./globals.css";
 import "./gmeet/index.css";
+import { setPortfolioData } from "@/src/services/portfolioData";
+import { fetchPortfolioDataFromFirebase } from "@/src/services/firebasePortfolio";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,13 +25,31 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const firebaseData = await fetchPortfolioDataFromFirebase();
+  setPortfolioData(firebaseData);
+  const bootstrapData = JSON.stringify(firebaseData).replace(/</g, "\\u003c");
+
   return (
     <html lang="en" className="w-full h-full">
+      <head>
+        <Script
+          id="portfolio-bootstrap"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.__PORTFOLIO_DATA__ = ${bootstrapData};
+              try {
+                sessionStorage.setItem('portfolio:firebase-data', JSON.stringify(window.__PORTFOLIO_DATA__));
+              } catch (error) {}
+            `,
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased w-full h-full`}
       >

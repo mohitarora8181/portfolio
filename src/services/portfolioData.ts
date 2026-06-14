@@ -7,6 +7,56 @@ export type ResearchPaper = PortfolioData["research"][number];
 export type Project = PortfolioData["projects"][number];
 export type Achievement = PortfolioData["achievements"][number];
 
+const PORTFOLIO_CACHE_KEY = "portfolio:firebase-data";
+const PORTFOLIO_GLOBAL_KEY = "__PORTFOLIO_DATA__";
+
+const portfolioFallback = portfolioJson;
+
+type PortfolioWindow = Window & {
+  [PORTFOLIO_GLOBAL_KEY]?: PortfolioData;
+};
+
+const readBrowserCache = () => {
+  if (typeof window === "undefined") return null;
+
+  const browserWindow = window as PortfolioWindow;
+  if (browserWindow[PORTFOLIO_GLOBAL_KEY]) {
+    return browserWindow[PORTFOLIO_GLOBAL_KEY] ?? null;
+  }
+
+  try {
+    const cached = window.sessionStorage.getItem(PORTFOLIO_CACHE_KEY);
+    if (!cached) return null;
+
+    const parsed = JSON.parse(cached) as PortfolioData;
+    browserWindow[PORTFOLIO_GLOBAL_KEY] = parsed;
+    return parsed;
+  } catch {
+    return null;
+  }
+};
+
+const currentPortfolioData: { value: PortfolioData } = {
+  value:
+    typeof window === "undefined"
+      ? portfolioFallback
+      : readBrowserCache() ?? portfolioFallback,
+};
+
+export const setPortfolioData = (data: PortfolioData) => {
+  currentPortfolioData.value = data;
+
+  if (typeof window !== "undefined") {
+    const browserWindow = window as PortfolioWindow;
+    browserWindow[PORTFOLIO_GLOBAL_KEY] = data;
+    try {
+      window.sessionStorage.setItem(PORTFOLIO_CACHE_KEY, JSON.stringify(data));
+    } catch {
+      // Session storage can be unavailable in privacy-restricted contexts.
+    }
+  }
+};
+
 const formatMonthYear = (value: string | null) => {
   if (!value) return "Present";
 
@@ -26,7 +76,14 @@ const formatProjectDate = (value: string) => {
 
 export const portfolioDataService = {
   get(): PortfolioData {
-    return portfolioJson;
+    if (typeof window !== "undefined") {
+      const cached = readBrowserCache();
+      if (cached) {
+        currentPortfolioData.value = cached;
+      }
+    }
+
+    return currentPortfolioData.value;
   },
 };
 
