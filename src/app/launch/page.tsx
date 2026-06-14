@@ -119,11 +119,17 @@ const timeline: TimelineItem[] = [
     title: achievement.title,
     body: achievement.description || `${achievement.type} recognition from ${achievement.issuer}.`,
   })),
+  ...data.research.map((paper) => ({
+    date: paper.status,
+    title: paper.title,
+    body: paper.highlights[0] ?? `${paper.role} at ${paper.venue || 'research lab'}.`,
+  })),
 ];
 
 const facts = [
   [String(data.projects.length), "projects"],
   [String(data.experience.length), "roles"],
+  [String(data.research.length), "papers"],
   [String(skillGroups.reduce((total, group) => total + group.items.length, 0)), "skills"],
   [data.education[0]?.institution.split(",")[0] ?? "Education", data.education[0]?.degree ?? "Education"],
 ];
@@ -278,6 +284,7 @@ export default function PortfolioHomePage() {
             <div className="pf-statusStrip" aria-label="Current focus">
               <span>{data.projects.length} projects</span>
               <span>{data.experience.length} roles</span>
+              <span>{data.research.length} papers</span>
               <span>{skillGroups.length} skill groups</span>
               <span>{data.achievements.length} achievements</span>
             </div>
@@ -407,8 +414,8 @@ ${stackGroups.slice(0, 5).map(([title, items]) => `  "${title.toLowerCase().repl
           <div className="pf-container">
             <SectionHead
               kicker="Checkpoint 03"
-              title="Experience, education, and achievements."
-              copy="Timeline entries are built from experience, education, and achievement arrays in myData.json."
+              title="Experience, research, education, and achievements."
+              copy="Timeline entries are built from experience, research, education, and achievement arrays in myData.json."
             />
 
             <div className="pf-timeline">

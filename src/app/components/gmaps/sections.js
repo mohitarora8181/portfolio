@@ -32,6 +32,7 @@ const locationBook = {
   skills: { coords: [17.385, 78.4867], zoom: 11, place: 'Hyderabad tech map' },
   education: { coords: [28.6219, 77.0907], zoom: 15, place: 'MSIT, New Delhi' },
   achievements: { coords: [28.5458, 77.1926], zoom: 13, place: 'IIT Delhi innovation circuit' },
+  research: { coords: [28.6139, 77.209], zoom: 12, place: 'Research lab, New Delhi' },
   contact: { coords: [28.6139, 77.209], zoom: 12, place: 'Contact base, New Delhi' },
 }
 
@@ -144,6 +145,19 @@ const sections = [
     location: locationBook.achievements,
     content: withCoords(data.achievements, 7),
     keywords: data.achievements.flatMap((item) => [item.title, item.issuer, item.type]),
+  },
+  {
+    id: 'research',
+    type: 'research',
+    title: 'Research',
+    category: 'Papers',
+    icon: 'R',
+    color: '#0b57d0',
+    rating: 4.9,
+    reviews: data.research.length * 46,
+    location: locationBook.research,
+    content: withCoords(data.research, 8),
+    keywords: data.research.flatMap((item) => [item.title, item.role, item.status, item.venue, ...item.tech_stack]),
   },
   {
     id: 'contact',

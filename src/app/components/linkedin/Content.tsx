@@ -43,6 +43,7 @@ const sidebarItems: { label: LinkedInSection; icon: React.ReactNode }[] = [
     { label: 'Skills', icon: <Newspaper sx={{ fontSize: 18 }} /> },
     { label: 'Education', icon: <School sx={{ fontSize: 18 }} /> },
     { label: 'Achievements', icon: <Event sx={{ fontSize: 18 }} /> },
+    { label: 'Research', icon: <Article sx={{ fontSize: 18 }} /> },
 ];
 
 const postMatchesQuery = (post: LinkedInPost, query: string) => {
@@ -133,6 +134,10 @@ const Content = ({ query, onQueryChange, activeSection, onSectionChange }: Conte
                     <div className="flex w-full justify-between text-gray-600 mt-2">
                         <span className='font-semibold'>Achievements</span>
                         <span className="font-semibold text-[#0a66c2]">{linkedinStats.achievements}</span>
+                    </div>
+                    <div className="flex w-full justify-between text-gray-600 mt-2">
+                        <span className='font-semibold'>Research</span>
+                        <span className="font-semibold text-[#0a66c2]">{linkedinStats.research}</span>
                     </div>
                 </div>
 
@@ -368,7 +373,7 @@ const Content = ({ query, onQueryChange, activeSection, onSectionChange }: Conte
                 </div>
                 <div className='fixed bottom-0 right-6 flex h-fit w-[300px] items-center rounded-t-xl border border-gray-300 bg-white p-1 px-2 shadow-xl'>
                     <img src={linkedinProfile.avatar} alt="" className="w-10 h-10 rounded-full object-cover border-2 border-white" />
-                    <span className='bg-[#01754f] w-[18px] h-[10px] rounded-full self-end -ml-3 mb-0.5 border-2 border-white' />
+                    <span className='bg-[#01754f] w-[10px] h-[10px] rounded-full self-end -ml-3 mb-0.5 border-2 border-white' />
                     <p className='px-3 font-semibold text-gray-700 text-sm'>Message {linkedinProfile.firstName}</p>
                     <span className='ml-auto'><Person sx={{ fontSize: 18 }} /></span>
                 </div>

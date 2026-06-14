@@ -3,6 +3,7 @@ import portfolioJson from "@/myData.json";
 export type PortfolioData = typeof portfolioJson;
 export type SkillGroup = PortfolioData["skills"][keyof PortfolioData["skills"]];
 export type Experience = PortfolioData["experience"][number];
+export type ResearchPaper = PortfolioData["research"][number];
 export type Project = PortfolioData["projects"][number];
 export type Achievement = PortfolioData["achievements"][number];
 
@@ -39,7 +40,12 @@ export const getFeaturedProjects = () =>
 export const getExperiencePeriod = (experience: Experience) =>
   `${formatMonthYear(experience.start_date)} - ${formatMonthYear(experience.end_date)}`;
 
+export const getResearchPeriod = (paper: ResearchPaper) =>
+  `${formatMonthYear(paper.start_date)} - ${formatMonthYear(paper.end_date)}`;
+
 export const getProjectDate = (project: Project) => formatProjectDate(project.date);
+
+export const getResearchPapers = () => getPortfolioData().research;
 
 export const getAppShowcases = () => {
   const data = getPortfolioData();

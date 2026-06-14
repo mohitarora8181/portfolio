@@ -14,6 +14,7 @@ import {
   Palette,
   RocketLaunch,
   Search,
+  Science,
   Tune,
   WorkOutline,
 } from "@mui/icons-material";
@@ -45,6 +46,7 @@ const appLogos: Record<string, string> = {
 const stats = [
   { label: "Projects", value: data.projects.length, icon: <Code sx={{ fontSize: 18 }} /> },
   { label: "Roles", value: data.experience.length, icon: <WorkOutline sx={{ fontSize: 18 }} /> },
+  { label: "Papers", value: data.research.length, icon: <Science sx={{ fontSize: 18 }} /> },
   { label: "Clones", value: appShowcases.length, icon: <Apps sx={{ fontSize: 18 }} /> },
 ];
 

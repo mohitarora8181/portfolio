@@ -2,6 +2,7 @@ import {
     getExperiencePeriod,
     getPortfolioData,
     getProjectDate,
+    getResearchPeriod,
     getSkillGroups,
 } from '@/src/services/portfolioData';
 
@@ -19,6 +20,7 @@ export type YouTubeSection =
     | 'Achievements'
     | 'Education'
     | 'Open Source'
+    | 'Research'
     | 'Featured'
     | 'Contact';
 
@@ -58,6 +60,7 @@ export const youtubeChannel = {
     stats: [
         `${data.projects.length} projects`,
         `${data.experience.length} roles`,
+        `${data.research.length} papers`,
         `${skillGroups.length} skill groups`,
     ],
 };
@@ -70,6 +73,7 @@ export const youtubeFilters = [
     'Achievements',
     'Education',
     'Open Source',
+    'Research',
     'Featured',
     'Contact',
     ...skillGroups.slice(0, 4).map((group) => group.label),
@@ -164,6 +168,18 @@ export const youtubeVideos: PortfolioVideo[] = [
         section: 'Open Source',
         chips: ['Open source'],
         links: item.repo_url ? [{ label: 'repository', href: item.repo_url }] : [],
+    })),
+    ...data.research.map((paper, index) => ({
+        id: paper.id,
+        title: paper.title,
+        description: paper.highlights[0] ?? paper.role,
+        thumbnail: paper.images?.[0]?.url ?? logoFallback(paper.title),
+        channel: data.meta.name,
+        meta: `${paper.status} | ${getResearchPeriod(paper)} | ${paper.tech_stack.length} techniques`,
+        duration: index % 2 ? '5:15' : '7:40',
+        section: 'Research',
+        chips: paper.tech_stack,
+        links: paper.paper_url ? [{ label: 'paper', href: paper.paper_url }] : [],
     })),
     {
         id: 'contact',

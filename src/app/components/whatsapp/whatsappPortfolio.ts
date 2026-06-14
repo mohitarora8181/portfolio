@@ -2,6 +2,7 @@ import {
     getExperiencePeriod,
     getPortfolioData,
     getProjectDate,
+    getResearchPeriod,
     getSkillGroups,
 } from '@/src/services/portfolioData';
 
@@ -192,5 +193,38 @@ export const portfolioChats: Chat[] = [
             const item = data.open_source[index];
             return item.repo_url ? [message, { text: `Repository: ${item.repo_url}`, time: 'Link', isSender: true }] : [message];
         }),
+    },
+    {
+        id: 'research',
+        name: 'Research',
+        message: `${data.research.length} research papers`,
+        time: 'Thu',
+        archived: false,
+        category: ['all', 'groups'],
+        messages: data.research.flatMap((paper) => [
+            {
+                text: `${paper.title} — ${paper.role} (${getResearchPeriod(paper)})`,
+                time: paper.status,
+                isSender: false,
+                dateTag: 'Research',
+                image: paper.images?.[0]?.url,
+                caption: paper.title,
+            },
+            {
+                text: paper.highlights[0] ?? paper.status,
+                time: paper.venue || 'Paper',
+                isSender: true,
+            },
+            {
+                text: `Tech: ${paper.tech_stack.join(', ')}`,
+                time: 'Stack',
+                isSender: false,
+            },
+            ...(paper.paper_url ? [{
+                text: `Paper link: ${paper.paper_url}`,
+                time: 'Link',
+                isSender: true,
+            }] : []),
+        ]),
     },
 ];

@@ -2,6 +2,7 @@ import {
     getExperiencePeriod,
     getPortfolioData,
     getProjectDate,
+    getResearchPeriod,
     getSkillGroups,
 } from '@/src/services/portfolioData';
 
@@ -21,7 +22,7 @@ export type SpotifyPlaylist = {
 
 export type SpotifyAlbum = {
     id: string;
-    kind: 'project' | 'experience';
+    kind: 'project' | 'experience' | 'research';
     title: string;
     subtitle: string;
     cover: string;
@@ -100,6 +101,23 @@ export const spotifyAlbums: SpotifyAlbum[] = [
         ],
         links: experience.company_url ? [{ label: 'company', href: experience.company_url }] : [],
         chips: experience.tech_stack,
+    })),
+    ...data.research.map((paper) => ({
+        id: paper.id,
+        kind: 'research' as const,
+        title: paper.title,
+        subtitle: `${paper.status} • ${getResearchPeriod(paper)}`,
+        cover: paper.images?.[0]?.url ?? logoFallback(paper.title),
+        description: paper.highlights[0] ?? paper.role,
+        details: paper.highlights,
+        meta: [
+            { label: 'Role', value: paper.role },
+            { label: 'Period', value: getResearchPeriod(paper) },
+            { label: 'Status', value: paper.status },
+            { label: 'Venue', value: paper.venue || 'In progress' },
+        ],
+        links: paper.paper_url ? [{ label: 'paper', href: paper.paper_url }] : [],
+        chips: paper.tech_stack,
     })),
 ];
 

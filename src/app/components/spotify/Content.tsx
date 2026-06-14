@@ -9,7 +9,7 @@ import {
 } from './spotifyPortfolio';
 import type { SpotifyAlbum, SpotifyPlaylist } from './spotifyPortfolio';
 
-const filterOptions = ['All', 'Projects', 'Experience', 'Skills'];
+const filterOptions = ['All', 'Projects', 'Experience', 'Skills', 'Research'];
 
 const socialLinks = [
     { label: 'GitHub', href: spotifyProfile.links.github, icon: GitHub },
@@ -60,7 +60,8 @@ const Content = ({ query, onQueryChange, onNowPlayingChange }: ContentProps) => 
             const matchesFilter =
                 activeFilter === 'All' ||
                 (activeFilter === 'Projects' && album.id.startsWith('proj_')) ||
-                (activeFilter === 'Experience' && album.id.startsWith('exp_'));
+                (activeFilter === 'Experience' && album.id.startsWith('exp_')) ||
+                (activeFilter === 'Research' && album.kind === 'research');
 
             const matchesQuery = !normalizedQuery || [
                 album.title,
@@ -303,7 +304,11 @@ const Content = ({ query, onQueryChange, onNowPlayingChange }: ContentProps) => 
                                     </div>
                                     <div>
                                         <p className='text-xs font-bold uppercase text-gray-500'>
-                                            {selectedAlbum.kind === 'project' ? 'Project details' : 'Experience details'}
+                                        {selectedAlbum.kind === 'project'
+                                            ? 'Project details'
+                                            : selectedAlbum.kind === 'experience'
+                                                ? 'Experience details'
+                                                : 'Research details'}
                                         </p>
                                         <p className='mt-2 text-sm leading-6 text-gray-300'>{selectedAlbum.description}</p>
                                     </div>

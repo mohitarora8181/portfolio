@@ -30,6 +30,7 @@ const topicTypes: Array<{ label: string; value: GmeetTopic['type'] | 'all' }> = 
     { label: 'Experience', value: 'experience' },
     { label: 'Skills', value: 'skill' },
     { label: 'Achievements', value: 'achievement' },
+    { label: 'Research', value: 'research' },
 ];
 
 const socialLinks = [

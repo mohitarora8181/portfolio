@@ -2,6 +2,7 @@ import {
     getExperiencePeriod,
     getPortfolioData,
     getProjectDate,
+    getResearchPeriod,
     getSkillGroups,
 } from '@/src/services/portfolioData';
 
@@ -21,7 +22,7 @@ export type GmeetParticipant = {
     muted: boolean;
     presenting?: boolean;
     topicId?: string;
-    category: 'profile' | 'project' | 'experience' | 'skill' | 'achievement' | 'open_source' | 'education';
+    category: 'profile' | 'project' | 'experience' | 'skill' | 'achievement' | 'open_source' | 'education' | 'research';
     initials: string;
     note: string;
 };
@@ -30,7 +31,7 @@ export type GmeetTopic = {
     id: string;
     title: string;
     subtitle: string;
-    type: 'project' | 'experience' | 'skill' | 'achievement';
+    type: 'project' | 'experience' | 'skill' | 'achievement' | 'research';
     details: string[];
     chips: string[];
     meta: { label: string; value: string }[];
@@ -121,6 +122,20 @@ export const gmeetTopics: GmeetTopic[] = [
         ],
         links: achievement.link ? [{ label: 'credential', href: achievement.link }] : [],
     })),
+    ...data.research.map((paper) => ({
+        id: paper.id,
+        title: paper.title,
+        subtitle: `${paper.status} | ${getResearchPeriod(paper)}`,
+        type: 'research' as const,
+        details: [paper.role, ...paper.highlights].filter(Boolean),
+        chips: paper.tech_stack,
+        meta: [
+            { label: 'Role', value: paper.role },
+            { label: 'Status', value: paper.status },
+            { label: 'Venue', value: paper.venue || 'Draft' },
+        ],
+        links: paper.paper_url ? [{ label: 'paper', href: paper.paper_url }] : [],
+    })),
 ];
 
 export const gmeetParticipants: GmeetParticipant[] = [
@@ -179,6 +194,17 @@ export const gmeetParticipants: GmeetParticipant[] = [
         initials: initialsOf(achievement.title),
         note: String(achievement.year),
     })),
+    ...data.research.map((paper) => ({
+        id: `person-${paper.id}`,
+        name: paper.title,
+        role: paper.role,
+        avatar: paper.images?.[0]?.url ?? avatarFallback(paper.title),
+        muted: true,
+        topicId: paper.id,
+        category: 'research' as const,
+        initials: initialsOf(paper.title),
+        note: paper.tech_stack.slice(0, 4).join(', '),
+    })),
 ];
 
 export const gmeetChatMessages: GmeetChatMessage[] = [
@@ -208,6 +234,13 @@ export const gmeetChatMessages: GmeetChatMessage[] = [
         message: achievement.description || `${achievement.type} recognition from ${achievement.issuer}.`,
         time: `${index + data.projects.length + data.experience.length + 1} min`,
         topicId: achievement.id,
+    })),
+    ...data.research.map((paper, index) => ({
+        id: `chat-${paper.id}`,
+        sender: paper.title,
+        message: paper.highlights[0] ?? paper.status,
+        time: `${index + data.projects.length + data.experience.length + data.achievements.length + 1} min`,
+        topicId: paper.id,
     })),
 ];
 

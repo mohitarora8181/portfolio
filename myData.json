@@ -246,6 +246,64 @@
       "progression": []
     }
   ],
+  "research": [
+    {
+      "id": "res_001",
+      "title": "OntoComm: Ontology Construction Cost Model Estimation",
+      "role": "Research Assistant",
+      "status": "under_review",
+      "start_date": "2025-01-01",
+      "end_date": "2026-12-31",
+      "venue": "",
+      "paper_url": "",
+      "tech_stack": [
+        "CNN",
+        "FNN",
+        "SMOTE",
+        "Deep Learning"
+      ],
+      "highlights": [
+        "Investigated automated cost estimation for ontology construction using deep learning, combining CNN and FNN architectures to capture structural and numerical features of ontology datasets",
+        "Designed and implemented a synthetic data generation pipeline using SMOTE, noise injection, and interpolation to augment limited training samples and improve model generalization",
+        "Conducted comparative evaluation of model variants across accuracy, precision, and recall metrics on benchmark ontology corpora"
+      ],
+      "images": [
+        {
+          "url": "https://onlinelibrary.wiley.com/cms/asset/46af9ea2-2c90-49b0-ac3c-8c2aad505382/coin70061-fig-0003-m.jpg",
+          "alt": "Neural network architecture diagram",
+          "caption": "CNN-FNN hybrid model for ontology cost estimation"
+        }
+      ]
+    },
+    {
+      "id": "res_002",
+      "title": "Legal Judgment Retrieval via RAG and Knowledge Graph Integration",
+      "role": "Research Assistant",
+      "status": "under_review",
+      "start_date": "2025-01-01",
+      "end_date": "2026-12-31",
+      "venue": "",
+      "paper_url": "",
+      "tech_stack": [
+        "RAG",
+        "Knowledge Graph",
+        "FAISS",
+        "Neo4j"
+      ],
+      "highlights": [
+        "Built a hybrid retrieval system combining Retrieval-Augmented Generation (RAG) with Knowledge Graphs (KG) for accurate semantic search over a corpus of law court judgments",
+        "Implemented dense vector indexing using FAISS and graph-based relationship modeling using Neo4j to enable similarity-based case retrieval grounded in precedent linkage",
+        "Developed a vectorization and ingestion pipeline for legal text, enabling precise, context-aware lookup of prior decisions based on case facts and legal reasoning"
+      ],
+      "images": [
+        {
+          "url": "https://media.licdn.com/dms/image/v2/D4E12AQF4KwyuW2lLdw/article-inline_image-shrink_1000_1488/article-inline_image-shrink_1000_1488/0/1731005512938?e=2147483647&v=beta&t=z30eeWhWOfdOUBN9LK4B2gNGeIGmNTXjMPZzol3vHrA",
+          "alt": "Legal documents and case files",
+          "caption": "RAG + Knowledge Graph for legal judgment retrieval"
+        }
+      ]
+    }
+  ],
   "projects": [
     {
       "id": "proj_001",
@@ -374,7 +432,7 @@
       "role": "contributor",
       "repo_url": "https://github.com/mohitarora8181/syllabusx-client",
       "description": "",
-      "demo":"https://www.linkedin.com/posts/mohit8181_webdevelopment-edtech-programming-activity-7267972344030126080-vfrB?utm_source=share&utm_medium=member_desktop&rcm=ACoAADOos84BN3aNASDXzdqbkFjx-nsCgs0CItg",
+      "demo": "https://www.linkedin.com/posts/mohit8181_webdevelopment-edtech-programming-activity-7267972344030126080-vfrB?utm_source=share&utm_medium=member_desktop&rcm=ACoAADOos84BN3aNASDXzdqbkFjx-nsCgs0CItg",
       "images": [
         {
           "url": "https://media.licdn.com/dms/image/v2/D5622AQEaE7s48gGeBQ/feedshare-image-high-res/feedshare-image-high-res/0/1732819636890?e=1782950400&v=beta&t=lTj9idYOt0NOf6F1-LR9tiUAELQsrZoI6NoGYfZIRYw",

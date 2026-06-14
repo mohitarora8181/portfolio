@@ -2,6 +2,7 @@ import {
     getExperiencePeriod,
     getPortfolioData,
     getProjectDate,
+    getResearchPeriod,
     getSkillGroups,
 } from '@/src/services/portfolioData';
 
@@ -11,7 +12,7 @@ const skillGroups = getSkillGroups();
 const firstImage = (item: { images?: { url: string }[] }) => item.images?.find((image) => image.url)?.url;
 const logoFallback = (label: string) => `https://ui-avatars.com/api/?name=${encodeURIComponent(label)}&background=0a66c2&color=ffffff&size=900`;
 
-export type LinkedInSection = 'All' | 'Experience' | 'Projects' | 'Skills' | 'Education' | 'Achievements' | 'Open Source';
+export type LinkedInSection = 'All' | 'Experience' | 'Projects' | 'Skills' | 'Education' | 'Achievements' | 'Open Source' | 'Research';
 
 export type LinkedInPost = {
     id: string;
@@ -46,6 +47,7 @@ export const linkedinSections: LinkedInSection[] = [
     'Education',
     'Achievements',
     'Open Source',
+    'Research',
 ];
 
 export const linkedinPosts: LinkedInPost[] = [
@@ -123,6 +125,18 @@ export const linkedinPosts: LinkedInPost[] = [
         chips: [item.role],
         links: item.repo_url ? [{ label: 'Repository', href: item.repo_url }] : [],
     })),
+    ...data.research.map((paper) => ({
+        id: paper.id,
+        section: 'Research' as const,
+        title: paper.title,
+        subtitle: `${paper.role} | ${getResearchPeriod(paper)}`,
+        content: paper.highlights[0] ?? paper.status,
+        image: paper.images?.[0]?.url ?? logoFallback(paper.title),
+        metrics: `${paper.tech_stack.length} techniques | ${paper.status}`,
+        details: paper.highlights,
+        chips: paper.tech_stack,
+        links: paper.paper_url ? [{ label: 'Paper', href: paper.paper_url }] : [],
+    })),
 ];
 
 export const linkedinStats = {
@@ -130,4 +144,5 @@ export const linkedinStats = {
     experience: data.experience.length,
     skills: skillGroups.reduce((total, group) => total + group.items.length, 0),
     achievements: data.achievements.length,
+    research: data.research.length,
 };

@@ -228,6 +228,36 @@ function AchievementsBody({ content, onFlyTo }) {
   )
 }
 
+function ResearchBody({ content, onFlyTo }) {
+  return (
+    <div className="project-list">
+      {content.map((paper) => (
+        <article className="project-card" key={paper.id}>
+          <div className="project-top">
+            <span className="project-name">
+              {paper.title}
+              <span className="badge badge-featured">Research</span>
+            </span>
+            <span className="project-date">{paper.status} · {paper.venue || 'Draft'}</span>
+            <FlyBtn onFlyTo={onFlyTo} coords={paper.coords} label={paper.title} />
+          </div>
+          <p className="project-desc">{paper.role}</p>
+          <Chips items={paper.tech_stack} />
+          <ul className="bullet-list">
+            {paper.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+          </ul>
+          <ImageStrip images={paper.images} />
+          {paper.paper_url && (
+            <div className="link-row">
+              <a href={paper.paper_url} target="_blank" rel="noreferrer">Paper</a>
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  )
+}
+
 /* ---------- Contact ---------- */
 function ContactBody({ content }) {
   const channels = [
@@ -262,6 +292,7 @@ const BODIES = {
   skills: SkillsBody,
   education: EducationBody,
   achievements: AchievementsBody,
+  research: ResearchBody,
   contact: ContactBody,
 }
 
