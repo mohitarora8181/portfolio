@@ -153,7 +153,7 @@ export default function Home() {
 
   return (
     <main
-      className={`h-screen overflow-hidden ${theme.main}`}
+      className={`relative min-h-dvh overflow-x-hidden overflow-y-auto ${theme.main} max-sm:h-auto`}
       onMouseMove={(event) => {
         pointerX.set(event.clientX / window.innerWidth - 0.5);
         pointerY.set(event.clientY / window.innerHeight - 0.5);
@@ -165,7 +165,7 @@ export default function Home() {
         style={{ left: glowX, top: glowY }}
         className={`pointer-events-none fixed z-0 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[90px] ${theme.glow}`}
       />
-      <section className="relative flex h-full flex-col items-center px-4 pt-[12vh] max-md:pt-[9vh] max-sm:pt-[15vh]">
+      <section className="relative flex min-h-dvh flex-col items-center px-4 pb-20 pt-[12vh] max-md:pt-[9vh] max-sm:h-auto max-sm:min-h-dvh max-sm:px-3 max-sm:pb-28 max-sm:pt-[15vh]">
         <motion.div
           style={{ x: backgroundX, y: backgroundY }}
           className="pointer-events-none absolute inset-0 opacity-70"
@@ -339,7 +339,7 @@ export default function Home() {
               >
                 <Link
                   href={app.href}
-                  className={`group flex h-[112px] w-[112px] cursor-pointer flex-col items-center justify-center rounded-2xl hover:shadow-lg ${theme.shortcut}`}
+                  className={`group flex h-[112px] w-[112px] cursor-pointer flex-col items-center justify-center rounded-2xl hover:shadow-lg max-sm:h-[104px] max-sm:w-[104px] ${theme.shortcut}`}
                 >
                   <span className={`grid h-[58px] w-[58px] place-items-center rounded-2xl shadow-[0_8px_22px_rgba(60,64,67,0.16)] ring-1 transition group-hover:shadow-[0_12px_28px_rgba(60,64,67,0.22)] ${theme.shortcutIcon}`}>
                     <img src={appLogos[app.name]} alt={app.name} className="h-9 w-9 object-contain" />
@@ -354,11 +354,11 @@ export default function Home() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ delay: 0.46 + filteredApps.length * 0.08, duration: 0.42 }}
               whileHover={{ y: -8, scale: 1.04 }}
-              className={`flex h-[112px] w-[112px] cursor-pointer flex-col items-center justify-center rounded-2xl hover:shadow-lg ${theme.shortcut}`}
+              className={`flex h-[112px] w-[112px] cursor-pointer flex-col items-center justify-center rounded-2xl hover:shadow-lg max-sm:h-[104px] max-sm:w-[104px] ${theme.shortcut}`}
             >
               <Link
                 href={"/launch"}
-                className={`group flex h-[112px] w-[112px] cursor-pointer flex-col items-center justify-center rounded-2xl hover:shadow-lg ${theme.shortcut}`}
+                className={`group flex h-[112px] w-[112px] cursor-pointer flex-col items-center justify-center rounded-2xl hover:shadow-lg max-sm:h-[104px] max-sm:w-[104px] ${theme.shortcut}`}
               >
                 <span className="grid h-[58px] w-[58px] place-items-center rounded-full bg-[#e8f0fe] text-[#174ea6] shadow-sm">
                   <RocketLaunch sx={{ fontSize: 27 }} />

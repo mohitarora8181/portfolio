@@ -114,7 +114,9 @@ const Content = ({ query, onQueryChange, activeSection, onSectionChange }: Conte
                     <div className='w-full px-5 pb-4 text-xs'>
                         <h2 className="mt-2 text-xl font-semibold leading-tight">{linkedinProfile.name}</h2>
                         <p className="mt-1 line-clamp-2 text-sm leading-5 text-gray-800">{linkedinProfile.tagline}</p>
-                        <p className="mt-2 text-xs text-gray-500">{linkedinProfile.education.institution}</p>
+                        <p className="mt-2 text-xs text-gray-500">
+                            {linkedinProfile.education?.institution ?? 'Education details'}
+                        </p>
                     </div>
                 </motion.div>
 

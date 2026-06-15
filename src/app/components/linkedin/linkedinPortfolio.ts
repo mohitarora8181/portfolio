@@ -8,6 +8,7 @@ import {
 
 const data = getPortfolioData();
 const skillGroups = getSkillGroups();
+const firstEducation = data.education?.[0] ?? null;
 
 const firstImage = (item: { images?: { url: string }[] }) => item.images?.find((image) => image.url)?.url;
 const logoFallback = (label: string) => `https://ui-avatars.com/api/?name=${encodeURIComponent(label)}&background=0a66c2&color=ffffff&size=900`;
@@ -36,7 +37,7 @@ export const linkedinProfile = {
     phone: data.meta.phone,
     resumeUrl: data.meta.resume_url,
     links: data.meta.links,
-    education: data.education[0],
+    education: firstEducation,
 };
 
 export const linkedinSections: LinkedInSection[] = [
@@ -56,10 +57,10 @@ export const linkedinPosts: LinkedInPost[] = [
         section: 'Experience' as const,
         title: `${item.role} at ${item.company}`,
         subtitle: `${item.location} | ${getExperiencePeriod(item)}`,
-        content: item.highlights[0],
+        content: item.highlights?.[0] ?? item.role,
         image: firstImage(item) || item.company_logo || logoFallback(item.company),
-        metrics: `${item.tech_stack.length} technologies | ${item.highlights.length} highlights`,
-        details: item.highlights,
+        metrics: `${item.tech_stack.length} technologies | ${(item.highlights ?? []).length} highlights`,
+        details: item.highlights ?? [item.role],
         chips: item.tech_stack,
         links: item.company_url ? [{ label: 'Company', href: item.company_url }] : [],
     })),
@@ -94,10 +95,10 @@ export const linkedinPosts: LinkedInPost[] = [
         section: 'Education' as const,
         title: education.institution,
         subtitle: `${education.degree} | ${education.start_year} - ${education.end_year}`,
-        content: `CGPA ${education.cgpa}. ${education.highlights.join(' ')}`,
+        content: `CGPA ${education.cgpa}. ${(education.highlights ?? []).join(' ')}`,
         image: education.logo || logoFallback(education.institution),
         metrics: `CGPA ${education.cgpa}`,
-        details: education.highlights.length > 0 ? education.highlights : [`CGPA ${education.cgpa}`],
+        details: education.highlights?.length ? education.highlights : [`CGPA ${education.cgpa}`],
         chips: [education.degree, `${education.start_year} - ${education.end_year}`],
         links: [],
     })),
