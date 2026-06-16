@@ -107,7 +107,7 @@ const timeline: TimelineItem[] = [
   ...data.experience.map((experience) => ({
     date: experience.current ? "Current" : getExperiencePeriod(experience),
     title: `${experience.role} at ${experience.company}`,
-    body: experience.highlights[0] ?? `${experience.type.replace(/_/g, " ")} role in ${experience.location}.`,
+    body: experience.highlights?.[0] ?? `${experience.type.replace(/_/g, " ")} role in ${experience.location}.`,
   })),
   ...data.education.map((education) => ({
     date: `${education.start_year} - ${education.end_year}`,
@@ -122,7 +122,7 @@ const timeline: TimelineItem[] = [
   ...data.research.map((paper) => ({
     date: paper.status,
     title: paper.title,
-    body: paper.highlights[0] ?? `${paper.role} at ${paper.venue || 'research lab'}.`,
+    body: paper.highlights?.[0] ?? `${paper.role} at ${paper.venue || 'research lab'}.`,
   })),
 ];
 

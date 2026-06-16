@@ -95,14 +95,14 @@ function ExperienceBody({ content, onFlyTo }) {
               <span className="exp-place">📍 {exp.place}</span>
             </span>
           </button>
-          {exp.progression.map((p) => (
+          {(exp.progression ?? []).map((p) => (
             <div className="exp-progression" key={p.role}>
               ↳ {p.role} · {period(p.start_date, p.end_date)}
             </div>
           ))}
           <Chips items={exp.tech_stack} />
           <ul className="bullet-list">
-            {exp.highlights.map((h) => <li key={h}>{h}</li>)}
+            {(exp.highlights ?? []).map((h) => <li key={h}>{h}</li>)}
           </ul>
           <ImageStrip images={exp.images} />
         </article>
@@ -244,7 +244,7 @@ function ResearchBody({ content, onFlyTo }) {
           <p className="project-desc">{paper.role}</p>
           <Chips items={paper.tech_stack} />
           <ul className="bullet-list">
-            {paper.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+            {(paper.highlights ?? []).map((highlight) => <li key={highlight}>{highlight}</li>)}
           </ul>
           <ImageStrip images={paper.images} />
           {paper.paper_url && (
