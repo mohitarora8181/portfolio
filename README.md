@@ -27,42 +27,6 @@ All of these views are powered by the same structured data source: `myData.json`
 | `/spotify` | Projects, experience, and skills as playlists/albums |
 | `/linkedin` | Professional feed with filters and expandable details |
 | `/gmeet` | Portfolio presentation room with people, chat, and details panels |
-| `/api/scrape` | Fast scraping endpoint with fetch-first mode and optional Puppeteer rendering |
-
-## API: `/api/scrape`
-
-Use this endpoint to fetch metadata quickly, with optional JS-rendered extraction when needed.
-
-### Request body
-
-```json
-{
-  "url": "https://example.com",
-  "render": false,
-  "selector": "h1"
-}
-```
-
-- `url` (required): target `http` or `https` URL
-- `render` (optional, default `false`): uses Puppeteer only when `true`
-- `selector` (optional): returns trimmed text for a CSS selector when present
-- `SCRAPE_ALLOWED_HOSTS` (required env): comma-separated host allowlist (for example: `example.com,news.ycombinator.com`)
-
-### Response shape
-
-```json
-{
-  "ok": true,
-  "url": "https://example.com/",
-  "title": "Example Domain",
-  "text": null,
-  "rendered": false,
-  "timings": {
-    "fetch": 123,
-    "total": 130
-  }
-}
-```
 
 ## Data Source
 
