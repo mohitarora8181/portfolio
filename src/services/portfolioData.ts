@@ -160,6 +160,13 @@ const currentPortfolioData: { value?: PortfolioData } = {
   value: typeof window === "undefined" ? undefined : readBrowserCache() ?? undefined,
 };
 
+const redirectToHomeIfPossible = () => {
+  if (typeof window === "undefined") return;
+  if (window.location.pathname === "/") return;
+
+  window.location.replace("/");
+};
+
 export const setPortfolioData = (data: PortfolioData) => {
   currentPortfolioData.value = data;
 
@@ -212,6 +219,7 @@ export const portfolioDataService = {
     }
 
     if (!currentPortfolioData.value) {
+      redirectToHomeIfPossible();
       throw new Error("Firebase portfolio data has not been loaded.");
     }
 
