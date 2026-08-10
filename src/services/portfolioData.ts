@@ -1,16 +1,136 @@
-import portfolioJson from "@/myData.json";
+export type PortfolioImage = {
+  url: string;
+  alt?: string;
+};
 
-export type PortfolioData = typeof portfolioJson;
-export type SkillGroup = PortfolioData["skills"][keyof PortfolioData["skills"]];
-export type Experience = PortfolioData["experience"][number];
-export type ResearchPaper = PortfolioData["research"][number];
-export type Project = PortfolioData["projects"][number];
-export type Achievement = PortfolioData["achievements"][number];
+export type PortfolioLinks = {
+  linkedin: string;
+  github: string;
+  leetcode: string;
+  geeksforgeeks: string;
+  portfolio?: string;
+  [key: string]: string | undefined;
+};
+
+export type PortfolioMeta = {
+  name: string;
+  tagline: string;
+  avatar: string;
+  email: string;
+  phone: string;
+  resume_url: string;
+  links: PortfolioLinks;
+};
+
+export type SkillGroup = {
+  label: string;
+  items: string[];
+  images?: PortfolioImage[];
+  coords?: [number, number];
+  place?: string;
+};
+
+export type Experience = {
+  id: string;
+  company: string;
+  role: string;
+  start_date: string;
+  end_date: string | null;
+  current: boolean;
+  location: string;
+  type: string;
+  highlights: string[];
+  tech_stack: string[];
+  company_url?: string;
+  company_logo?: string;
+  images?: PortfolioImage[];
+  coords?: [number, number];
+  place?: string;
+};
+
+export type ResearchPaper = {
+  id: string;
+  title: string;
+  role: string;
+  start_date: string;
+  end_date: string | null;
+  status: string;
+  venue?: string;
+  highlights: string[];
+  tech_stack: string[];
+  paper_url?: string;
+  images?: PortfolioImage[];
+  coords?: [number, number];
+  place?: string;
+};
+
+export type Project = {
+  id: string;
+  name: string;
+  tagline: string;
+  description: string;
+  type: string;
+  status: string;
+  date: string;
+  featured: boolean;
+  highlights: string[];
+  tech_stack: string[];
+  links: Partial<Record<string, string>>;
+  images?: PortfolioImage[];
+  coords?: [number, number];
+  place?: string;
+};
+
+export type Achievement = {
+  id: string;
+  title: string;
+  issuer: string;
+  year: number | string;
+  type: string;
+  description?: string;
+  image?: string;
+  link?: string;
+  coords?: [number, number];
+  place?: string;
+};
+
+export type Education = {
+  id: string;
+  institution: string;
+  degree: string;
+  start_year: number | string;
+  end_year: number | string;
+  cgpa: number | string;
+  logo?: string;
+  highlights?: string[];
+};
+
+export type OpenSourceContribution = {
+  id: string;
+  name: string;
+  description: string;
+  role: string;
+  tech_stack?: string[];
+  link?: string;
+  repo_url?: string;
+  images?: PortfolioImage[];
+  coords?: [number, number];
+  place?: string;
+};
+
+export type PortfolioData = {
+  meta: PortfolioMeta;
+  skills: Record<string, SkillGroup>;
+  experience: Experience[];
+  research: ResearchPaper[];
+  projects: Project[];
+  achievements: Achievement[];
+  education: Education[];
+  open_source: OpenSourceContribution[];
+};
 
 const PORTFOLIO_CACHE_KEY = "portfolio:firebase-data";
 const PORTFOLIO_GLOBAL_KEY = "__PORTFOLIO_DATA__";
-
-const portfolioFallback = portfolioJson;
 
 type PortfolioWindow = Window & {
   [PORTFOLIO_GLOBAL_KEY]?: PortfolioData;
@@ -36,11 +156,8 @@ const readBrowserCache = () => {
   }
 };
 
-const currentPortfolioData: { value: PortfolioData } = {
-  value:
-    typeof window === "undefined"
-      ? portfolioFallback
-      : readBrowserCache() ?? portfolioFallback,
+const currentPortfolioData: { value?: PortfolioData } = {
+  value: typeof window === "undefined" ? undefined : readBrowserCache() ?? undefined,
 };
 
 export const setPortfolioData = (data: PortfolioData) => {
@@ -75,6 +192,17 @@ const formatProjectDate = (value: string) => {
 };
 
 export const portfolioDataService = {
+  peek(): PortfolioData | null {
+    if (typeof window !== "undefined") {
+      const cached = readBrowserCache();
+      if (cached) {
+        currentPortfolioData.value = cached;
+      }
+    }
+
+    return currentPortfolioData.value ?? null;
+  },
+
   get(): PortfolioData {
     if (typeof window !== "undefined") {
       const cached = readBrowserCache();
@@ -83,11 +211,16 @@ export const portfolioDataService = {
       }
     }
 
+    if (!currentPortfolioData.value) {
+      throw new Error("Firebase portfolio data has not been loaded.");
+    }
+
     return currentPortfolioData.value;
   },
 };
 
 export const getPortfolioData = () => portfolioDataService.get();
+export const getLoadedPortfolioData = () => portfolioDataService.peek();
 
 export const getSkillGroups = () => Object.values(getPortfolioData().skills);
 
@@ -104,8 +237,8 @@ export const getProjectDate = (project: Project) => formatProjectDate(project.da
 
 export const getResearchPapers = () => getPortfolioData().research;
 
-export const getAppShowcases = () => {
-  const data = getPortfolioData();
+export const getAppShowcases = (portfolioData?: PortfolioData) => {
+  const data = portfolioData ?? getPortfolioData();
 
   return [
     {

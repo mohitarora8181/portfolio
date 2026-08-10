@@ -356,7 +356,7 @@ export default function PortfolioHomePage() {
           <div className="pf-container">
             <SectionHead
               kicker="Checkpoint 01"
-              title={`${data.projects.length} builds from myData.json.`}
+              title={`${data.projects.length} builds from Firebase.`}
               copy="Projects and clone routes are generated from the structured portfolio source instead of hardcoded launch-page content."
             />
 
@@ -379,7 +379,7 @@ export default function PortfolioHomePage() {
             <SectionHead
               kicker="Checkpoint 02"
               title="Stack mapped from the skills section."
-              copy={`${skillGroups.length} skill groups are read directly from myData.json and rendered as the launch toolkit.`}
+              copy={`${skillGroups.length} skill groups are read directly from Firebase and rendered as the launch toolkit.`}
             />
 
             <div className="pf-stackLayout">
@@ -390,7 +390,7 @@ export default function PortfolioHomePage() {
                 </header>
                 <pre>{`{
 ${stackGroups.slice(0, 5).map(([title, items]) => `  "${title.toLowerCase().replace(/[^a-z0-9]+/g, "_")}": [${items.slice(0, 4).map((item) => `"${item}"`).join(", ")}]`).join(",\n")},
-  "system_state": "synced_from_myData"
+  "system_state": "synced_from_firebase"
 }`}</pre>
               </div>
 
@@ -415,7 +415,7 @@ ${stackGroups.slice(0, 5).map(([title, items]) => `  "${title.toLowerCase().repl
             <SectionHead
               kicker="Checkpoint 03"
               title="Experience, research, education, and achievements."
-              copy="Timeline entries are built from experience, research, education, and achievement arrays in myData.json."
+              copy="Timeline entries are built from experience, research, education, and achievement arrays in Firebase."
             />
 
             <div className="pf-timeline">

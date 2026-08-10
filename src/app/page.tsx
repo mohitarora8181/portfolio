@@ -18,12 +18,11 @@ import {
   Tune,
   WorkOutline,
 } from "@mui/icons-material";
-import { getAppShowcases, getPortfolioData } from "@/src/services/portfolioData";
-
-const data = getPortfolioData();
-const appShowcases = getAppShowcases();
-
-const nameLetters = data.meta.name.split("");
+import {
+  getAppShowcases,
+  getLoadedPortfolioData,
+  type PortfolioData,
+} from "@/src/services/portfolioData";
 
 const letterColors = [
   "text-[#4285f4]",
@@ -42,13 +41,6 @@ const appLogos: Record<string, string> = {
   "Google Meet": "https://www.google.com/s2/favicons?domain=meet.google.com&sz=128",
   "Google Maps": "https://www.google.com/s2/favicons?domain=maps.google.com&sz=128",
 };
-
-const stats = [
-  { label: "Projects", value: data.projects.length, icon: <Code sx={{ fontSize: 18 }} /> },
-  { label: "Roles", value: data.experience.length, icon: <WorkOutline sx={{ fontSize: 18 }} /> },
-  { label: "Papers", value: data.research.length, icon: <Science sx={{ fontSize: 18 }} /> },
-  { label: "Clones", value: appShowcases.length, icon: <Apps sx={{ fontSize: 18 }} /> },
-];
 
 const themes = {
   light: {
@@ -106,6 +98,7 @@ const isThemeKey = (value: string | null): value is ThemeKey => (
 );
 
 export default function Home() {
+  const [data, setData] = useState<PortfolioData | null>(() => getLoadedPortfolioData());
   const [query, setQuery] = useState("");
   const [themeKey, setThemeKey] = useState<ThemeKey>("light");
   const [themeReady, setThemeReady] = useState(false);
@@ -123,6 +116,10 @@ export default function Home() {
   const panelX = useTransform(smoothX, [-0.5, 0.5], [18, -18]);
   const panelY = useTransform(smoothY, [-0.5, 0.5], [14, -14]);
   const theme = themes[themeKey];
+
+  useEffect(() => {
+    setData(getLoadedPortfolioData());
+  }, []);
 
   useEffect(() => {
     const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
@@ -143,13 +140,35 @@ export default function Home() {
   };
 
   const filteredApps = useMemo(() => {
+    if (!data) return [];
+
+    const appShowcases = getAppShowcases(data);
     const normalizedQuery = query.trim().toLowerCase();
     if (!normalizedQuery) return appShowcases;
 
     return appShowcases.filter((app) =>
       [app.name, app.description, ...app.skills].join(" ").toLowerCase().includes(normalizedQuery)
     );
-  }, [query]);
+  }, [data, query]);
+
+  if (!data) {
+    return (
+      <main className={`grid min-h-dvh place-items-center ${theme.main}`}>
+        <div className={`rounded-full border px-5 py-3 text-sm font-semibold shadow-sm ${theme.panel}`}>
+          Loading Firebase portfolio...
+        </div>
+      </main>
+    );
+  }
+
+  const appShowcases = getAppShowcases(data);
+  const nameLetters = data.meta.name.split("");
+  const stats = [
+    { label: "Projects", value: data.projects.length, icon: <Code sx={{ fontSize: 18 }} /> },
+    { label: "Roles", value: data.experience.length, icon: <WorkOutline sx={{ fontSize: 18 }} /> },
+    { label: "Papers", value: data.research.length, icon: <Science sx={{ fontSize: 18 }} /> },
+    { label: "Clones", value: appShowcases.length, icon: <Apps sx={{ fontSize: 18 }} /> },
+  ];
 
   return (
     <main

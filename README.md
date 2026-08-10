@@ -2,7 +2,7 @@
 
 A data-driven portfolio built with Next.js, React, Tailwind CSS, Framer Motion, and Material UI icons.
 
-Instead of a traditional portfolio layout, this project presents the same portfolio data through familiar daily-use app interfaces. The home page acts like an animated Chrome new tab page, and each clone turns `myData.json` into a different product-style experience.
+Instead of a traditional portfolio layout, this project presents the same portfolio data through familiar daily-use app interfaces. The home page acts like an animated Chrome new tab page, and each clone turns Firebase portfolio data into a different product-style experience.
 
 ## Concept
 
@@ -15,7 +15,7 @@ The goal of this portfolio is to showcase frontend skill through recognizable UI
 - LinkedIn-style professional feed
 - Google Meet-style portfolio presentation room
 
-All of these views are powered by the same structured data source: `myData.json`.
+All of these views are powered by the same structured Firebase portfolio data.
 
 ## Routes
 
@@ -30,10 +30,10 @@ All of these views are powered by the same structured data source: `myData.json`
 
 ## Data Source
 
-The portfolio content lives in:
+The portfolio content lives in Firebase Realtime Database and is loaded by:
 
 ```txt
-myData.json
+src/services/firebasePortfolio.ts
 ```
 
 It contains:
@@ -47,13 +47,13 @@ It contains:
 - Education
 - Achievements
 
-The data is accessed through:
+The shared data cache and helper API live in:
 
 ```txt
 src/services/portfolioData.ts
 ```
 
-For now, the service imports `myData.json` locally. The service layer is intentionally separated so it can later be changed to load from Firebase Realtime Database or another remote source without rewriting every UI clone.
+Firebase data is mandatory. If the Firebase request fails or returns empty data, the app fails loudly instead of falling back to local content.
 
 ## Project Structure
 
@@ -73,11 +73,11 @@ src/
       linkedin/
       gmeet/
   services/
+    firebasePortfolio.ts
     portfolioData.ts
-myData.json
 ```
 
-Each clone has its own mapper/component layer so the same JSON can be reshaped into the UI language of that app.
+Each clone has its own mapper/component layer so the same Firebase payload can be reshaped into the UI language of that app.
 
 ## Tech Stack
 
@@ -124,7 +124,7 @@ npm run start
 
 ## Customizing Portfolio Data
 
-Update `myData.json` to change the portfolio content.
+Update the Firebase Realtime Database portfolio payload to change the portfolio content.
 
 Examples:
 
@@ -136,14 +136,10 @@ Examples:
 
 The app clones will automatically render updated data through their own UI patterns.
 
-## Future Data Plan
-
-The data service is ready to evolve from local JSON to a remote source.
-
-Planned direction:
+## Data Flow
 
 ```txt
-myData.json -> portfolioDataService.get() -> Firebase Realtime Database
+Firebase Realtime Database -> fetchPortfolioDataFromFirebase() -> portfolioDataService.get()
 ```
 
 The UI components should continue consuming service helpers instead of importing data directly.

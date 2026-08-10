@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     "projects",
   ],
   icons: {
-    icon: 'https://media.licdn.com/dms/image/v2/D5603AQG0cK8tZmPDAQ/profile-displayphoto-scale_400_400/B56Z5_MgzwIUAg-/0/1780250448976?e=1782345600&v=beta&t=Bc7E5SgJB3is3YCY7Wz8oLz0SPYlcmxKwRacLm_46aU',
+    icon: 'https://i.ibb.co/FkVw8NxY/image.png',
   },
   alternates: {
     canonical: SITE_URL,
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     description: "Projects, experience, research, and clone apps by Mohit Arora.",
     images: [
       {
-        url: "https://media.licdn.com/dms/image/v2/D5603AQG0cK8tZmPDAQ/profile-displayphoto-scale_400_400/B56Z5_MgzwIUAg-/0/1780250448976?e=1782345600&v=beta&t=Bc7E5SgJB3is3YCY7Wz8oLz0SPYlcmxKwRacLm_46aU",
+        url: "https://i.ibb.co/FkVw8NxY/image.png",
         width: 400,
         height: 400,
         alt: "Mohit Arora profile photo",
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     title: `${SITE_NAME} | Portfolio`,
     description: "Projects, experience, research, and clone apps by Mohit Arora.",
     images: [
-      "https://media.licdn.com/dms/image/v2/D5603AQG0cK8tZmPDAQ/profile-displayphoto-scale_400_400/B56Z5_MgzwIUAg-/0/1780250448976?e=1782345600&v=beta&t=Bc7E5SgJB3is3YCY7Wz8oLz0SPYlcmxKwRacLm_46aU",
+      "https://i.ibb.co/FkVw8NxY/image.png",
     ],
   },
   robots: {
@@ -90,6 +90,9 @@ export default async function RootLayout({
 }>) {
   const firebaseData = await fetchPortfolioDataFromFirebase();
   setPortfolioData(firebaseData);
+  const portfolioBootstrap = JSON.stringify({
+    data: firebaseData,
+  }).replace(/</g, "\\u003c");
   const structuredData = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Person",
@@ -116,6 +119,11 @@ export default async function RootLayout({
     <html lang="en" className="w-full h-full">
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData }} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(() => { const payload = ${portfolioBootstrap}; window.__PORTFOLIO_DATA__ = payload.data; try { window.sessionStorage.setItem("portfolio:firebase-data", JSON.stringify(payload.data)); } catch (_) {} })();`,
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased w-full h-full`}
