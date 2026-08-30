@@ -17,6 +17,7 @@ export async function GET() {
       },
     });
   } catch (error) {
+    console.log(error);
     return new NextResponse("Landing page not found", {
       status: 404,
       headers: {
