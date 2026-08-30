@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="theme-color" content="#e8dfcd" />
+    <meta name="description" content="Explore the interactive 3D portfolio of Mohit Arora — full-stack developer and robotics enthusiast." />
+    <title>Mohit Arora — Interactive Portfolio</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23e8dfcd'/%3E%3Ctext x='8' y='47' font-size='42' font-family='cursive' font-weight='700' fill='%23252522'%3EMA%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script>
+      (() => {
+        try {
+          const saved = localStorage.getItem("mohit-portfolio-theme");
+          const preferred = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          document.documentElement.dataset.theme = saved || preferred;
+        } catch {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/landing/styles.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="loader" class="loader">
+      <div class="tear tear-left"></div>
+      <div class="tear tear-right"></div>
+      <div class="loader-shell">
+        <header><strong>M<span>A</span></strong><p>Interactive portfolio<br/>Mohit Arora</p></header>
+        <div class="loader-center">
+          <p>Welcome to</p>
+          <h1>Mohit’s<br/>world.</h1>
+          <div class="loader-door" aria-hidden="true"><i></i></div>
+        </div>
+        <footer>
+          <span id="loaderStatus">Initializing the scene</span>
+          <div class="loader-track"><i id="loaderProgress"></i></div>
+          <output><span id="loaderValue">00</span>%</output>
+        </footer>
+      </div>
+    </div>
+
+    <canvas id="world" tabindex="-1" aria-label="Continuous interactive 3D portfolio journey"></canvas>
+    <div class="paper-grain" aria-hidden="true"></div>
+
+    <header class="hud-header">
+      <button class="mark" data-action="hall" aria-label="Return to hall"><b>M<span>A</span></b><small>Mohit Arora<br/>Creative developer</small></button>
+      <div class="room-indicator"><span id="roomName">The Journey</span><i></i><small id="roomProgress">00 / 09</small></div>
+      <div class="header-actions">
+        <div class="theme-switch" role="group" aria-label="Color theme">
+          <button type="button" data-theme-option="light" aria-pressed="false">Light</button>
+          <button type="button" data-theme-option="dark" aria-pressed="false">Dark</button>
+        </div>
+        <button class="menu-button" id="menuButton" aria-label="Open menu" aria-expanded="false"><span>Menu</span><i></i><i></i></button>
+      </div>
+    </header>
+
+    <aside class="menu" id="menu" aria-hidden="true">
+      <p>Jump to chapter</p>
+      <div class="menu-chapters">
+        <button data-room="projects"><small>01</small> Projects</button>
+        <button data-room="experience"><small>02</small> Experience</button>
+        <button data-room="profile"><small>03</small> Profile</button>
+        <button data-room="education"><small>04</small> Education</button>
+        <button data-room="skills"><small>05</small> Skills</button>
+        <button data-room="research"><small>06</small> Research</button>
+        <button data-room="achievements"><small>07</small> Achievements</button>
+        <button data-room="open_source"><small>08</small> Open Source</button>
+        <button data-room="contact"><small>09</small> Contact</button>
+      </div>
+      <div class="menu-links" id="menuLinks"></div>
+    </aside>
+
+    <div class="intro-card" id="introCard" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-describedby="introDescription">
+      <div class="intro-brand">
+        <b>M<span>A</span></b><p>Mohit Arora<br/>Creative developer</p>
+        <div class="theme-switch intro-theme" role="group" aria-label="Welcome screen color theme">
+          <button type="button" data-theme-option="light" aria-pressed="false">Light</button>
+          <button type="button" data-theme-option="dark" aria-pressed="false">Dark</button>
+        </div>
+      </div>
+      <main class="intro-main">
+        <div class="intro-copy">
+          <p>Interactive portfolio</p>
+          <h1 id="introTitle">Explore the work<br/>behind the code.</h1>
+          <span id="introDescription">Follow one continuous path through nine focused chapters, from selected work and experience to research, achievements, and ways to connect.</span>
+          <button id="startButton">Enter the journey <b>→</b></button>
+        </div>
+        <ol class="intro-route" aria-label="Journey chapters">
+          <li><b>01</b><span>Projects<small>Selected builds</small></span></li>
+          <li><b>02</b><span>Experience<small>Roles and impact</small></span></li>
+          <li><b>03</b><span>Profile<small>Background and focus</small></span></li>
+          <li><b>04</b><span>Education<small>Academic journey</small></span></li>
+          <li><b>05</b><span>Skills<small>Technical toolkit</small></span></li>
+          <li><b>06</b><span>Research<small>Current investigations</small></span></li>
+          <li><b>07</b><span>Achievements<small>Recognition and leadership</small></span></li>
+          <li><b>08</b><span>Open Source<small>Community contributions</small></span></li>
+          <li><b>09</b><span>Contact<small>Start a conversation</small></span></li>
+        </ol>
+      </main>
+      <div class="intro-meta"><span>Scroll or drag to continue</span><span>Nine chapters · one continuous journey</span></div>
+    </div>
+
+    <nav class="journey-rail" id="journeyRail" aria-label="Portfolio journey">
+      <p>Your journey</p>
+      <button data-guide-room="projects"><i></i><span>Projects<small>Selected builds</small></span><b>01</b></button>
+      <button data-guide-room="experience"><i></i><span>Experience<small>Roles &amp; impact</small></span><b>02</b></button>
+      <button data-guide-room="profile"><i></i><span>Profile<small>Background &amp; focus</small></span><b>03</b></button>
+      <button data-guide-room="education"><i></i><span>Education<small>Academic journey</small></span><b>04</b></button>
+      <button data-guide-room="skills"><i></i><span>Skills<small>Technical toolkit</small></span><b>05</b></button>
+      <button data-guide-room="research"><i></i><span>Research<small>Current investigations</small></span><b>06</b></button>
+      <button data-guide-room="achievements"><i></i><span>Achievements<small>Recognition &amp; leadership</small></span><b>07</b></button>
+      <button data-guide-room="open_source"><i></i><span>Open Source<small>Community work</small></span><b>08</b></button>
+      <button data-guide-room="contact"><i></i><span>Contact<small>Start a conversation</small></span><b>09</b></button>
+    </nav>
+
+    <section class="room-context" id="roomContext" aria-live="polite">
+      <span id="roomNumber">01</span>
+      <div><h2 id="roomTitle">Projects</h2><p id="roomDescription">Select a framed project to see the decisions, stack, and links behind it.</p></div>
+    </section>
+    <nav class="content-index" id="contentIndex" aria-label="Room contents"></nav>
+
+    <div class="crosshair" id="crosshair" aria-hidden="true"><i></i><i></i></div>
+    <div class="hotspot-label" id="hotspotLabel"></div>
+
+    <div class="room-panel" id="roomPanel" aria-live="polite">
+      <button class="panel-close" id="panelClose" aria-label="Close details">×</button>
+      <p class="panel-kicker" id="panelKicker"></p>
+      <h2 id="panelTitle"></h2>
+      <p class="panel-meta" id="panelMeta"></p>
+      <figure class="panel-media" id="panelMedia"></figure>
+      <p class="panel-copy" id="panelCopy"></p>
+      <div class="panel-details" id="panelDetails"></div>
+      <div class="panel-tags" id="panelTags"></div>
+      <div class="panel-actions" id="panelActions"></div>
+    </div>
+
+    <div class="controls" id="controls">
+      <div class="mouse-icon"><i></i></div>
+      <span id="controlText">MOVE TO LOOK  •  SCROLL TO CONTINUE</span>
+    </div>
+    <div class="availability" id="availability"><i></i><span>Available for selected projects</span></div>
+    <!-- <button class="sound-button muted" id="soundButton" aria-label="Toggle ambient sound"><i></i><i></i><i></i><span>SOUND OFF</span></button> -->
+
+    <div class="rotate-notice"><span>↻</span><p>Rotate your device<br/>for the full experience</p></div>
+    <noscript>Please enable JavaScript to explore Mohit's interactive portfolio.</noscript>
+    <script type="module" src="/landing/app.js"></script>
+  </body>
+</html>
