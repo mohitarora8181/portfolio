@@ -9,7 +9,7 @@ import Toast from '../components/gmaps/Toast.jsx'
 
 const MapView = dynamic(() => import('../components/gmaps/MapView.jsx'), {
   ssr: false,
-  loading: () => <div className="map map-loading">Loading map...</div>,
+  loading: () => <div className="map map-loading">Preparing map view</div>,
 })
 
 export default function App() {

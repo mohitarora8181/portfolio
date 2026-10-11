@@ -153,9 +153,36 @@ export default function Home() {
 
   if (!data) {
     return (
-      <main className={`grid min-h-dvh place-items-center ${theme.main}`}>
-        <div className={`rounded-full border px-5 py-3 text-sm font-semibold shadow-sm ${theme.panel}`}>
-          Loading Firebase portfolio...
+      <main className={`relative grid min-h-dvh place-items-center overflow-hidden px-4 ${theme.main}`}>
+        <div className={`pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[90px] ${theme.glow}`} />
+        <div className="relative z-10 flex w-full max-w-[760px] flex-col items-center">
+          <div className="mb-7 flex items-center gap-2" aria-hidden="true">
+            {letterColors.map((color, index) => (
+              <span
+                key={`${color}-${index}`}
+                className={`h-3 w-3 rounded-full ${color.replace("text-", "bg-")} animate-pulse`}
+                style={{ animationDelay: `${index * 120}ms` }}
+              />
+            ))}
+          </div>
+
+          <div className={`mb-4 h-16 w-[min(82vw,520px)] rounded-full border shadow-sm ${theme.panel}`}>
+            <div className="h-full w-full animate-pulse rounded-full bg-current opacity-[0.06]" />
+          </div>
+
+          <p className={`text-sm font-semibold ${theme.muted}`}>Preparing portfolio</p>
+
+          <div className="mt-8 grid grid-cols-3 gap-4 sm:grid-cols-5" aria-hidden="true">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <div
+                key={index}
+                className={`h-[104px] w-[104px] rounded-2xl border shadow-sm ${theme.panel}`}
+              >
+                <div className="mx-auto mt-5 h-11 w-11 animate-pulse rounded-2xl bg-current opacity-[0.08]" />
+                <div className="mx-auto mt-4 h-2 w-14 animate-pulse rounded-full bg-current opacity-[0.08]" />
+              </div>
+            ))}
+          </div>
         </div>
       </main>
     );
